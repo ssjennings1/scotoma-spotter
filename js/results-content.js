@@ -9,14 +9,65 @@
 /* ── INDUSTRY-SPECIFIC LANGUAGE ── */
 function indLang(industry){
   var map = {
-    'Electrical / Trades': { team:'crew', workplace:'job sites', leader:'foreman', work:'jobs', org:'shop' },
-    'Construction': { team:'crew', workplace:'job sites', leader:'superintendent', work:'projects', org:'operation' },
-    'Manufacturing': { team:'floor team', workplace:'production floor', leader:'shift lead', work:'orders', org:'plant' },
-    'Professional Services': { team:'team', workplace:'office', leader:'senior associate', work:'client work', org:'firm' },
-    'Other': { team:'team', workplace:'operation', leader:'key manager', work:'work', org:'business' }
+    'Construction & Trades':              { team:'crew',       workplace:'job sites',        leader:'superintendent',      work:'projects',     org:'operation' },
+    'Manufacturing & Industrial':         { team:'floor team', workplace:'production floor',  leader:'shift lead',          work:'orders',       org:'plant' },
+    'Transportation & Logistics':         { team:'team',       workplace:'the floor',         leader:'dispatcher',          work:'shipments',    org:'operation' },
+    'Healthcare & Medical':               { team:'care team',  workplace:'the clinic',        leader:'office manager',      work:'patient load', org:'practice' },
+    'Professional & Business Services':   { team:'team',       workplace:'the office',        leader:'senior associate',    work:'client work',  org:'firm' },
+    'Retail, Hospitality & Service':      { team:'staff',      workplace:'the floor',         leader:'store manager',       work:'the day-to-day', org:'business' },
+    'Other':                              { team:'team',       workplace:'the operation',     leader:'key manager',         work:'work',         org:'business' }
   };
   return map[industry] || map['Other'];
 }
+
+/* ── INDUSTRY-SPECIFIC BLIND SPOT COLOR ──
+   1-2 sentences about how this type manifests in this industry.
+   Keyed by industry, then by scotoma type.
+*/
+var industryColor = {
+  'Construction & Trades': {
+    optimizer: 'In the trades, this usually shows up as the owner still personally bidding every job, walking every site, and approving every change order — even with a superintendent who could handle 80% of it.',
+    architectural: 'In construction, the architectural blind spot hides in the gap between your office and the field. Job costing says one thing, the crew is doing another, and nobody has a single version of the truth until something blows up.',
+    relational: 'On crew-based job sites, relational fractures spread fast. One foreman with bad energy can poison a whole crew\'s output — and you won\'t hear about it because the guys just put their heads down and stop caring.',
+    velocity: 'In the trades, velocity blind spots show up when you\'re booking more work than your crew capacity can absorb — and the first sign is usually callbacks, punch-list problems, or your best guys burning out.'
+  },
+  'Manufacturing & Industrial': {
+    optimizer: 'On the production floor, the optimizer blind spot shows up when every schedule change, supplier issue, or quality call still routes through one person. The line doesn\'t stop because of equipment — it stops because of a decision bottleneck.',
+    architectural: 'In manufacturing, the architectural blind spot lives in the handoff between shifts, between departments, and between the floor and the front office. Information that should flow automatically gets carried by one or two people who\'ve been there the longest.',
+    relational: 'In a plant environment, relational blind spots hide behind high turnover that leadership writes off as "the labor market." It\'s usually not the market. It\'s the gap between the culture leadership believes they\'ve built and what people actually experience shift to shift.',
+    velocity: 'In manufacturing, velocity blind spots emerge when you\'re adding capacity — new lines, new shifts, new products — faster than your quality systems and training processes can keep up. Scrap rates and rework are the early warning signs.'
+  },
+  'Transportation & Logistics': {
+    optimizer: 'In logistics, the optimizer blind spot shows up when every exception — a delayed shipment, a driver issue, a routing change — still escalates to the owner instead of being handled at the dispatch level.',
+    architectural: 'In transportation, the architectural blind spot lives between dispatch, the drivers, and the customers. Roles that made sense with 10 trucks don\'t scale to 50. Who owns the customer relationship? Who handles exceptions? The answer is usually "whoever picks up the phone first."',
+    relational: 'In logistics, relational blind spots hide in the isolation of the work itself — drivers on the road, warehouse workers on the dock, dispatch in the office. When these groups stop communicating directly, problems get discovered at delivery instead of at origin.',
+    velocity: 'In logistics, velocity blind spots show up when you\'re adding routes and capacity faster than your dispatch process can scale — and the first sign is usually missed deliveries, compliance gaps, or driver turnover that keeps climbing.'
+  },
+  'Healthcare & Medical': {
+    optimizer: 'In healthcare, the optimizer blind spot shows up as the founding physician or practice owner still seeing every complex case, approving every hire, and handling every patient complaint personally — while the rest of the team waits for direction.',
+    architectural: 'In a medical practice, the architectural blind spot lives in the gap between clinical operations and business operations. The providers focus on patient care, the admin side runs on informal processes, and nobody owns the space in between where the real friction builds.',
+    relational: 'In healthcare, the relational blind spot often hides in the gap between what leadership calls "patient-centered culture" and what the care team actually experiences shift to shift. Burnout and turnover in clinical settings are almost always relational before they become operational.',
+    velocity: 'In healthcare, velocity blind spots emerge when you\'re adding providers, locations, or service lines faster than your administrative infrastructure and clinical workflows can scale. Patient experience starts to wobble before the numbers do.'
+  },
+  'Professional & Business Services': {
+    optimizer: 'In professional services, the optimizer blind spot shows up as the senior partner or founder who still touches every proposal, reviews every deliverable, and manages every key client relationship. The firm can\'t grow past one person\'s calendar.',
+    architectural: 'In a professional services firm, the architectural blind spot hides in the transition from "everyone does everything" to specialized roles. Who owns business development vs. delivery vs. client management? Without clear lanes, your best people spend half their time on work that isn\'t their highest value.',
+    relational: 'In professional services, relational blind spots live in the unspoken hierarchy between partners, associates, and support staff. The culture deck says "collaborative" — but the actual experience of junior team members often tells a different story.',
+    velocity: 'In professional services, velocity blind spots emerge when you\'re saying yes to more client work than your bench can deliver at quality. Scope creep becomes the norm, margins compress, and your team starts making quiet trade-offs between clients.'
+  },
+  'Retail, Hospitality & Service': {
+    optimizer: 'In retail and service businesses, the optimizer blind spot shows up as the owner who still opens and closes, handles every vendor call, and jumps behind the counter when it gets busy. Your best asset — your judgment — is being spent on tasks a trained manager could own.',
+    architectural: 'In hospitality and service, the architectural blind spot hides in the gap between your location managers and headquarters. Standards exist on paper but execution varies wildly by location because the reporting structure, communication cadence, and accountability systems weren\'t built to scale.',
+    relational: 'In customer-facing businesses, relational blind spots spread from the back of house to the front. If your staff doesn\'t feel respected and supported, your customers will feel the difference — even if they can\'t name it. Every service recovery problem has a team culture problem underneath it.',
+    velocity: 'In retail and hospitality, velocity blind spots show up when you\'re adding locations, services, or menu items faster than your hiring, training, and operational playbook can absorb — and the customer experience becomes inconsistent before you realize it.'
+  },
+  'Other': {
+    optimizer: 'This pattern shows up in every industry the same way: the leader who built the business becomes the bottleneck that caps it. The habits that made you successful at 10 people become the constraints that hold you back at 50.',
+    architectural: 'Regardless of industry, the architectural blind spot lives in the gap between how your business actually runs and how you think it runs. The informal systems that worked when everyone sat in one room don\'t survive growth.',
+    relational: 'In any organization, relational blind spots hide in plain sight. The energy shift, the conversations that got shorter, the meetings that feel different — those aren\'t random. They\'re symptoms of a trust gap that leadership is the last to see.',
+    velocity: 'In any growing business, velocity blind spots emerge when the systems and people that got you here can\'t keep up with where you\'re going. The "fix it later" list grows faster than the "fixed" list, and the cracks compound quietly.'
+  }
+};
 
 /* ═══════════════════════════════════════════
    CONTENT BY TIER × TYPE
@@ -84,6 +135,12 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
 
   var tc = typeContent[type] || typeContent.architectural;
 
+  // Get industry-specific color for this type
+  var colorMap = industryColor[industry] || industryColor['Other'];
+  var iColor = colorMap[type] || colorMap['optimizer'] || '';
+  // Append industry color to the mirror text
+  var mirrorFull = mirrorFull + (iColor ? ' '+iColor : '');
+
   /* ── TIER-SPECIFIC WRAPPER ── */
   if(tier==='early'){
     return {
@@ -118,7 +175,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       greeting: name+', your answers tell me something important.',
       sections: [
         { label:'Your Profile', heading:'You\'re encoding patterns right now — whether you know it or not.', text:q2Narrative+' At '+orgSize+' people in '+industry+', the decisions you\'re making right now about who does what, how information flows, and how your '+ind.team+' operates — those are becoming the permanent architecture of your '+ind.org+'. The patterns you\'re building will either scale beautifully or become invisible bottlenecks.' },
-        { label:'The Blind Spot Risk', heading: tc.typeName, text: tc.mirror }
+        { label:'The Blind Spot Risk', heading: tc.typeName, text: mirrorFull }
       ],
       actionsTitle: 'Three things you can do this week.',
       actionsSub: 'These aren\'t generic advice. They\'re specific to the pattern your answers revealed.',
@@ -142,7 +199,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       subhead: 'The thing that got you here is creating the friction you\'re feeling. That\'s not failure — that\'s growth.',
       greeting: name+', I want to be straight with you.',
       sections: [
-        { label:'What I See', heading: tc.typeName, text: q2Narrative+' '+tc.mirror },
+        { label:'What I See', heading: tc.typeName, text: q2Narrative+' '+mirrorFull },
         { label:'What You\'re Missing', heading:'The invisible friction.', text: tc.whatsMissing },
         { label:'What It\'s Costing You', heading:'More than you think.', text: tc.cost }
       ],
@@ -168,7 +225,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       subhead: 'Your answers tell me you\'re dealing with something deeper than a single fix. The pattern has layers — and it\'s been building for a while.',
       greeting: name+', I\'m going to be direct with you.',
       sections: [
-        { label:'What I See', heading: tc.typeName+' — Multi-Layered', text: q2Narrative+' '+tc.mirror },
+        { label:'What I See', heading: tc.typeName+' — Multi-Layered', text: q2Narrative+' '+mirrorFull },
         { label:'What You\'re Missing', heading:'It goes deeper than you think.', text: tc.whatsMissing+' And here\'s the harder truth: you\'ve probably tried to fix pieces of this before. Maybe a new hire, a restructure, a consultant. It didn\'t stick — not because the fix was wrong, but because it was treating a symptom of a pattern you couldn\'t fully see.' },
         { label:'What It\'s Costing You', heading:'The real number.', text: tc.cost }
       ],
@@ -194,7 +251,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     subhead: 'Your answers tell me this has been building for a long time. You\'ve tried things. They haven\'t stuck. That\'s not because you\'re doing it wrong — it\'s because the pattern is bigger than any single fix.',
     greeting: name+', I want you to hear something first: this isn\'t your fault.',
     sections: [
-      { label:'What I See', heading:'Systemic invisibility across multiple dimensions.', text: q2Narrative+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size. '+tc.mirror },
+      { label:'What I See', heading:'Systemic invisibility across multiple dimensions.', text: q2Narrative+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size. '+mirrorFull },
       { label:'Why Fixes Haven\'t Stuck', heading:'It\'s not the fixes. It\'s the sequence.', text:'You\'ve tried things — reorganizing, coaching, new hires, new tools. Some of them were probably the right moves. But without seeing the full system, you were treating symptoms out of order. The pattern underneath kept reasserting itself.' },
       { label:'What Needs to Happen', heading:'Diagnosis, roadmap, and someone in the room with you.', text:'You need someone who can see the whole picture — the business architecture, the leadership dynamics, and the human patterns underneath — and work alongside you to change them. Not a report. A partnership.' }
     ],

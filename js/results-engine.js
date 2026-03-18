@@ -1,51 +1,135 @@
 /* ═══════════════════════════════════════
    Scotoma Spotter™ — Results Engine
    ═══════════════════════════════════════
-   Renders the results page: dimensions
-   chart, body content, actions, and offer.
+   Renders the results page: radar chart,
+   body content, actions, and offer.
    Uses getContent() from results-content.js
    ═══════════════════════════════════════ */
 
-/* ── DIMENSION SCORES ── */
-function getDimensions(score, type, q2, role, size, S){
-  // These create the visual "scotoma profile" radar
-  // Normalized to percentages for the bar chart
-  var instinct = Math.min(100, Math.round((q2/25)*100)); // 3AM test
-  var scale = Math.min(100, Math.round((size/25)*100)); // Org complexity
-  var authority = Math.min(100, Math.round((role/25)*100)); // Leadership position
-  var readiness = Math.min(100, Math.round((S.q4/30)*100)); // Readiness to act
+/* ── SCOTOMA TYPE SCORES ── */
+var scotomaTypeNames = {
+  optimizer: 'Optimizer',
+  architectural: 'Architectural',
+  relational: 'Relational',
+  velocity: 'Velocity'
+};
 
-  // Type-driven dimension
-  var typeScores = {optimizer:85, architectural:75, relational:70, velocity:80};
-  var pattern = typeScores[type]||70;
+function getScotomaScores(type, q2, q4, role, size){
+  // q2: 0-25 (3AM test), q4: 0-30 (readiness), role: 0-25, size: 0-25
+  var q2mod = Math.round((q2/25)*15);   // 0-15
+  var q4mod = Math.round((q4/30)*10);   // 0-10
+  var sizeMod = Math.round((size/25)*10); // 0-10
+  var roleMod = Math.round((role/25)*10); // 0-10
 
-  return [
-    {label:'Instinct Signal', value:instinct},
-    {label:'Scale Pressure', value:scale},
-    {label:'Pattern Strength', value:pattern},
-    {label:'Authority', value:authority},
-    {label:'Readiness', value:readiness}
-  ];
+  var types = ['optimizer','architectural','relational','velocity'];
+  var scores = {};
+
+  types.forEach(function(t){
+    if(t === type){
+      // Primary: high base + instinct and readiness modifiers
+      scores[t] = Math.min(100, Math.max(15, 70 + q2mod + q4mod));
+    } else {
+      // Secondary: lower base + size and role modifiers + small instinct bump
+      var base = 20;
+      // Adjacent types score a bit higher for realism
+      if(type==='optimizer' && t==='architectural') base = 35;
+      if(type==='optimizer' && t==='velocity') base = 30;
+      if(type==='architectural' && t==='optimizer') base = 30;
+      if(type==='architectural' && t==='relational') base = 35;
+      if(type==='relational' && t==='architectural') base = 30;
+      if(type==='relational' && t==='velocity') base = 25;
+      if(type==='velocity' && t==='optimizer') base = 35;
+      if(type==='velocity' && t==='relational') base = 25;
+      scores[t] = Math.min(100, Math.max(15, base + sizeMod + roleMod + Math.round(q2mod*0.3)));
+    }
+  });
+
+  return scores;
 }
 
-function renderDimensions(dims){
-  var html = '';
-  dims.forEach(function(d){
-    html += '<div class="dimension-row">';
-    html += '<div class="dimension-label">'+d.label+'</div>';
-    html += '<div class="dimension-track"><div class="dimension-fill" style="width:'+d.value+'%"></div></div>';
-    html += '<div class="dimension-val">'+d.value+'%</div>';
-    html += '</div>';
+/* ── RADAR CHART (SVG) ── */
+function renderRadarChart(scores, primaryType){
+  var types = ['optimizer','architectural','relational','velocity'];
+  var labels = ['Optimizer','Architectural','Relational','Velocity'];
+
+  // SVG dimensions
+  var cx = 160, cy = 160, maxR = 120;
+  // 4 axes: top, right, bottom, left
+  var angles = [-90, 0, 90, 180]; // degrees
+
+  function polarToXY(angleDeg, radius){
+    var rad = angleDeg * Math.PI / 180;
+    return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
+  }
+
+  // Grid rings
+  var gridRings = [0.25, 0.5, 0.75, 1.0];
+  var gridHtml = '';
+  gridRings.forEach(function(pct){
+    var r = maxR * pct;
+    var pts = angles.map(function(a){ var p = polarToXY(a, r); return p.x+','+p.y; }).join(' ');
+    gridHtml += '<polygon points="'+pts+'" fill="none" stroke="rgba(250,248,245,0.08)" stroke-width="1"/>';
   });
-  document.getElementById('rDimensions').innerHTML = html;
+
+  // Axis lines
+  var axisHtml = '';
+  angles.forEach(function(a){
+    var p = polarToXY(a, maxR);
+    axisHtml += '<line x1="'+cx+'" y1="'+cy+'" x2="'+p.x+'" y2="'+p.y+'" stroke="rgba(250,248,245,0.1)" stroke-width="1"/>';
+  });
+
+  // Score polygon
+  var scorePoints = [];
+  types.forEach(function(t, i){
+    var val = scores[t] / 100;
+    var p = polarToXY(angles[i], maxR * val);
+    scorePoints.push(p.x+','+p.y);
+  });
+  var scoreHtml = '<polygon class="radar-polygon" points="'+scorePoints.join(' ')+'" fill="rgba(196,147,90,0.15)" stroke="var(--bronze)" stroke-width="2"/>';
+
+  // Score dots
+  var dotsHtml = '';
+  types.forEach(function(t, i){
+    var val = scores[t] / 100;
+    var p = polarToXY(angles[i], maxR * val);
+    dotsHtml += '<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="var(--bronze)" class="radar-dot"/>';
+  });
+
+  // Labels
+  var labelOffsets = [
+    { dx: 0, dy: -14, anchor: 'middle' },  // top
+    { dx: 14, dy: 5, anchor: 'start' },     // right
+    { dx: 0, dy: 18, anchor: 'middle' },    // bottom
+    { dx: -14, dy: 5, anchor: 'end' }       // left
+  ];
+  var labelHtml = '';
+  types.forEach(function(t, i){
+    var p = polarToXY(angles[i], maxR + 4);
+    var off = labelOffsets[i];
+    var isPrimary = (t === primaryType);
+    var cls = isPrimary ? 'radar-label radar-label-primary' : 'radar-label';
+    var scoreTxt = scores[t]+'%';
+    labelHtml += '<text x="'+(p.x+off.dx)+'" y="'+(p.y+off.dy)+'" text-anchor="'+off.anchor+'" class="'+cls+'">'+labels[i]+'</text>';
+    labelHtml += '<text x="'+(p.x+off.dx)+'" y="'+(p.y+off.dy+13)+'" text-anchor="'+off.anchor+'" class="radar-score'+(isPrimary?' radar-score-primary':'')+'">'+scoreTxt+'</text>';
+  });
+
+  var svg = '<svg viewBox="0 0 320 320" class="radar-svg" xmlns="http://www.w3.org/2000/svg">';
+  svg += gridHtml + axisHtml + scoreHtml + dotsHtml + labelHtml;
+  svg += '</svg>';
+
+  // Interpretation line
+  var typeName = scotomaTypeNames[primaryType] || 'Architectural';
+  var interp = '<div class="radar-interpretation">Your strongest pattern: <strong>The '+typeName+' Blind Spot</strong></div>';
+
+  document.getElementById('rDimensions').innerHTML = svg + interp;
 }
 
 /* ── BUILD RESULTS ── */
 function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
 
-  // ── Dimension scores for the visual ──
-  var dims = getDimensions(score, type, q2score, S.role, S.size, S);
-  renderDimensions(dims);
+  // ── Radar chart scores ──
+  var scores = getScotomaScores(type, q2score, S.q4, S.role, S.size);
+  renderRadarChart(scores, type);
 
   // ── Content by tier × type ──
   var content = getContent(tier, type, industry, name, q2score, orgSize, S);

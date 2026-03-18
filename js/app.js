@@ -159,9 +159,32 @@ window.submitEmail = function(){
     go('s-results');
     document.getElementById('progress').style.width='100%';
     document.getElementById('progress').setAttribute('aria-valuenow','100');
-    // Animate the dimension bars
+    // Animate the radar chart
     setTimeout(function(){document.getElementById('rVisual').classList.add('animated');},200);
   },3800);
+};
+
+/* ── RESTART ASSESSMENT ── */
+window.restartAssessment = function(){
+  // Reset state
+  S.size=null; S.sizeLabel=''; S.role=null; S.industry=''; S.q2=null; S.q3=null; S.q3type=''; S.q4=null; S.disq=false;
+  // Clear all selections
+  document.querySelectorAll('.q-chip.selected, .q-opt.selected').forEach(function(el){ el.classList.remove('selected'); });
+  // Reset continue buttons
+  document.querySelectorAll('.q-next').forEach(function(btn){ btn.classList.remove('ready'); });
+  // Clear email form
+  var inName = document.getElementById('inName'); if(inName) inName.value='';
+  var inEmail = document.getElementById('inEmail'); if(inEmail) inEmail.value='';
+  var inCompany = document.getElementById('inCompany'); if(inCompany) inCompany.value='';
+  var inConsent = document.getElementById('inConsent'); if(inConsent) inConsent.checked=false;
+  clearError();
+  // Reset progress
+  document.getElementById('progress').style.width='0%';
+  document.getElementById('progress').setAttribute('aria-valuenow','0');
+  // Reset radar animation
+  document.getElementById('rVisual').classList.remove('animated');
+  // Go to hero
+  go('s-hero');
 };
 
 })();
