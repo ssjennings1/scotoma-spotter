@@ -81,6 +81,22 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
   else if(q2score>=5) q2Narrative = 'You mentioned it happens occasionally. That\'s actually the earliest stage of the signal — your instinct noticing before your calendar gives you space to think about it.';
   else q2Narrative = 'You said the 3AM feeling isn\'t hitting you yet. That\'s good news — it means you\'re still ahead of the pattern.';
 
+  // Visibility narrative (from Q3)
+  var visNarrative = '';
+  var vis = S.q3vis || 0;
+  if(vis>=20) visNarrative = 'You told me you\'ve clearly outgrown your ability to see everything. That\'s not failure — that\'s scale. But you\'re still trying to lead like you can see it all, and the gap between what you know and what\'s actually happening is where the blind spot lives.';
+  else if(vis>=15) visNarrative = 'You said you\'re drowning — you\'ve lost the thread and you know it. That\'s not a metaphor anymore. It\'s your nervous system telling you the current approach has hit its limit.';
+  else if(vis>=10) visNarrative = 'You mentioned you\'re starting to lose visibility. That\'s the inflection — the gap between what you can see and what\'s actually happening is growing, and it\'s growing faster than you think.';
+  else if(vis>=5) visNarrative = 'You said you still see and touch everything. That works at your current scale — but it won\'t survive the next stage of growth. The patterns you can\'t see are the ones forming right now.';
+
+  // Failed solutions narrative (from Q4)
+  var failsNarrative = '';
+  var fails = S.q4fails || 0;
+  if(fails>=25) failsNarrative = 'You\'ve tried multiple fixes and none of them stuck. That\'s not bad execution — it\'s evidence of a pattern bigger than any single intervention. You\'re not fixing the wrong things. You\'re fixing symptoms of something you can\'t see from inside the system.';
+  else if(fails>=20) failsNarrative = 'You told me you\'ve tried two or three things that didn\'t work. Each one probably seemed right at the time. The fact that they reverted tells you something important: the pattern underneath is stronger than any single fix.';
+  else if(fails>=10) failsNarrative = 'You mentioned trying one fix that didn\'t stick. That\'s actually useful data — it tells you the problem isn\'t where you thought it was.';
+  // 0 = no narrative needed
+
   /* ── TYPE-SPECIFIC CONTENT ── */
   var typeContent = {
     optimizer: {
@@ -223,8 +239,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       greeting: name+', I want to be straight with you. '+q2Narrative,
       sections: [
         { label: tc.typeName, heading:'The Pattern', text: mirrorFull },
-        { label:'The Operations View', heading:'What it\'s costing you in hours and dollars.', text: tc.opsView },
-        { label:'The Deeper Pattern', heading:'Why this persists — even when you know better.', text: tc.deeperPattern },
+        { label:'The Operations View', heading:'What it\'s costing you in hours and dollars.', text: tc.opsView+(visNarrative?' '+visNarrative:'') },
+        { label:'The Deeper Pattern', heading:'Why this persists — even when you know better.', text: tc.deeperPattern+(failsNarrative?' '+failsNarrative:'') },
         { label:'The Honest Truth', heading:'What you already know.', text: tc.honestTruth }
       ],
       actionsTitle: 'Three moves you can make this week.',
@@ -247,11 +263,11 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Breaking Point',
       headline: 'This Isn\'t One Blind Spot.<br><em>It\'s Systemic.</em>',
       subhead: 'Your answers tell me you\'re dealing with something deeper than a single fix. The pattern has layers — and it\'s been building for a while.',
-      greeting: name+', I\'m going to be direct with you. '+q2Narrative,
+      greeting: name+', I\'m going to be direct with you. '+q2Narrative+(visNarrative?' '+visNarrative:''),
       sections: [
         { label: tc.typeName+' — Multi-Layered', heading:'The Pattern', text: mirrorFull },
-        { label:'The Operations View', heading:'What an advisor would see in the first 48 hours.', text: tc.opsView+' And here\'s the harder reality: you\'ve probably tried to fix pieces of this before. A new hire, a restructure, a consultant. It didn\'t stick — not because the fix was wrong, but because it was treating a symptom of a pattern you couldn\'t fully see.' },
-        { label:'The Deeper Pattern', heading:'Why the fixes haven\'t stuck.', text: tc.deeperPattern },
+        { label:'The Operations View', heading:'What an advisor would see in the first 48 hours.', text: tc.opsView },
+        { label:'The Deeper Pattern', heading:'Why the fixes haven\'t stuck.', text: tc.deeperPattern+(failsNarrative?' '+failsNarrative:'') },
         { label:'The Honest Truth', heading:'What you know but haven\'t said out loud.', text: tc.honestTruth }
       ],
       actionsTitle: 'Start here — even before we talk.',
@@ -274,11 +290,11 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     eyebrow: 'Your Results — Transformation',
     headline: 'You Don\'t Need Another Report.<br><em>You Need a Partner.</em>',
     subhead: 'Your answers tell me this has been building for a long time. You\'ve tried things. They haven\'t stuck. That\'s not because you\'re doing it wrong — it\'s because the pattern is bigger than any single fix.',
-    greeting: name+', I want you to hear something first: this isn\'t your fault. '+q2Narrative+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.',
+    greeting: name+', I want you to hear something first: this isn\'t your fault. '+q2Narrative+(visNarrative?' '+visNarrative:'')+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.',
     sections: [
       { label: tc.typeName+' — Systemic', heading:'The Pattern', text: mirrorFull },
       { label:'The Operations View', heading:'What the numbers would tell a stranger.', text: tc.opsView },
-      { label:'The Deeper Pattern', heading:'Why you — specifically you — couldn\'t see this.', text: tc.deeperPattern+' You\'ve tried things — reorganizing, coaching, new hires, new tools. Some of them were probably the right moves. But without seeing the full system, you were treating symptoms out of order. The pattern underneath kept reasserting itself.' },
+      { label:'The Deeper Pattern', heading:'Why you — specifically you — couldn\'t see this.', text: tc.deeperPattern+(failsNarrative?' '+failsNarrative:'') },
       { label:'The Honest Truth', heading:'What you\'d say if no one was listening.', text: tc.honestTruth }
     ],
     actionsTitle: 'Even now — there are moves you can make.',

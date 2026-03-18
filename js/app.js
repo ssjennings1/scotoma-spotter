@@ -9,8 +9,15 @@
 'use strict';
 
 /* ── STATE ── */
-var S = { size:null, sizeLabel:'', role:null, industry:'', q2:null, q3:null, q3type:'', q4:null, disq:false };
-var screens = ['s-hero','s-q1','s-q2','s-q3','s-q4','s-email'];
+var S = {
+  size:null, sizeLabel:'', role:null, industry:'', disq:false,
+  q2:null,       // 3AM test (0-25)
+  q3vis:null,    // Visibility loss (5-20)
+  q4fails:null,  // Failed solutions (0-25)
+  q5:null, q5type:'', // Scotoma type
+  q6:null        // Readiness (0-30)
+};
+var screens = ['s-hero','s-q1','s-q2','s-q3','s-q4','s-q5','s-q6','s-email'];
 
 /* ── NAV ── */
 function setProgress(id){
@@ -66,12 +73,12 @@ window.fromQ1 = function(){
   go('s-q2');
 };
 
-/* ── OPTION SELECT (Screens 2-4) ── */
+/* ── OPTION SELECT (Screens 2-6) ── */
 window.pick = function(label, key, pts, type){
   label.parentElement.querySelectorAll('.q-opt').forEach(function(o){o.classList.remove('selected');});
   label.classList.add('selected');
   S[key] = pts;
-  if(type) S.q3type = type;
+  if(type) S.q5type = type;
   document.getElementById(key+'-btn').classList.add('ready');
 };
 
@@ -114,20 +121,21 @@ window.submitEmail = function(){
 
   var company = document.getElementById('inCompany').value.trim();
 
-  // Calculate
-  var total = (S.size||0)+(S.role||0)+(S.q2||0)+(S.q4||0);
+  // Calculate score (expanded: size + role + q2 + q3vis + q4fails + q6)
+  var total = (S.size||0)+(S.role||0)+(S.q2||0)+(S.q3vis||0)+(S.q4fails||0)+(S.q6||0);
   var tier;
-  if(total<=20) tier='early';
-  else if(total<=45) tier='builder';
-  else if(total<=70) tier='inflection';
-  else if(total<=90) tier='breaking';
+  if(total<=30) tier='early';
+  else if(total<=60) tier='builder';
+  else if(total<=95) tier='inflection';
+  else if(total<=125) tier='breaking';
   else tier='transformation';
 
   var payload = {
     name:name, email:email, company:company,
-    score:total, tier:tier, scotomaType:S.q3type,
+    score:total, tier:tier, scotomaType:S.q5type,
     orgSize:S.sizeLabel, industry:S.industry,
-    q2_3am:S.q2, q4_readiness:S.q4
+    q2_3am:S.q2, q3_visibility:S.q3vis,
+    q4_failedFixes:S.q4fails, q6_readiness:S.q6
   };
 
   /* ── GHL WEBHOOK ──
@@ -155,7 +163,7 @@ window.submitEmail = function(){
 
   setTimeout(function(){
     clearInterval(msgInterval);
-    buildResults(name, total, tier, S.q3type, S.industry, S.q2, S.sizeLabel, S);
+    buildResults(name, total, tier, S.q5type, S.industry, S.q2, S.sizeLabel, S);
     go('s-results');
     document.getElementById('progress').style.width='100%';
     document.getElementById('progress').setAttribute('aria-valuenow','100');
@@ -167,7 +175,8 @@ window.submitEmail = function(){
 /* ── RESTART ASSESSMENT ── */
 window.restartAssessment = function(){
   // Reset state
-  S.size=null; S.sizeLabel=''; S.role=null; S.industry=''; S.q2=null; S.q3=null; S.q3type=''; S.q4=null; S.disq=false;
+  S.size=null; S.sizeLabel=''; S.role=null; S.industry=''; S.disq=false;
+  S.q2=null; S.q3vis=null; S.q4fails=null; S.q5=null; S.q5type=''; S.q6=null;
   // Clear all selections
   document.querySelectorAll('.q-chip.selected, .q-opt.selected').forEach(function(el){ el.classList.remove('selected'); });
   // Reset continue buttons

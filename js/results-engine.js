@@ -14,10 +14,10 @@ var scotomaTypeNames = {
   velocity: 'Velocity'
 };
 
-function getScotomaScores(type, q2, q4, role, size){
-  // q2: 0-25 (3AM test), q4: 0-30 (readiness), role: 0-25, size: 0-25
+function getScotomaScores(type, q2, q6, role, size){
+  // q2: 0-25 (3AM test), q6: 0-30 (readiness), role: 0-25, size: 0-25
   var q2mod = Math.round((q2/25)*15);   // 0-15
-  var q4mod = Math.round((q4/30)*10);   // 0-10
+  var q4mod = Math.round((q6/30)*10);   // 0-10
   var sizeMod = Math.round((size/25)*10); // 0-10
   var roleMod = Math.round((role/25)*10); // 0-10
 
@@ -128,7 +128,7 @@ function renderRadarChart(scores, primaryType){
 function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
 
   // ── Radar chart scores ──
-  var scores = getScotomaScores(type, q2score, S.q4, S.role, S.size);
+  var scores = getScotomaScores(type, q2score, S.q6, S.role, S.size);
   renderRadarChart(scores, type);
 
   // ── Content by tier × type ──

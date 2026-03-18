@@ -60,7 +60,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow">The Scotoma Spotter™</div>
       <h1>Find What You've<br><em>Stopped Seeing</em></h1>
-      <p class="hero-sub">Four questions. Ninety seconds. You'll get a diagnosis of the blind spot that's quietly running your business — and what to do about it this week.</p>
+      <p class="hero-sub">Six questions. Two minutes. You'll get a diagnosis of the blind spot that's quietly running your business — and what to do about it this week.</p>
       <div class="hero-start">
         <button class="btn-bronze" onclick="go('s-q1')">Begin →</button>
       </div>
@@ -75,7 +75,7 @@
 <div class="screen" id="s-q1">
   <div class="q-screen">
     <div class="q-card">
-      <div class="q-counter">1 of 4</div>
+      <div class="q-counter">1 of 6</div>
       <h2 class="q-title">Tell me about your company.</h2>
 
       <div class="q-group">
@@ -123,7 +123,7 @@
 <div class="screen" id="s-q2">
   <div class="q-screen">
     <div class="q-card">
-      <div class="q-counter">2 of 4</div>
+      <div class="q-counter">2 of 6</div>
       <h2 class="q-title">How often do you wake up at 3am with the feeling that "something's off" — but you can't name what it is?</h2>
       <div class="q-options" id="q2-opts">
         <label class="q-opt" onclick="pick(this,'q2',0)"><input type="radio" name="q2">
@@ -145,55 +145,109 @@
 </div>
 
 <!-- ═══════════════════════════ -->
-<!--  SCREEN 3: SCOTOMA TYPE     -->
+<!--  SCREEN 3: VISIBILITY LOSS  -->
 <!-- ═══════════════════════════ -->
 <div class="screen" id="s-q3">
   <div class="q-screen">
     <div class="q-card">
-      <div class="q-counter">3 of 4</div>
-      <h2 class="q-title">Which of these sounds most like you right now?</h2>
+      <div class="q-counter">3 of 6</div>
+      <h2 class="q-title">Which statement best describes your current leadership reality?</h2>
       <div class="q-options" id="q3-opts">
-        <label class="q-opt" onclick="pick(this,'q3',15,'optimizer')"><input type="radio" name="q3">
-          <div><div class="q-opt-text">Everything still runs through me — I can't step away without things stalling.</div></div>
+        <label class="q-opt" onclick="pick(this,'q3vis',5)"><input type="radio" name="q3vis">
+          <div><div class="q-opt-text">I still see and touch everything in my business.</div><div class="q-opt-sub">I know what's happening at every level.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q3',15,'architectural')"><input type="radio" name="q3">
-          <div><div class="q-opt-text">We've grown fast but nobody's clear on who does what anymore.</div></div>
+        <label class="q-opt" onclick="pick(this,'q3vis',10)"><input type="radio" name="q3vis">
+          <div><div class="q-opt-text">I'm starting to lose visibility but I'm still mostly in control.</div><div class="q-opt-sub">There are corners I don't see anymore, but I trust the people covering them.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q3',15,'relational')"><input type="radio" name="q3">
-          <div><div class="q-opt-text">People and culture problems keep landing on my desk — even ones I thought we'd already solved.</div></div>
+        <label class="q-opt" onclick="pick(this,'q3vis',20)"><input type="radio" name="q3vis">
+          <div><div class="q-opt-text">I've clearly outgrown my ability to see everything.</div><div class="q-opt-sub">I know there are things happening that I'm not aware of — and that bothers me.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q3',15,'velocity')"><input type="radio" name="q3">
-          <div><div class="q-opt-text">We're growing so fast I feel like I'm losing touch with what's actually happening.</div></div>
+        <label class="q-opt" onclick="pick(this,'q3vis',15)"><input type="radio" name="q3vis">
+          <div><div class="q-opt-text">I'm drowning — I have no idea what's really happening anymore.</div><div class="q-opt-sub">I've lost the thread and I know it.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q3-btn" onclick="go('s-q4')">Continue →</button>
+      <button class="btn-bronze q-next" id="q3vis-btn" onclick="go('s-q4')">Continue →</button>
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════ -->
-<!--  SCREEN 4: READINESS        -->
+<!--  SCREEN 4: FAILED SOLUTIONS -->
 <!-- ═══════════════════════════ -->
 <div class="screen" id="s-q4">
   <div class="q-screen">
     <div class="q-card">
-      <div class="q-counter">4 of 4</div>
-      <h2 class="q-title">If you could see exactly what's off, would you act on it?</h2>
+      <div class="q-counter">4 of 6</div>
+      <h2 class="q-title">In the past 12 months, have you tried to fix internal friction or misalignment — and it didn't stick?</h2>
       <div class="q-options" id="q4-opts">
-        <label class="q-opt" onclick="pick(this,'q4',0)"><input type="radio" name="q4">
+        <label class="q-opt" onclick="pick(this,'q4fails',0)"><input type="radio" name="q4fails">
+          <div><div class="q-opt-text">No — haven't tried anything specific yet.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4fails',10)"><input type="radio" name="q4fails">
+          <div><div class="q-opt-text">Yes — tried one thing that didn't work.</div><div class="q-opt-sub">A new hire, a restructure, a conversation — it helped briefly, then reverted.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4fails',20)"><input type="radio" name="q4fails">
+          <div><div class="q-opt-text">Yes — tried 2–3 things that didn't stick.</div><div class="q-opt-sub">Each fix seemed right at the time, but the underlying pattern kept reasserting itself.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4fails',25)"><input type="radio" name="q4fails">
+          <div><div class="q-opt-text">Yes — multiple attempts, nothing has worked.</div><div class="q-opt-sub">I've thrown resources at this and I'm starting to wonder if I'm fixing the wrong thing.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q4fails-btn" onclick="go('s-q5')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 5: SCOTOMA TYPE     -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q5">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">5 of 6</div>
+      <h2 class="q-title">Which of these sounds most like you right now?</h2>
+      <div class="q-options" id="q5-opts">
+        <label class="q-opt" onclick="pick(this,'q5',15,'optimizer')"><input type="radio" name="q5">
+          <div><div class="q-opt-text">Everything still runs through me — I can't step away without things stalling.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q5',15,'architectural')"><input type="radio" name="q5">
+          <div><div class="q-opt-text">We've grown fast but nobody's clear on who does what anymore.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q5',15,'relational')"><input type="radio" name="q5">
+          <div><div class="q-opt-text">People and culture problems keep landing on my desk — even ones I thought we'd already solved.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q5',15,'velocity')"><input type="radio" name="q5">
+          <div><div class="q-opt-text">We're growing so fast I feel like I'm losing touch with what's actually happening.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q5-btn" onclick="go('s-q6')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 6: READINESS        -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q6">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">6 of 6</div>
+      <h2 class="q-title">If you could see exactly what's off, would you act on it?</h2>
+      <div class="q-options" id="q6-opts">
+        <label class="q-opt" onclick="pick(this,'q6',0)"><input type="radio" name="q6">
           <div><div class="q-opt-text">Maybe — I'm still figuring out if there's really a problem.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q4',10)"><input type="radio" name="q4">
+        <label class="q-opt" onclick="pick(this,'q6',10)"><input type="radio" name="q6">
           <div><div class="q-opt-text">Probably — if the path forward made sense.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q4',20)"><input type="radio" name="q4">
+        <label class="q-opt" onclick="pick(this,'q6',20)"><input type="radio" name="q6">
           <div><div class="q-opt-text">Yes — this has been eating at me and I'm ready to move.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q4',30)"><input type="radio" name="q4">
+        <label class="q-opt" onclick="pick(this,'q6',30)"><input type="radio" name="q6">
           <div><div class="q-opt-text">Yesterday — I should have dealt with this months ago.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q4-btn" onclick="go('s-email')">Continue →</button>
+      <button class="btn-bronze q-next" id="q6-btn" onclick="go('s-email')">Continue →</button>
     </div>
   </div>
 </div>
