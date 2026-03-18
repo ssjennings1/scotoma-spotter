@@ -160,7 +160,12 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
   oHtml += '</ul></div>';
   oHtml += '<a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" class="btn-bronze" target="_blank" rel="noopener">'+content.offer.cta+'</a>';
   if(content.offer.alt){
-    oHtml += '<div class="offer-alt"><a href="#">'+content.offer.alt+'</a></div>';
+    // Check if alt starts with "Not ready?" — render as link; otherwise as plain triage text
+    if(content.offer.alt.indexOf('Not ready')===0){
+      oHtml += '<div class="offer-alt"><a href="#">'+content.offer.alt+'</a></div>';
+    } else {
+      oHtml += '<div class="offer-alt" style="border-bottom:none;"><span style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">'+content.offer.alt+'</span></div>';
+    }
   }
   // Session bridge on all tiers
   oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';

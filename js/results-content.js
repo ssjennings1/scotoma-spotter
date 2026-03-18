@@ -106,7 +106,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       whatsMissing: 'Your '+ind.team+' has quietly stopped bringing you problems — not because there aren\'t any, but because they assume you\'ll just solve them yourself. Decisions queue behind your calendar. The people who could step up don\'t, because there\'s no room. You\'ve trained the entire '+ind.org+' to wait for you.',
       cost: 'Every decision you make is one your '+ind.leader+' doesn\'t learn to make. You\'re trading long-term capability for short-term speed. And the ceiling you\'re feeling? It\'s your own capacity. Revenue can\'t outgrow the person everything runs through.',
       /* ── THREE LENSES ── */
-      opsView: 'Your decision queue has more items in it than you think. Last week, count how many things waited on you — not because they were hard, but because nobody had permission to move without you. That number is your capacity tax. Every one of those items cost your '+ind.org+' hours of waiting time, and your '+ind.leader+' hours of learned helplessness. Multiply that across a year and you\'re looking at the real cost of being the fastest person in the room.',
+      opsView: 'Your decision queue has more items in it than you think. Last week, count how many things waited on you — not because they were hard, but because nobody had permission to move without you. That number is your capacity tax. Every one of those items cost your '+ind.org+' hours of waiting time, and your '+ind.leader+' stopped even trying to make the call on their own. Multiply that across a year and you\'re looking at the real cost of being the fastest person in the room.',
       deeperPattern: 'This isn\'t a delegation problem. If it were, you would have solved it by now — you solve everything. The pattern runs deeper: your identity is fused with being the person who handles things. Letting go doesn\'t just feel inefficient — it feels like abandoning the thing that made you successful. So you hold on, not because your '+ind.team+' can\'t handle it, but because the last time you let go of something, it didn\'t go well. And you made a quiet decision: <em>never again.</em> That decision is now running your entire '+ind.org+'.',
       honestTruth: 'You already know you\'re the bottleneck. You\'ve known for a while. You\'ve even told yourself you\'d start delegating more — after this project, after this quarter, after things settle down. But things never settle down when everything runs through one person. The question isn\'t whether you need to let go. It\'s whether you\'ll do it on your terms, or wait until your body, your family, or your best employee forces the issue.',
       actions: [
@@ -179,10 +179,10 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — Early Scale',
       headline: 'Your Vision Is Still Clear.<br><em>Build the Habits That Keep It That Way.</em>',
       subhead: 'At your current scale, you can still see most of what\'s happening. That\'s your advantage. The work now is building the systems that protect it as you grow.',
-      greeting: name+', here\'s what your answers tell me.',
+      greeting: name+', you built something real. '+q2Narrative,
       sections: [
-        { label:'Your Profile', heading:'You\'re ahead of the curve.', text:q2Narrative+' At '+orgSize+' people, direct visibility is still working for you. That\'s not a consolation prize — it\'s a genuine advantage. The fact that you\'re thinking about organizational blind spots before they\'ve formed puts you ahead of most founders at your stage.' },
-        { label:'What I\'d Watch For', heading:'The patterns that catch founders off guard.', text:'I\'ve worked with enough companies to tell you what happens next: somewhere between 25 employees and $5M, the leadership style that\'s working now starts creating friction. Not because you\'re doing anything wrong — because the business outgrows your span of control. Decisions start waiting on you. People stop bringing you bad news. Solutions that look right on paper don\'t change behavior. That\'s when the scotoma forms.' }
+        { label:'Your Profile', heading:'You can still see the whole picture. That\'s your edge.', text:'At '+orgSize+' people, you still know what\'s happening. You can walk the '+ind.workplace+', read the room, and course-correct in real time. That\'s not a small thing — it\'s the advantage most founders lose without realizing it. The fact that you\'re thinking about this now, before the blind spots have formed, puts you ahead of most people at your stage.' },
+        { label:'What I\'d Watch For', heading:'The patterns that catch good leaders off guard.', text:'I\'ve worked with enough companies to tell you what happens next: somewhere between 25 employees and $5M, the way you\'re leading now starts creating friction. Not because you\'re doing anything wrong — because the business outgrows what one person can see. Decisions start waiting on you. Your people stop bringing you the bad news. Things that work on paper don\'t change behavior on '+ind.workplace+'. That\'s when the blind spot forms — and you won\'t feel it until it\'s already costing you.' }
       ],
       actionsTitle: 'Build these habits now — while you still can.',
       actionsSub: 'The founders who navigate the next stage well are the ones who build intentional architecture before they need it.',
@@ -192,7 +192,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         bridge: 'You don\'t need a diagnostic yet. What you need is awareness of the patterns that trip founders up between here and 50 people.',
         price: 'Free',
         desc: 'Download "The Founder\'s Pre-Scotoma Checklist: 5 Systems to Build Before You Need Them"',
-        items: ['Pre-scotoma checklist for early-stage founders','The 5 systems that prevent the most common blind spots','Early warning signs to watch as you scale'],
+        items: ['A checklist of what to build now so it doesn\'t break later','The 5 systems that keep you from becoming the bottleneck','The warning signs that tell you it\'s time to get an outside eye'],
         cta: 'Download the Free Guide →',
         alt: null
       }
@@ -204,9 +204,9 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Builder Stage',
       headline: 'You\'re Building Fast.<br><em>Let\'s Make Sure You\'re Building Right.</em>',
       subhead: 'You\'re in a critical window: big enough to need systems, small enough to build them right the first time.',
-      greeting: name+', your answers tell me something important.',
+      greeting: name+', your answers tell me something important. '+q2Narrative+(visNarrative?' '+visNarrative:''),
       sections: [
-        { label:'Your Profile', heading:'You\'re encoding patterns right now — whether you know it or not.', text:q2Narrative+' At '+orgSize+' people in '+industry+', the decisions you\'re making right now about who does what, how information flows, and how your '+ind.team+' operates — those are becoming the permanent architecture of your '+ind.org+'. The patterns you\'re building will either scale beautifully or become invisible bottlenecks.' },
+        { label:'Your Profile', heading:'You\'re setting things up as you go — and those decisions are becoming permanent.', text:'At '+orgSize+' people in '+industry+', you\'re making calls every day about who does what, who reports to whom, how things get communicated. You\'re building those on the fly because you\'re busy — and that\'s normal. But here\'s what I see: the way you set things up at 20 people becomes the way the '+ind.org+' runs at 50. Those patterns will either scale beautifully or become invisible walls that quietly drain speed, morale, and margin.'+(failsNarrative?' '+failsNarrative:'') },
         { label:'The Blind Spot Risk', heading: tc.typeName, text: mirrorFull }
       ],
       actionsTitle: 'Three things you can do this week.',
@@ -214,10 +214,10 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       actions: tc.actions,
       offer: {
         headline: 'Prevent the Blind Spot — Don\'t Just Find It Later',
-        bridge: 'The actions above will give you real traction. But self-diagnosis has a ceiling — you can\'t see the system from inside the system. The Builder\'s Blind Spot Scan catches what proximity hides, while you\'re still small enough to fix it without disruption.',
+        bridge: 'The actions above will give you real traction. But there\'s a limit to what you can see from inside the '+ind.org+' you\'re building. The Builder\'s Blind Spot Scan is a hard look at what\'s working and what\'s going to break — while you\'re still small enough to fix it without blowing things up.',
         price: '$3,500',
-        desc: 'A 2-hour intensive + follow-up. Executive brief with preventive recommendations.',
-        items: ['Early-warning diagnosis of patterns that work now but break at scale','Decision-making audit: what to systematize vs. keep centralized','Leadership pipeline assessment','Cultural scaffolding review'],
+        desc: 'A 2-hour intensive + follow-up. You walk away with a clear picture and a plan you can actually use.',
+        items: ['What\'s working now but will break at 50+ people','Which decisions to hand off and which to keep','Who on your '+ind.team+' is ready to step up — and where the gaps are','What behaviors to reinforce before they become the wrong defaults'],
         cta: 'Learn More About the Blind Spot Scan →',
         alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"'
       }
@@ -248,10 +248,10 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       actions: tc.actions,
       offer: {
         headline: 'See the Full Picture',
-        bridge: 'The actions above will give you real traction. But here\'s what I know from doing this work: the pattern you\'re sensing has layers you can\'t reach on your own. The Blind Spot Scan maps what proximity hides — in 7-10 days, you\'ll know exactly what\'s off and what to do about it.',
+        bridge: 'The actions above will give you real traction. But here\'s what I know from doing this work: the pattern you\'re sensing has layers you can\'t reach on your own. You need someone who can see what proximity and familiarity hide. In 7-10 days, you\'ll know exactly what\'s off and what to do about it.',
         price: '$3,500',
-        desc: 'Your '+tc.typeName+' diagnosis mapped across leadership, structure, and workflow. Prioritized recommendations. Self-implementation roadmap.',
-        items: ['Your blind spot mapped across leadership, structure, and workflow','Prioritized recommendations on what to change first','Self-implementation roadmap with quick wins and long-term shifts','Optional 15-minute kickoff call to align on scope'],
+        desc: 'A clear answer to what\'s broken and what to fix first. Not a report that gathers dust — a plan you can actually use.',
+        items: ['Exactly where the blind spot is hiding and what it\'s costing you','What to change first and what to leave alone','A step-by-step plan with quick wins and longer-term shifts','A 15-minute kickoff call so we\'re working on the right thing'],
         cta: 'Get the Blind Spot Scan →',
         alt: 'Not ready? Download: "5 Warning Signs Your Blind Spot Is Getting Worse"'
       }
@@ -275,12 +275,12 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       actions: tc.actions,
       offer: {
         headline: 'You Need the Complete Picture',
-        bridge: 'At this stage, partial fixes create new problems. The Full Diagnostic maps every layer — business architecture, leadership capacity, and human dynamics — and gives you a time-phased roadmap so you know what to fix first and what to leave alone.',
+        bridge: 'At this stage, fixing one thing at a time creates new problems somewhere else. This is for the owner who\'s tried the new hire, the restructure, the offsite — and watched them all revert within 90 days. The Full Diagnostic maps every layer and gives you a roadmap so you know what to fix first, what to leave alone, and in what order.',
         price: '$15,000',
-        desc: 'A 2-3 week deep dive. Complete visibility. Phased intervention roadmap.',
-        items: ['Complete blind spot report across all three layers','Intervention roadmap with phased implementation plan','Success metrics and risk mitigation strategy','Post-diagnostic consultation on next steps'],
-        cta: 'Book a 15-Minute Scoping Call →',
-        alt: null
+        desc: 'A 2-3 week deep dive. You get complete visibility and a plan that actually sticks.',
+        items: ['A complete picture of what\'s broken across your leadership, structure, and people','What to fix first, what to leave alone, and in what order','How to know it\'s working — and what to watch for if it\'s not','A consultation to figure out next steps: do it yourself, get ongoing support, or bring in a partner'],
+        cta: 'Book a 15-Minute Call →',
+        alt: 'This isn\'t a sales call. It\'s a triage conversation — we figure out if this is the right fit for where you are.'
       }
     };
   }
@@ -302,12 +302,12 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     actions: tc.actions,
     offer: {
       headline: 'Full Transformation',
-      bridge: 'This starts with the complete diagnostic — every layer mapped — then transitions into implementation partnership. I don\'t hand you a report and wish you luck. I work alongside you until the pattern shifts.',
+      bridge: 'This starts with the complete diagnostic — every layer mapped — then transitions into working alongside you to actually get it done. I don\'t hand you a report and wish you luck. I stay in the room until the pattern shifts.',
       price: 'Starting at $30,000',
-      desc: 'Scope-dependent. Custom engagement designed around your specific situation.',
-      items: ['Complete diagnostic across all three layers','Custom intervention design','Implementation partnership — advisory, project-based, or hybrid','Ongoing strategic support until the pattern shifts'],
+      desc: 'Built around your specific situation. We figure out the right shape together — some clients want a partner in the room, others want a strategist on call.',
+      items: ['Complete diagnostic — the full picture of what\'s happening and why','A plan built for your situation, not a template','Someone working alongside you to execute the changes, not just recommend them','Ongoing support until things actually shift — not a handoff after 30 days'],
       cta: 'Book a 15-Minute Consultation →',
-      alt: null
+      alt: 'This isn\'t a sales call. It\'s a triage conversation — we\'ll confirm whether this is the right fit and what the shortest path to action looks like.'
     }
   };
 }
