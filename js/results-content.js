@@ -194,6 +194,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         desc: 'Download "The Founder\'s Pre-Scotoma Checklist: 5 Systems to Build Before You Need Them"',
         items: ['A checklist of what to build now so it doesn\'t break later','The 5 systems that keep you from becoming the bottleneck','The warning signs that tell you it\'s time to get an outside eye'],
         cta: 'Download the Free Guide →',
+        ctaHref: 'assets/founders-pre-scotoma-checklist.pdf',
+        ctaDownload: true,
         alt: null
       }
     };
@@ -219,7 +221,9 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         desc: 'A 2-hour intensive + follow-up. You walk away with a clear picture and a plan you can actually use.',
         items: ['What\'s working now but will break at 50+ people','Which decisions to hand off and which to keep','Who on your '+ind.team+' is ready to step up — and where the gaps are','What behaviors to reinforce before they become the wrong defaults'],
         cta: 'Learn More About the Blind Spot Scan →',
-        alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"'
+        alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"',
+        altHref: 'assets/7-decisions-scale-or-stall.pdf',
+        altDownload: true
       }
     };
   }

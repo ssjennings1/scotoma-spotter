@@ -158,11 +158,16 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
   oHtml += '<div class="offer-box"><ul>';
   content.offer.items.forEach(function(it){ oHtml+='<li>'+it+'</li>'; });
   oHtml += '</ul></div>';
-  oHtml += '<a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" class="btn-bronze" target="_blank" rel="noopener">'+content.offer.cta+'</a>';
+  var ctaHref = content.offer.ctaHref || 'https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo';
+  var ctaDl = content.offer.ctaDownload ? ' download' : '';
+  var ctaTarget = content.offer.ctaDownload ? '' : ' target="_blank" rel="noopener"';
+  oHtml += '<a href="'+ctaHref+'" class="btn-bronze"'+ctaTarget+ctaDl+'>'+content.offer.cta+'</a>';
   if(content.offer.alt){
     // Check if alt starts with "Not ready?" — render as link; otherwise as plain triage text
     if(content.offer.alt.indexOf('Not ready')===0){
-      oHtml += '<div class="offer-alt"><a href="#">'+content.offer.alt+'</a></div>';
+      var altHref = content.offer.altHref || '#';
+      var altDl = content.offer.altDownload ? ' download' : '';
+      oHtml += '<div class="offer-alt"><a href="'+altHref+'"'+altDl+'>'+content.offer.alt+'</a></div>';
     } else {
       oHtml += '<div class="offer-alt" style="border-bottom:none;"><span style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">'+content.offer.alt+'</span></div>';
     }
