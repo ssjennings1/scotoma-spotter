@@ -169,6 +169,6 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
   }
   // Session bridge on all tiers
   oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';
-  oHtml += '<a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
+  oHtml += '<a href="https://link.syncovatellc.com/widget/bookings/on-demand-advisor" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
   document.getElementById('rOffer').innerHTML = oHtml;
 }
