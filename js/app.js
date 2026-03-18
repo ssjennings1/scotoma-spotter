@@ -19,6 +19,45 @@ var S = {
 };
 var screens = ['s-hero','s-q1','s-q2','s-q3','s-q4','s-q5','s-q6','s-email'];
 
+/* ── SHAREABLE RESULTS URL ──
+   Encodes all state needed to reconstruct the results page into URL params.
+   Format: ?r=<base64 JSON> — keeps URL short and params opaque.
+*/
+function buildResultsUrl(name, score, tier, type, industry, orgSize, stateObj){
+  var data = {
+    n: name, sc: score, t: tier, tp: type, i: industry, o: orgSize,
+    q2: stateObj.q2, q3: stateObj.q3vis, q4: stateObj.q4fails, q6: stateObj.q6,
+    sz: stateObj.size, rl: stateObj.role
+  };
+  var encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  return window.location.origin + window.location.pathname + '?r=' + encoded;
+}
+
+function checkForResultsUrl(){
+  var params = new URLSearchParams(window.location.search);
+  var r = params.get('r');
+  if(!r) return false;
+  try {
+    var data = JSON.parse(decodeURIComponent(escape(atob(r))));
+    // Reconstruct state
+    S.size = data.sz; S.role = data.rl; S.industry = data.i; S.sizeLabel = data.o;
+    S.q2 = data.q2; S.q3vis = data.q3; S.q4fails = data.q4; S.q6 = data.q6;
+    S.q5type = data.tp;
+    // Render results directly
+    buildResults(data.n, data.sc, data.t, data.tp, data.i, data.q2, data.o, S);
+    // Show results screen immediately (no animation)
+    document.querySelector('.screen.active').classList.remove('active');
+    document.getElementById('s-results').classList.add('active');
+    document.getElementById('progress').style.width = '100%';
+    document.getElementById('progress').setAttribute('aria-valuenow', '100');
+    setTimeout(function(){ document.getElementById('rVisual').classList.add('animated'); }, 200);
+    return true;
+  } catch(e){
+    console.log('Invalid results URL:', e);
+    return false;
+  }
+}
+
 /* ── NAV ── */
 function setProgress(id){
   var i = screens.indexOf(id);
@@ -130,12 +169,15 @@ window.submitEmail = function(){
   else if(total<=125) tier='breaking';
   else tier='transformation';
 
+  var resultsUrl = buildResultsUrl(name, total, tier, S.q5type, S.industry, S.sizeLabel, S);
+
   var payload = {
     name:name, email:email, company:company,
     score:total, tier:tier, scotomaType:S.q5type,
     orgSize:S.sizeLabel, industry:S.industry,
     q2_3am:S.q2, q3_visibility:S.q3vis,
-    q4_failedFixes:S.q4fails, q6_readiness:S.q6
+    q4_failedFixes:S.q4fails, q6_readiness:S.q6,
+    resultsUrl: resultsUrl
   };
 
   /* ── GHL WEBHOOK ──
@@ -195,5 +237,8 @@ window.restartAssessment = function(){
   // Go to hero
   go('s-hero');
 };
+
+/* ── ON PAGE LOAD: check for results URL ── */
+checkForResultsUrl();
 
 })();
