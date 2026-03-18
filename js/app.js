@@ -143,7 +143,7 @@ window.submitEmail = function(){
      Go to: Automations > Workflows > + Create Workflow > Trigger: Inbound Webhook
      Copy the URL GHL gives you and paste it here.
   */
-  var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/yCTzggMS1VT4xrqF3lML/webhook-trigger/c66c00d4-21e7-49eb-9b6a-4886454d7125';
+  var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/yCTzggMS1VT4xrqF3lML/webhook-trigger/886dcaa9-29bf-4567-be3b-69b503eed7d6';
   if(WEBHOOK_URL){
     fetch(WEBHOOK_URL, {
       method:'POST', headers:{'Content-Type':'application/json'},
