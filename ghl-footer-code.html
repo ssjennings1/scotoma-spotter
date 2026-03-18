@@ -1,0 +1,51 @@
+<!--
+  SYNCOVATE SCOTOMA SPOTTER — CUSTOM FOOTER CODE
+  ================================================
+  Paste this entire block into GoHighLevel:
+  Funnel/Website > Page Settings > Custom Code > Footer Code
+
+  This script:
+  1. Injects the hero headline + subtitle above the form
+  2. Adds a scroll progress bar at the top of the page
+-->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // --- HERO HEADLINE + SUBTITLE ---
+  // Insert above the form, inside the form section
+  var formInner = document.querySelector('.section-8REcoOVf6K > .inner');
+  if (formInner && !document.getElementById('scotoma-hero-headline')) {
+    var firstChild = formInner.children[0];
+
+    var headline = document.createElement('h2');
+    headline.id = 'scotoma-hero-headline';
+    headline.textContent = "Discover What You Can\u2019t See";
+
+    var subtitle = document.createElement('p');
+    subtitle.id = 'scotoma-hero-subtitle';
+    subtitle.textContent = "This 2-minute diagnostic reveals the blind spots silently draining your organization\u2019s performance.";
+
+    if (firstChild) {
+      formInner.insertBefore(subtitle, firstChild);
+      formInner.insertBefore(headline, subtitle);
+    } else {
+      formInner.appendChild(headline);
+      formInner.appendChild(subtitle);
+    }
+  }
+
+  // --- SCROLL PROGRESS BAR ---
+  if (!document.getElementById('syncovateScrollProgress')) {
+    var bar = document.createElement('div');
+    bar.id = 'syncovateScrollProgress';
+    document.body.prepend(bar);
+
+    window.addEventListener('scroll', function () {
+      var scrollTop = window.scrollY || window.pageYOffset;
+      var docHeight = document.body.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = pct + '%';
+    });
+  }
+});
+</script>

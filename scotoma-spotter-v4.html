@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scotoma Spotter™ | Syncovate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bronze:#C4935A;--bronze-hover:#A87840;--bronze-glow:rgba(196,147,90,0.08);
+  --teal:#56ADBF;--teal-soft:rgba(86,173,191,0.12);
+  --charcoal:#252830;--charcoal-mid:#3D4148;
+  --cream:#FAF8F5;--warm-gray:#F0EDE8;
+  --text:#3A3530;--text-muted:#7A736B;--text-light:rgba(253,252,250,0.45);
+  --border:rgba(196,147,90,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);background:var(--charcoal);overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(37,40,48,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(196,147,90,0.1);}
+.nav-wordmark{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,248,245,0.7);text-decoration:none;}
+.nav-links{display:flex;align-items:center;gap:1.5rem;}
+.nav-links a{font-size:0.65rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,248,245,0.35);text-decoration:none;transition:color 0.25s;}
+.nav-links a:hover{color:var(--bronze);}
+.nav-cta{color:var(--charcoal)!important;background:var(--bronze);padding:0.5rem 1.1rem;font-weight:500!important;transition:background 0.25s,transform 0.2s;}
+.nav-cta:hover{background:var(--bronze-hover);transform:translateY(-1px);}
+
+/* ── PROGRESS ── */
+.progress-track{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:rgba(196,147,90,0.08);}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--bronze),var(--teal));transition:width 0.6s cubic-bezier(0.16,1,0.3,1);}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;padding-top:62px;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* ── HERO ── */
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden;background:var(--charcoal);}
+.hero-grid{position:absolute;inset:0;background-image:
+  linear-gradient(rgba(196,147,90,0.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(196,147,90,0.025) 1px,transparent 1px);
+  background-size:80px 80px;pointer-events:none;}
+.hero-glow{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(196,147,90,0.06) 0%,transparent 60%);pointer-events:none;}
+.hero-content{position:relative;z-index:1;max-width:640px;}
+.hero-eyebrow{font-size:0.6rem;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:var(--bronze);margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.6s ease 0.2s forwards;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,5.5vw,3.8rem);line-height:1.08;color:#FDFCFA;margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.7s ease 0.35s forwards;}
+.hero h1 em{font-style:italic;color:var(--bronze);}
+.hero-sub{font-size:clamp(0.88rem,1.1vw,1rem);font-weight:300;line-height:1.9;color:var(--text-light);max-width:460px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 0.7s ease 0.5s forwards;}
+.hero-start{opacity:0;animation:fadeUp 0.6s ease 0.7s forwards;}
+.btn-bronze{display:inline-block;font-size:0.7rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--charcoal);background:var(--bronze);padding:15px 36px;text-decoration:none;border:none;cursor:pointer;transition:all 0.25s;font-family:'DM Sans',sans-serif;}
+.btn-bronze:hover{background:var(--bronze-hover);transform:translateY(-2px);box-shadow:0 8px 30px rgba(196,147,90,0.25);}
+.hero-note{position:absolute;bottom:2.5rem;font-size:0.75rem;color:rgba(253,252,250,0.18);opacity:0;animation:fadeUp 0.5s ease 1s forwards;}
+
+/* ── QUESTION SCREENS ── */
+.q-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--cream);}
+.q-card{max-width:600px;width:100%;padding:0 1rem;}
+.q-counter{font-size:0.58rem;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:1.75rem;}
+.q-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.4rem,2.8vw,1.85rem);line-height:1.25;color:var(--charcoal);margin-bottom:2rem;}
+.q-subtitle{font-size:0.88rem;color:var(--text-muted);line-height:1.7;margin-top:-1rem;margin-bottom:2rem;}
+
+/* Option cards */
+.q-options{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem;}
+.q-opt{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem 1.25rem;background:white;border:1px solid var(--border);cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.q-opt::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bronze);transform:scaleY(0);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+.q-opt:hover{border-color:var(--bronze);background:var(--bronze-glow);}
+.q-opt.selected{border-color:var(--bronze);background:var(--bronze-glow);}
+.q-opt.selected::before{transform:scaleY(1);}
+.q-opt input{display:none;}
+.q-opt-text{font-size:0.92rem;line-height:1.6;color:var(--text);}
+.q-opt-sub{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;line-height:1.5;}
+
+/* Multi-select groups on screen 1 */
+.q-group{margin-bottom:1.75rem;}
+.q-group-label{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--bronze);margin-bottom:0.6rem;}
+.q-row{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.q-chip{padding:0.6rem 1.1rem;background:white;border:1px solid var(--border);cursor:pointer;transition:all 0.25s;font-size:0.85rem;color:var(--text);}
+.q-chip:hover{border-color:var(--bronze);background:var(--bronze-glow);}
+.q-chip.selected{border-color:var(--bronze);background:var(--bronze-glow);color:var(--charcoal);font-weight:400;}
+.q-chip input{display:none;}
+
+.q-next{opacity:0.25;pointer-events:none;transition:opacity 0.3s;}
+.q-next.ready{opacity:1;pointer-events:auto;}
+
+/* ── EMAIL GATE ── */
+.email-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--charcoal);position:relative;overflow:hidden;}
+.email-screen .hero-grid{position:absolute;inset:0;}
+.email-card{max-width:440px;width:100%;position:relative;z-index:1;}
+.email-card .q-counter{color:var(--bronze);}
+.email-card h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.7rem;line-height:1.2;color:#FDFCFA;margin-bottom:0.6rem;}
+.email-card p{font-size:0.88rem;color:var(--text-light);margin-bottom:1.75rem;line-height:1.8;}
+.email-input{display:block;width:100%;padding:0.85rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(196,147,90,0.2);color:#FDFCFA;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:300;margin-bottom:0.6rem;outline:none;transition:border-color 0.25s;}
+.email-input:focus{border-color:var(--bronze);}
+.email-input::placeholder{color:rgba(253,252,250,0.2);}
+.email-consent{display:flex;align-items:flex-start;gap:0.6rem;margin:1rem 0 1.5rem;font-size:0.75rem;color:rgba(253,252,250,0.3);line-height:1.5;cursor:pointer;}
+.email-consent input{margin-top:2px;accent-color:var(--bronze);}
+
+/* ── LOADING / TRANSITION ── */
+.loading-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--charcoal);position:relative;overflow:hidden;}
+.loading-screen .hero-grid{position:absolute;inset:0;}
+.loading-content{position:relative;z-index:1;text-align:center;}
+.loading-ring{width:64px;height:64px;border:2px solid rgba(196,147,90,0.1);border-top-color:var(--bronze);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 2rem;}
+.loading-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;color:rgba(253,252,250,0.5);transition:opacity 0.5s;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── DISQUALIFICATION ── */
+.disq-screen{flex:1;display:flex;flex-direction:column;}
+.disq-hero{background:var(--charcoal);padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.disq-hero .hero-grid{position:absolute;inset:0;}
+.disq-inner{position:relative;z-index:1;max-width:560px;margin:0 auto;}
+.disq-inner .q-counter{margin-bottom:1.5rem;}
+.disq-inner h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.15;color:#FDFCFA;margin-bottom:1rem;}
+.disq-inner h2 em{font-style:italic;color:var(--bronze);}
+.disq-inner p{font-size:0.92rem;line-height:1.85;color:var(--text-light);margin-bottom:0.75rem;}
+.disq-body{flex:1;background:var(--cream);padding:4rem 2rem;}
+.disq-body-inner{max-width:520px;margin:0 auto;}
+.disq-body-inner h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.25rem;color:var(--charcoal);margin-bottom:0.75rem;}
+.disq-body-inner p{font-size:0.9rem;line-height:1.85;color:var(--text-muted);margin-bottom:0.75rem;}
+.toolkit-item{padding:1rem 0;border-bottom:1px solid var(--border);}
+.toolkit-item:last-of-type{border-bottom:none;}
+.toolkit-label{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--bronze);margin-bottom:0.25rem;}
+.toolkit-form{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.5rem;max-width:340px;}
+.toolkit-form input{padding:0.75rem 1rem;border:1px solid var(--border);background:white;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.25s;}
+.toolkit-form input:focus{border-color:var(--bronze);}
+
+/* ── RESULTS ── */
+.results-screen{flex:1;display:flex;flex-direction:column;}
+
+/* Results hero */
+.r-hero{background:var(--charcoal);padding:5rem 2rem 4rem;position:relative;overflow:hidden;text-align:center;}
+.r-hero .hero-grid{position:absolute;inset:0;}
+.r-hero-inner{position:relative;z-index:1;max-width:640px;margin:0 auto;}
+.r-hero .q-counter{margin-bottom:1.5rem;}
+.r-hero h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.1;color:#FDFCFA;margin-bottom:1rem;}
+.r-hero h2 em{font-style:italic;color:var(--bronze);}
+.r-hero-sub{font-size:0.95rem;line-height:1.85;color:var(--text-light);max-width:500px;margin:0 auto;}
+
+/* Scotoma map / visual */
+.r-visual{background:var(--charcoal);padding:0 2rem 4rem;}
+.r-visual-inner{max-width:600px;margin:0 auto;background:rgba(255,255,255,0.025);border:1px solid rgba(196,147,90,0.1);padding:2.5rem;position:relative;}
+.r-visual-title{font-size:0.58rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:1.5rem;text-align:center;}
+.dimension-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;}
+.dimension-label{font-size:0.75rem;font-weight:500;color:rgba(253,252,250,0.5);width:120px;text-align:right;flex-shrink:0;}
+.dimension-track{flex:1;height:6px;background:rgba(255,255,255,0.06);position:relative;overflow:hidden;}
+.dimension-fill{height:100%;background:linear-gradient(90deg,var(--bronze),var(--teal));transform-origin:left;transform:scaleX(0);transition:transform 1.2s cubic-bezier(0.16,1,0.3,1);}
+.dimension-val{font-size:0.7rem;font-weight:500;color:var(--bronze);width:40px;flex-shrink:0;}
+.r-visual.animated .dimension-fill{transform:scaleX(1);}
+
+/* Results body */
+.r-body{background:var(--cream);padding:4rem 2rem;}
+.r-body-inner{max-width:600px;margin:0 auto;}
+.r-greeting{font-size:1.02rem;color:var(--text);margin-bottom:2.5rem;line-height:1.8;}
+.r-section{margin-bottom:2.5rem;}
+.r-label{font-size:0.55rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:0.6rem;}
+.r-heading{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;line-height:1.3;color:var(--charcoal);margin-bottom:0.6rem;}
+.r-text{font-size:0.9rem;line-height:1.9;color:var(--text-muted);}
+.r-text strong{color:var(--text);font-weight:500;}
+
+/* Action items */
+.r-actions{background:var(--warm-gray);padding:3.5rem 2rem;}
+.r-actions-inner{max-width:600px;margin:0 auto;}
+.r-actions-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.4rem;color:var(--charcoal);margin-bottom:0.5rem;}
+.r-actions-sub{font-size:0.88rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.7;}
+.action-card{background:white;border-left:3px solid var(--bronze);padding:1.5rem;margin-bottom:1rem;}
+.action-num{font-size:0.55rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--bronze);margin-bottom:0.4rem;}
+.action-title{font-weight:500;font-size:0.95rem;color:var(--charcoal);margin-bottom:0.4rem;}
+.action-text{font-size:0.88rem;line-height:1.8;color:var(--text-muted);}
+.action-time{font-size:0.75rem;color:var(--bronze);margin-top:0.5rem;font-weight:500;}
+
+/* Offer bridge */
+.r-offer{background:var(--cream);padding:4rem 2rem;border-top:1px solid var(--border);}
+.r-offer-inner{max-width:600px;margin:0 auto;text-align:center;}
+.r-offer-inner h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;color:var(--charcoal);margin-bottom:0.75rem;}
+.r-offer-inner .r-text{text-align:center;margin-bottom:1.5rem;}
+.offer-price{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:2rem;color:var(--charcoal);margin:1rem 0;}
+.offer-box{text-align:left;max-width:440px;margin:1.5rem auto 2rem;padding:1.5rem;background:var(--warm-gray);border-left:3px solid var(--bronze);}
+.offer-box li{font-size:0.85rem;line-height:1.8;color:var(--text);list-style:none;padding-left:1.2rem;position:relative;margin-bottom:0.25rem;}
+.offer-box li::before{content:'✓';position:absolute;left:0;color:var(--bronze);font-weight:600;}
+.offer-alt{margin-top:1.25rem;}
+.offer-alt a{font-size:0.82rem;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:all 0.25s;}
+.offer-alt a:hover{color:var(--bronze);border-color:var(--bronze);}
+.offer-session{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.offer-session p{font-size:0.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:0.75rem;}
+
+/* Signature */
+.sig{padding:2.5rem 2rem;background:var(--cream);border-top:1px solid var(--border);}
+.sig-inner{max-width:600px;margin:0 auto;}
+.sig-name{font-size:0.88rem;color:var(--text);font-weight:400;}
+.sig-title{font-size:0.8rem;color:var(--text-muted);}
+
+/* ── FOOTER ── */
+footer{background:#14161A;padding:4rem 2rem 2rem;border-top:1px solid rgba(196,147,90,0.06);}
+.footer-grid{max-width:960px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,248,245,0.6);}
+.footer-tagline{font-size:0.82rem;line-height:1.7;color:rgba(250,248,245,0.25);max-width:260px;margin-top:0.75rem;}
+.footer-col h4{font-size:0.58rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(250,248,245,0.3);margin-bottom:1rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+.footer-col a{font-size:0.82rem;color:rgba(250,248,245,0.35);text-decoration:none;transition:color 0.25s;}
+.footer-col a:hover{color:var(--bronze);}
+.footer-bottom{max-width:960px;margin:0 auto;padding-top:1.5rem;border-top:1px solid rgba(250,248,245,0.05);display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.footer-copy{font-size:0.68rem;color:rgba(250,248,245,0.15);letter-spacing:0.04em;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+.fade-in{animation:fadeUp 0.6s ease forwards;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:0 1.25rem;}
+  .nav-links a:not(.nav-cta){display:none;}
+  .hero{padding:3rem 1.5rem;}
+  .q-card{padding:0 0.5rem;}
+  .q-row{flex-direction:column;}
+  .q-chip{text-align:center;}
+  .r-hero,.r-visual,.r-body,.r-actions,.r-offer,.sig,.disq-hero,.disq-body{padding-left:1.5rem;padding-right:1.5rem;}
+  .dimension-label{width:80px;font-size:0.65rem;}
+  .footer-grid{grid-template-columns:1fr;gap:1.5rem;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2rem;}
+  .r-hero h2{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://syncovatellc.com/index" class="nav-wordmark">Syncovate</a>
+  <div class="nav-links">
+    <a href="https://syncovatellc.com/organizational-diagnostic">Diagnostics</a>
+    <a href="https://syncovatellc.com/coaching-and-advising">Coaching</a>
+    <a href="https://syncovatellc.com/speaking--facilitation">Speaking</a>
+    <a href="https://syncovatellc.com/about-dr-j">About Dr. J</a>
+    <a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" class="nav-cta" target="_blank" rel="noopener">Book a Call</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 0: HERO            -->
+<!-- ═══════════════════════════ -->
+<div class="screen active" id="s-hero">
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">The Scotoma Spotter™</div>
+      <h1>Find What You've<br><em>Stopped Seeing</em></h1>
+      <p class="hero-sub">Four questions. Ninety seconds. You'll get a diagnosis of the blind spot that's quietly running your business — and what to do about it this week.</p>
+      <div class="hero-start">
+        <button class="btn-bronze" onclick="go('s-q1')">Begin →</button>
+      </div>
+    </div>
+    <div class="hero-note">Built for founders, CEOs, and owners of growing companies.</div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 1: ABOUT YOU       -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q1">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">1 of 4</div>
+      <h2 class="q-title">Tell me about your company.</h2>
+
+      <div class="q-group">
+        <div class="q-group-label">How many people?</div>
+        <div class="q-row" id="grp-size">
+          <label class="q-chip" onclick="chip(this,'size',5)"><input type="radio" name="size">1–10</label>
+          <label class="q-chip" onclick="chip(this,'size',10)"><input type="radio" name="size">11–25</label>
+          <label class="q-chip" onclick="chip(this,'size',15)"><input type="radio" name="size">26–75</label>
+          <label class="q-chip" onclick="chip(this,'size',20)"><input type="radio" name="size">76–200</label>
+          <label class="q-chip" onclick="chip(this,'size',25)"><input type="radio" name="size">200+</label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-group-label">Your role</div>
+        <div class="q-row" id="grp-role">
+          <label class="q-chip" onclick="chip(this,'role',25)"><input type="radio" name="role">Founder / CEO / Owner</label>
+          <label class="q-chip" onclick="chip(this,'role',20)"><input type="radio" name="role">C-suite / President / Partner</label>
+          <label class="q-chip" onclick="chip(this,'role',10)"><input type="radio" name="role">VP / Director</label>
+          <label class="q-chip" onclick="chip(this,'role',0,'disq')"><input type="radio" name="role">Manager / Other</label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-group-label">Industry</div>
+        <div class="q-row" id="grp-ind">
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Electrical / Trades</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Construction</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Manufacturing</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Professional Services</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Other</label>
+        </div>
+      </div>
+
+      <button class="btn-bronze q-next" id="q1-btn" onclick="fromQ1()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 2: 3AM TEST        -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q2">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">2 of 4</div>
+      <h2 class="q-title">How often do you wake up at 3am with the feeling that "something's off" — but you can't name what it is?</h2>
+      <div class="q-options" id="q2-opts">
+        <label class="q-opt" onclick="pick(this,'q2',0)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Never / Rarely</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',5)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Once a month</div><div class="q-opt-sub">It crosses my mind but I can usually shake it off.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',15)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">A couple times a month</div><div class="q-opt-sub">There's a pattern forming and I know it.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',25)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Weekly or more</div><div class="q-opt-sub">It's constant. I can feel something is wrong but I can't pin it down.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q2-btn" onclick="go('s-q3')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 3: SCOTOMA TYPE     -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q3">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">3 of 4</div>
+      <h2 class="q-title">Which of these sounds most like you right now?</h2>
+      <div class="q-options" id="q3-opts">
+        <label class="q-opt" onclick="pick(this,'q3',15,'optimizer')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">Everything still runs through me — I can't step away without things stalling.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'architectural')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">We've grown fast but nobody's clear on who does what anymore.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'relational')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">People and culture problems keep landing on my desk — even ones I thought we'd already solved.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'velocity')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">We're growing so fast I feel like I'm losing touch with what's actually happening.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q3-btn" onclick="go('s-q4')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 4: READINESS        -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q4">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">4 of 4</div>
+      <h2 class="q-title">If you could see exactly what's off, would you act on it?</h2>
+      <div class="q-options" id="q4-opts">
+        <label class="q-opt" onclick="pick(this,'q4',0)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Maybe — I'm still figuring out if there's really a problem.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',10)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Probably — if the path forward made sense.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',20)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Yes — this has been eating at me and I'm ready to move.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',30)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Yesterday — I should have dealt with this months ago.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q4-btn" onclick="go('s-email')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  EMAIL GATE                 -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-email">
+  <div class="email-screen">
+    <div class="hero-grid"></div>
+    <div class="email-card">
+      <div class="q-counter">Assessment Complete</div>
+      <h2>Your diagnosis is ready.</h2>
+      <p>I built your Scotoma Profile from your answers. Enter your name and email and I'll show you what I found — including one thing you can do about it this week.</p>
+      <input type="text" class="email-input" id="inName" placeholder="First name">
+      <input type="email" class="email-input" id="inEmail" placeholder="Email">
+      <input type="text" class="email-input" id="inCompany" placeholder="Company (optional)">
+      <label class="email-consent"><input type="checkbox" id="inConsent"> I agree to receive my results and occasional resources from Syncovate.</label>
+      <button class="btn-bronze" onclick="submitEmail()" style="width:100%;text-align:center;">Show Me What I'm Missing →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  LOADING TRANSITION         -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-loading">
+  <div class="loading-screen">
+    <div class="hero-grid"></div>
+    <div class="loading-content">
+      <div class="loading-ring"></div>
+      <div class="loading-text" id="loadingText">Mapping your blind spot profile...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  DISQUALIFICATION           -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-disq">
+  <div class="disq-screen">
+    <div class="disq-hero">
+      <div class="hero-grid"></div>
+      <div class="disq-inner">
+        <div class="q-counter">Scotoma Spotter™</div>
+        <h2>You see it.<br><em>That matters.</em></h2>
+        <p>This assessment is built for the person who has the authority to change the system — the founder, CEO, or owner. But here's what I know about managers: you feel the friction before anyone else does. You see patterns leadership can't see from where they sit.</p>
+        <p>That makes you the most valuable person in this equation.</p>
+      </div>
+    </div>
+    <div class="disq-body">
+      <div class="disq-body-inner">
+        <h3>Help your leadership see what you're seeing.</h3>
+        <p>Enter your details and I'll send you the <strong>Internal Champion Toolkit</strong> — everything you need to open this conversation with your CEO or founder without sounding alarmist.</p>
+
+        <div class="toolkit-item"><div class="toolkit-label">The Executive Brief</div><p>"Why Successful CEOs Develop Strategic Blind Spots" — a non-threatening way to explain what you're observing.</p></div>
+        <div class="toolkit-item"><div class="toolkit-label">The Conversation Starter</div><p>A three-sentence email you can send today to open the door.</p></div>
+        <div class="toolkit-item"><div class="toolkit-label">VIP Assessment Link</div><p>A direct link so your leadership team can take the Scotoma Spotter themselves.</p></div>
+
+        <div class="toolkit-form">
+          <input type="text" placeholder="First name">
+          <input type="email" placeholder="Email">
+          <button class="btn-bronze" style="width:100%;text-align:center;">Send Me the Toolkit →</button>
+        </div>
+        <div style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border);">
+          <div class="sig-name">— Dr. Shannon Jennings</div>
+          <div class="sig-title">Founder, Syncovate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  RESULTS (populated by JS) -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-results">
+  <div class="results-screen">
+    <!-- Hero -->
+    <div class="r-hero">
+      <div class="hero-grid"></div>
+      <div class="r-hero-inner">
+        <div class="q-counter" id="rEyebrow"></div>
+        <h2 id="rHeadline"></h2>
+        <p class="r-hero-sub" id="rSubhead"></p>
+      </div>
+    </div>
+    <!-- Visual diagnostic -->
+    <div class="r-visual" id="rVisual">
+      <div class="r-visual-inner">
+        <div class="r-visual-title">Your Scotoma Profile</div>
+        <div id="rDimensions"></div>
+      </div>
+    </div>
+    <!-- Body -->
+    <div class="r-body"><div class="r-body-inner" id="rBody"></div></div>
+    <!-- Actions -->
+    <div class="r-actions"><div class="r-actions-inner" id="rActions"></div></div>
+    <!-- Offer -->
+    <div class="r-offer"><div class="r-offer-inner" id="rOffer"></div></div>
+    <!-- Sig -->
+    <div class="sig"><div class="sig-inner"><div class="sig-name">— Dr. Shannon Jennings</div><div class="sig-title">Founder, Syncovate</div></div></div>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-wordmark">Syncovate</div>
+          <p class="footer-tagline">Helping privately held business leaders make the hard calls — with clarity, confidence, and the tools to follow through.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Work</h4>
+          <ul>
+            <li><a href="https://syncovatellc.com/organizational-diagnostic">Organizational Diagnostics</a></li>
+            <li><a href="https://syncovatellc.com/coaching-and-advising">Coaching &amp; Advising</a></li>
+            <li><a href="https://syncovatellc.com/speaking--facilitation">Speaking &amp; Facilitation</a></li>
+            <li><a href="https://syncovatellc.com/scotoma-spotter">Scotoma Spotter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://syncovatellc.com/about-dr-j">About Dr. J</a></li>
+            <li><a href="https://www.linkedin.com/in/shannonsjennings/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="tel:5745323178">574-532-3178</a></li>
+            <li><a href="mailto:shannon@syncovatellc.com">shannon@syncovatellc.com</a></li>
+            <li><a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" target="_blank" rel="noopener">Book a Call</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Syncovate LLC</span>
+        <span class="footer-copy">Niles, Michigan</span>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ── STATE ── */
+var S = { size:null, sizeLabel:'', role:null, industry:'', q2:null, q3:null, q3type:'', q4:null, disq:false };
+var screens = ['s-hero','s-q1','s-q2','s-q3','s-q4','s-email'];
+
+/* ── NAV ── */
+function setProgress(id){
+  var i = screens.indexOf(id);
+  if(i<0)return;
+  document.getElementById('progress').style.width = Math.round((i/(screens.length-1))*100)+'%';
+}
+
+window.go = function(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var el = document.getElementById(id);
+  if(el){el.classList.add('active');window.scrollTo(0,0);setProgress(id);}
+};
+
+/* ── CHIP SELECT (Screen 1) ── */
+window.chip = function(label, key, pts, special){
+  label.parentElement.querySelectorAll('.q-chip').forEach(function(c){c.classList.remove('selected');});
+  label.classList.add('selected');
+  if(key==='size'){ S.size=pts; S.sizeLabel=label.textContent.trim(); }
+  else if(key==='role'){ S.role=pts; S.disq=(special==='disq'); }
+  else if(key==='industry'){ S.industry=label.textContent.trim(); }
+  // Enable continue when all three selected
+  if(S.size!==null && S.role!==null && S.industry){
+    document.getElementById('q1-btn').classList.add('ready');
+  }
+};
+
+window.fromQ1 = function(){
+  if(S.disq){ go('s-disq'); return; }
+  go('s-q2');
+};
+
+/* ── OPTION SELECT (Screens 2-4) ── */
+window.pick = function(label, key, pts, type){
+  label.parentElement.querySelectorAll('.q-opt').forEach(function(o){o.classList.remove('selected');});
+  label.classList.add('selected');
+  S[key] = pts;
+  if(type) S.q3type = type;
+  document.getElementById(key+'-btn').classList.add('ready');
+};
+
+/* ── EMAIL SUBMIT ── */
+window.submitEmail = function(){
+  var name = document.getElementById('inName').value.trim();
+  var email = document.getElementById('inEmail').value.trim();
+  if(!name||!email){alert('Please enter your name and email.');return;}
+  if(!document.getElementById('inConsent').checked){alert('Please check the consent box to see your results.');return;}
+  var company = document.getElementById('inCompany').value.trim();
+
+  // Calculate
+  var total = (S.size||0)+(S.role||0)+(S.q2||0)+(S.q4||0);
+  var tier;
+  if(total<=20) tier='early';
+  else if(total<=45) tier='builder';
+  else if(total<=70) tier='inflection';
+  else if(total<=90) tier='breaking';
+  else tier='transformation';
+
+  var payload = {
+    name:name, email:email, company:company,
+    score:total, tier:tier, scotomaType:S.q3type,
+    orgSize:S.sizeLabel, industry:S.industry,
+    q2_3am:S.q2, q4_readiness:S.q4
+  };
+
+  /* ── GHL WEBHOOK ──
+     Replace the URL below with your GHL Inbound Webhook URL.
+     Go to: Automations > Workflows > + Create Workflow > Trigger: Inbound Webhook
+     Copy the URL GHL gives you and paste it here.
+  */
+  var WEBHOOK_URL = ''; // ← PASTE YOUR GHL WEBHOOK URL HERE
+  if(WEBHOOK_URL){
+    fetch(WEBHOOK_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    }).catch(function(e){ console.log('Webhook error:',e); });
+  }
+
+  // Show loading then results
+  go('s-loading');
+  var msgs = ['Mapping your blind spot profile...','Cross-referencing patterns...','Building your diagnosis...'];
+  var mi = 0;
+  var lt = document.getElementById('loadingText');
+  var msgInterval = setInterval(function(){
+    mi++;
+    if(mi<msgs.length){ lt.style.opacity=0; setTimeout(function(){lt.textContent=msgs[mi];lt.style.opacity=1;},300); }
+  },1200);
+
+  setTimeout(function(){
+    clearInterval(msgInterval);
+    buildResults(name, total, tier, S.q3type, S.industry, S.q2, S.sizeLabel);
+    go('s-results');
+    document.getElementById('progress').style.width='100%';
+    // Animate the dimension bars
+    setTimeout(function(){document.getElementById('rVisual').classList.add('animated');},200);
+  },3800);
+};
+
+/* ═══════════════════════════════════════
+   RESULTS ENGINE
+   ═══════════════════════════════════════ */
+
+function buildResults(name, score, tier, type, industry, q2score, orgSize){
+
+  // ── Dimension scores for the visual (derived from answers) ──
+  var dims = getDimensions(score, type, q2score, S.role, S.size);
+  renderDimensions(dims);
+
+  // ── Content by tier × type ──
+  var content = getContent(tier, type, industry, name, q2score, orgSize);
+
+  document.getElementById('rEyebrow').textContent = content.eyebrow;
+  document.getElementById('rHeadline').innerHTML = content.headline;
+  document.getElementById('rSubhead').innerHTML = content.subhead;
+
+  // Body
+  var bHtml = '<p class="r-greeting">'+content.greeting+'</p>';
+  content.sections.forEach(function(s){
+    bHtml += '<div class="r-section"><div class="r-label">'+s.label+'</div><div class="r-heading">'+s.heading+'</div><div class="r-text">'+s.text+'</div></div>';
+  });
+  document.getElementById('rBody').innerHTML = bHtml;
+
+  // Actions
+  var aHtml = '<div class="r-actions-title">'+content.actionsTitle+'</div><p class="r-actions-sub">'+content.actionsSub+'</p>';
+  content.actions.forEach(function(a,i){
+    aHtml += '<div class="action-card"><div class="action-num">Action '+(i+1)+'</div><div class="action-title">'+a.title+'</div><div class="action-text">'+a.text+'</div><div class="action-time">'+a.time+'</div></div>';
+  });
+  document.getElementById('rActions').innerHTML = aHtml;
+
+  // Offer
+  var oHtml = '<h3>'+content.offer.headline+'</h3><p class="r-text">'+content.offer.bridge+'</p>';
+  oHtml += '<div class="offer-price">'+content.offer.price+'</div><p class="r-text">'+content.offer.desc+'</p>';
+  oHtml += '<div class="offer-box"><ul>';
+  content.offer.items.forEach(function(it){ oHtml+='<li>'+it+'</li>'; });
+  oHtml += '</ul></div>';
+  oHtml += '<a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" class="btn-bronze" target="_blank" rel="noopener">'+content.offer.cta+'</a>';
+  if(content.offer.alt){
+    oHtml += '<div class="offer-alt"><a href="#">'+content.offer.alt+'</a></div>';
+  }
+  // Session bridge on all tiers
+  oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';
+  oHtml += '<a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
+  document.getElementById('rOffer').innerHTML = oHtml;
+}
+
+/* ── DIMENSION SCORES ── */
+function getDimensions(score, type, q2, role, size){
+  // These create the visual "scotoma profile" radar
+  // Normalized to percentages for the bar chart
+  var instinct = Math.min(100, Math.round((q2/25)*100)); // 3AM test
+  var scale = Math.min(100, Math.round((size/25)*100)); // Org complexity
+  var authority = Math.min(100, Math.round((role/25)*100)); // Leadership position
+  var readiness = Math.min(100, Math.round((S.q4/30)*100)); // Readiness to act
+
+  // Type-driven dimension
+  var typeScores = {optimizer:85, architectural:75, relational:70, velocity:80};
+  var pattern = typeScores[type]||70;
+
+  return [
+    {label:'Instinct Signal', value:instinct},
+    {label:'Scale Pressure', value:scale},
+    {label:'Pattern Strength', value:pattern},
+    {label:'Authority', value:authority},
+    {label:'Readiness', value:readiness}
+  ];
+}
+
+function renderDimensions(dims){
+  var html = '';
+  dims.forEach(function(d){
+    html += '<div class="dimension-row">';
+    html += '<div class="dimension-label">'+d.label+'</div>';
+    html += '<div class="dimension-track"><div class="dimension-fill" style="width:'+d.value+'%"></div></div>';
+    html += '<div class="dimension-val">'+d.value+'%</div>';
+    html += '</div>';
+  });
+  document.getElementById('rDimensions').innerHTML = html;
+}
+
+/* ── INDUSTRY-SPECIFIC LANGUAGE ── */
+function indLang(industry){
+  var map = {
+    'Electrical / Trades': { team:'crew', workplace:'job sites', leader:'foreman', work:'jobs', org:'shop' },
+    'Construction': { team:'crew', workplace:'job sites', leader:'superintendent', work:'projects', org:'operation' },
+    'Manufacturing': { team:'floor team', workplace:'production floor', leader:'shift lead', work:'orders', org:'plant' },
+    'Professional Services': { team:'team', workplace:'office', leader:'senior associate', work:'client work', org:'firm' },
+    'Other': { team:'team', workplace:'operation', leader:'key manager', work:'work', org:'business' }
+  };
+  return map[industry] || map['Other'];
+}
+
+/* ═══════════════════════════════════════════
+   CONTENT BY TIER × TYPE
+   ═══════════════════════════════════════════ */
+
+function getContent(tier, type, industry, name, q2score, orgSize){
+  var ind = indLang(industry);
+  var q2Narrative = '';
+  if(q2score>=25) q2Narrative = 'You told me that feeling hits you weekly or more. That\'s not anxiety — that\'s pattern recognition. Your brain is detecting something your conscious mind hasn\'t caught up to yet.';
+  else if(q2score>=15) q2Narrative = 'That feeling hitting you a couple times a month? It\'s not random. Your instinct is picking up a signal your daily routine keeps overriding.';
+  else if(q2score>=5) q2Narrative = 'You mentioned it happens occasionally. That\'s actually the earliest stage of the signal — your instinct noticing before your calendar gives you space to think about it.';
+  else q2Narrative = 'You said the 3AM feeling isn\'t hitting you yet. That\'s good news — it means you\'re still ahead of the pattern.';
+
+  /* ── TYPE-SPECIFIC CONTENT ── */
+  var typeContent = {
+    optimizer: {
+      typeName: 'The Optimizer Blind Spot',
+      heroEmphasis: 'Built This Company',
+      mirror: 'The speed, the decisiveness, the "I\'ll just handle it" reflex — that\'s what got you here. But here\'s what I see in '+ind.org+'s like yours: the thing that built the business becomes the thing that caps it. You\'re still the fastest problem-solver in the room. And that\'s exactly the problem.',
+      whatsMissing: 'Your '+ind.team+' has quietly stopped bringing you problems — not because there aren\'t any, but because they assume you\'ll just solve them yourself. Decisions queue behind your calendar. The people who could step up don\'t, because there\'s no room. You\'ve trained the entire '+ind.org+' to wait for you.',
+      cost: 'Every decision you make is one your '+ind.leader+' doesn\'t learn to make. You\'re trading long-term capability for short-term speed. And the ceiling you\'re feeling? It\'s your own capacity. Revenue can\'t outgrow the person everything runs through.',
+      actions: [
+        { title:'Map the decision queue.', text:'This week, write down every decision someone brought to you or waited on you for. Just list them. Don\'t judge, don\'t fix — just make the invisible queue visible. You\'ll be surprised how long the list is.', time:'30 minutes over 5 days' },
+        { title:'Sort into three columns.', text:'Take your list and sort each decision: "Must stay with me" / "Could hand off with guardrails" / "Should have handed off months ago." That third column is your blind spot in writing.', time:'20 minutes' },
+        { title:'Hand one off by Friday.', text:'Pick one item from column three. The easiest one. Tell the person it\'s theirs now, tell them the guardrails, and resist the urge to check on it for two weeks.', time:'One conversation' }
+      ],
+    },
+    architectural: {
+      typeName: 'The Architectural Blind Spot',
+      heroEmphasis: 'Outgrown the Blueprint',
+      mirror: 'You grew fast and you built on the fly — because that\'s what you had to do. But the way your '+ind.org+' runs today is still wired for when you had 12 people. The org chart says one thing. The actual workflow says something else. And the gap between those two is where your best people are getting stuck.',
+      whatsMissing: 'Your '+ind.team+' doesn\'t need more effort. They need clarity — who owns what, who decides what, where information goes when it leaves someone\'s desk. Right now, that architecture is informal, unwritten, and mostly dependent on relationships that were formed when the '+ind.org+' was a fraction of its current size.',
+      cost: 'Information gets trapped. Decisions take longer than they should. Your '+ind.leader+' is bridging gaps you don\'t know exist. And when people hit invisible walls — unclear authority, overlapping roles, bottlenecked communication — they don\'t complain. They just start looking elsewhere.',
+      actions: [
+        { title:'Draw the real org chart.', text:'Not the official one. The one that shows how decisions actually get made. Who do people actually go to when they need something? That\'s your real structure — and it probably looks nothing like the one on paper.', time:'45 minutes' },
+        { title:'Find the three biggest gaps.', text:'Compare the real chart to the official one. Where are the mismatches? Where is someone doing a job their title doesn\'t describe? Where is a decision getting made two levels away from where it should be?', time:'30 minutes' },
+        { title:'Pick one role and rewrite the handshake.', text:'Take the role with the biggest gap between what\'s on paper and what actually happens. Sit down with that person and rewrite the real deal: what they own, what they decide, what comes to you. Make the invisible structure visible.', time:'One conversation' }
+      ],
+    },
+    relational: {
+      typeName: 'The Relational Blind Spot',
+      heroEmphasis: 'Can\'t Locate the Source',
+      mirror: 'The energy shifted. You can feel it. Conversations are shorter than they used to be. People say "things are fine" when you ask, and you know they\'re not. But you can\'t point to the specific thing that changed — and that\'s what makes relational blind spots so dangerous. They\'re invisible until someone leaves.',
+      whatsMissing: 'Somewhere in your '+ind.org+', there\'s a trust gap you can\'t see from where you sit. It might be between peers. It might be between a '+ind.leader+' and their '+ind.team+'. It might be between what you say the culture is and what people actually experience on the '+ind.workplace+'. The mismatch between the stated values and the lived reality is where engagement dies quietly.',
+      cost: 'Your best people get quiet first. They don\'t complain — they disengage. By the time the relational fracture becomes visible to leadership, it\'s been spreading for months. And the usual fix — a team offsite, a survey, an "open door" announcement — bounces off because it doesn\'t address the actual rupture.',
+      actions: [
+        { title:'Name what shifted.', text:'Think back to when things felt different — when the energy was better. What changed? A hire? A departure? A decision that wasn\'t explained? A promise that didn\'t land? The shift usually traces back to one moment. Name it.', time:'15 minutes of honest reflection' },
+        { title:'Ask one person the real question.', text:'Pick the person on your '+ind.team+' you trust most — the one who\'ll tell you the truth. Ask them: "What\'s the one thing people aren\'t saying out loud right now?" Then listen without defending.', time:'One conversation, full attention' },
+        { title:'Close one loop.', text:'Whatever you hear, take one concrete action this week that demonstrates you heard it. Not a policy change. Not a grand announcement. One visible action that closes the gap between what you said and what people experienced.', time:'Depends on what you hear' }
+      ],
+    },
+    velocity: {
+      typeName: 'The Velocity Blind Spot',
+      heroEmphasis: 'Moving Too Fast to See',
+      mirror: 'Growth covered the cracks. When '+ind.work+' keeps coming in and the numbers look right, it\'s easy to tell yourself the system is working. But you\'re carrying a feeling that something underneath isn\'t keeping up — the '+ind.team+' is stretched, the processes are held together with duct tape and heroics, and the "we\'ll fix it later" list keeps growing.',
+      whatsMissing: 'Speed creates compound invisibility. You don\'t have time to look back because you\'re sprinting forward. But the shortcuts your '+ind.org+' made at an earlier stage — the roles that were never properly defined, the processes that were "good enough," the communication that relied on proximity — those are now operating at a scale they were never designed for.',
+      cost: 'You\'re accruing operational debt faster than you realize. Customer experience is starting to wobble. Your '+ind.leader+' is burning the kind of energy that doesn\'t regenerate. And the scariest part: you won\'t see the breaking point until you\'re past it.',
+      actions: [
+        { title:'List the duct tape.', text:'Every '+ind.org+' has systems held together by one person\'s heroics or a workaround that was supposed to be temporary. List them. The ones that make you wince are the ones that matter most.', time:'30 minutes' },
+        { title:'Find the load-bearing person.', text:'Who on your '+ind.team+' is the one holding the most together with the least support? That person is your biggest vulnerability and your biggest asset. If they left tomorrow, what breaks?', time:'Honest gut check' },
+        { title:'Fix one thing before you grow more.', text:'Pick one item from your duct tape list — the one with the highest risk. Fix it properly. Not a patch. An actual solution. Stabilize before you accelerate.', time:'This week' }
+      ],
+    }
+  };
+
+  var tc = typeContent[type] || typeContent.architectural;
+
+  /* ── TIER-SPECIFIC WRAPPER ── */
+  if(tier==='early'){
+    return {
+      eyebrow: 'Your Results — Early Scale',
+      headline: 'Your Vision Is Still Clear.<br><em>Build the Habits That Keep It That Way.</em>',
+      subhead: 'At your current scale, you can still see most of what\'s happening. That\'s your advantage. The work now is building the systems that protect it as you grow.',
+      greeting: name+', here\'s what your answers tell me.',
+      sections: [
+        { label:'Your Profile', heading:'You\'re ahead of the curve.', text:q2Narrative+' At '+orgSize+' people, direct visibility is still working for you. That\'s not a consolation prize — it\'s a genuine advantage. The fact that you\'re thinking about organizational blind spots before they\'ve formed puts you ahead of most founders at your stage.' },
+        { label:'What I\'d Watch For', heading:'The patterns that catch founders off guard.', text:'I\'ve worked with enough companies to tell you what happens next: somewhere between 25 employees and $5M, the leadership style that\'s working now starts creating friction. Not because you\'re doing anything wrong — because the business outgrows your span of control. Decisions start waiting on you. People stop bringing you bad news. Solutions that look right on paper don\'t change behavior. That\'s when the scotoma forms.' }
+      ],
+      actionsTitle: 'Build these habits now — while you still can.',
+      actionsSub: 'The founders who navigate the next stage well are the ones who build intentional architecture before they need it.',
+      actions: tc.actions,
+      offer: {
+        headline: 'Stay Ahead of It',
+        bridge: 'You don\'t need a diagnostic yet. What you need is awareness of the patterns that trip founders up between here and 50 people.',
+        price: 'Free',
+        desc: 'Download "The Founder\'s Pre-Scotoma Checklist: 5 Systems to Build Before You Need Them"',
+        items: ['Pre-scotoma checklist for early-stage founders','The 5 systems that prevent the most common blind spots','Early warning signs to watch as you scale'],
+        cta: 'Download the Free Guide →',
+        alt: null
+      }
+    };
+  }
+
+  if(tier==='builder'){
+    return {
+      eyebrow: 'Your Results — The Builder Stage',
+      headline: 'You\'re Building Fast.<br><em>Let\'s Make Sure You\'re Building Right.</em>',
+      subhead: 'You\'re in a critical window: big enough to need systems, small enough to build them right the first time.',
+      greeting: name+', your answers tell me something important.',
+      sections: [
+        { label:'Your Profile', heading:'You\'re encoding patterns right now — whether you know it or not.', text:q2Narrative+' At '+orgSize+' people in '+industry+', the decisions you\'re making right now about who does what, how information flows, and how your '+ind.team+' operates — those are becoming the permanent architecture of your '+ind.org+'. The patterns you\'re building will either scale beautifully or become invisible bottlenecks.' },
+        { label:'The Blind Spot Risk', heading: tc.typeName, text: tc.mirror }
+      ],
+      actionsTitle: 'Three things you can do this week.',
+      actionsSub: 'These aren\'t generic advice. They\'re specific to the pattern your answers revealed.',
+      actions: tc.actions,
+      offer: {
+        headline: 'Prevent the Blind Spot — Don\'t Just Find It Later',
+        bridge: 'The actions above will give you real traction. But self-diagnosis has a ceiling — you can\'t see the system from inside the system. The Builder\'s Blind Spot Scan catches what proximity hides, while you\'re still small enough to fix it without disruption.',
+        price: '$3,500',
+        desc: 'A 2-hour intensive + follow-up. Executive brief with preventive recommendations.',
+        items: ['Early-warning diagnosis of patterns that work now but break at scale','Decision-making audit: what to systematize vs. keep centralized','Leadership pipeline assessment','Cultural scaffolding review'],
+        cta: 'Learn More About the Blind Spot Scan →',
+        alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"'
+      }
+    };
+  }
+
+  if(tier==='inflection'){
+    return {
+      eyebrow: 'Your Results — The Inflection Point',
+      headline: 'You\'ve '+tc.heroEmphasis+'.<br><em>Now It\'s in the Way.</em>',
+      subhead: 'The thing that got you here is creating the friction you\'re feeling. That\'s not failure — that\'s growth.',
+      greeting: name+', I want to be straight with you.',
+      sections: [
+        { label:'What I See', heading: tc.typeName, text: q2Narrative+' '+tc.mirror },
+        { label:'What You\'re Missing', heading:'The invisible friction.', text: tc.whatsMissing },
+        { label:'What It\'s Costing You', heading:'More than you think.', text: tc.cost }
+      ],
+      actionsTitle: 'Three moves you can make this week.',
+      actionsSub: 'I designed these for founders dealing with exactly the pattern your answers revealed. They won\'t solve everything — but they\'ll make the invisible thing visible.',
+      actions: tc.actions,
+      offer: {
+        headline: 'See the Full Picture',
+        bridge: 'The actions above will give you real traction. But here\'s what I know from doing this work: the pattern you\'re sensing has layers you can\'t reach on your own. The Blind Spot Scan maps what proximity hides — in 7-10 days, you\'ll know exactly what\'s off and what to do about it.',
+        price: '$3,500',
+        desc: 'Your '+tc.typeName+' diagnosis mapped across leadership, structure, and workflow. Prioritized recommendations. Self-implementation roadmap.',
+        items: ['Your blind spot mapped across leadership, structure, and workflow','Prioritized recommendations on what to change first','Self-implementation roadmap with quick wins and long-term shifts','Optional 15-minute kickoff call to align on scope'],
+        cta: 'Get the Blind Spot Scan →',
+        alt: 'Not ready? Download: "5 Warning Signs Your Blind Spot Is Getting Worse"'
+      }
+    };
+  }
+
+  if(tier==='breaking'){
+    return {
+      eyebrow: 'Your Results — The Breaking Point',
+      headline: 'This Isn\'t One Blind Spot.<br><em>It\'s Systemic.</em>',
+      subhead: 'Your answers tell me you\'re dealing with something deeper than a single fix. The pattern has layers — and it\'s been building for a while.',
+      greeting: name+', I\'m going to be direct with you.',
+      sections: [
+        { label:'What I See', heading: tc.typeName+' — Multi-Layered', text: q2Narrative+' '+tc.mirror },
+        { label:'What You\'re Missing', heading:'It goes deeper than you think.', text: tc.whatsMissing+' And here\'s the harder truth: you\'ve probably tried to fix pieces of this before. Maybe a new hire, a restructure, a consultant. It didn\'t stick — not because the fix was wrong, but because it was treating a symptom of a pattern you couldn\'t fully see.' },
+        { label:'What It\'s Costing You', heading:'The real number.', text: tc.cost }
+      ],
+      actionsTitle: 'Start here — even before we talk.',
+      actionsSub: 'These won\'t solve the systemic issue. But they\'ll give you data and clarity that makes the next conversation more productive.',
+      actions: tc.actions,
+      offer: {
+        headline: 'You Need the Complete Picture',
+        bridge: 'At this stage, partial fixes create new problems. The Full Diagnostic maps every layer — business architecture, leadership capacity, and human dynamics — and gives you a time-phased roadmap so you know what to fix first and what to leave alone.',
+        price: '$15,000',
+        desc: 'A 2-3 week deep dive. Complete visibility. Phased intervention roadmap.',
+        items: ['Complete blind spot report across all three layers','Intervention roadmap with phased implementation plan','Success metrics and risk mitigation strategy','Post-diagnostic consultation on next steps'],
+        cta: 'Book a 15-Minute Scoping Call →',
+        alt: null
+      }
+    };
+  }
+
+  // transformation
+  return {
+    eyebrow: 'Your Results — Transformation',
+    headline: 'You Don\'t Need Another Report.<br><em>You Need a Partner.</em>',
+    subhead: 'Your answers tell me this has been building for a long time. You\'ve tried things. They haven\'t stuck. That\'s not because you\'re doing it wrong — it\'s because the pattern is bigger than any single fix.',
+    greeting: name+', I want you to hear something first: this isn\'t your fault.',
+    sections: [
+      { label:'What I See', heading:'Systemic invisibility across multiple dimensions.', text: q2Narrative+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size. '+tc.mirror },
+      { label:'Why Fixes Haven\'t Stuck', heading:'It\'s not the fixes. It\'s the sequence.', text:'You\'ve tried things — reorganizing, coaching, new hires, new tools. Some of them were probably the right moves. But without seeing the full system, you were treating symptoms out of order. The pattern underneath kept reasserting itself.' },
+      { label:'What Needs to Happen', heading:'Diagnosis, roadmap, and someone in the room with you.', text:'You need someone who can see the whole picture — the business architecture, the leadership dynamics, and the human patterns underneath — and work alongside you to change them. Not a report. A partnership.' }
+    ],
+    actionsTitle: 'Even now — there are moves you can make.',
+    actionsSub: 'These won\'t replace the deeper work. But they\'ll start building the muscle of seeing the system differently.',
+    actions: tc.actions,
+    offer: {
+      headline: 'Full Transformation',
+      bridge: 'This starts with the complete diagnostic — every layer mapped — then transitions into implementation partnership. I don\'t hand you a report and wish you luck. I work alongside you until the pattern shifts.',
+      price: 'Starting at $30,000',
+      desc: 'Scope-dependent. Custom engagement designed around your specific situation.',
+      items: ['Complete diagnostic across all three layers','Custom intervention design','Implementation partnership — advisory, project-based, or hybrid','Ongoing strategic support until the pattern shifts'],
+      cta: 'Book a 15-Minute Consultation →',
+      alt: null
+    }
+  };
+}
+
+})();
+</script>
+</body>
+</html>
