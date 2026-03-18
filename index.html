@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scotoma Spotter™ | Syncovate</title>
+<meta name="description" content="Four questions. Ninety seconds. Discover the blind spot that's quietly running your business — and what to do about it this week.">
+<meta name="theme-color" content="#252830">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scotoma Spotter™ — Find What You've Stopped Seeing">
+<meta property="og:description" content="Four questions. Ninety seconds. A diagnosis of the blind spot that's quietly running your business.">
+<meta property="og:url" content="https://ssjennings1.github.io/scotoma-spotter/">
+<!-- <meta property="og:image" content="https://ssjennings1.github.io/scotoma-spotter/og-image.png"> -->
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scotoma Spotter™ — Find What You've Stopped Seeing">
+<meta name="twitter:description" content="Four questions. Ninety seconds. A diagnosis of the blind spot that's quietly running your business.">
+<!-- <meta name="twitter:image" content="https://ssjennings1.github.io/scotoma-spotter/og-image.png"> -->
+
+<!-- Analytics: uncomment and add your measurement ID -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://syncovatellc.com/index" class="nav-wordmark">Syncovate</a>
+  <div class="nav-links">
+    <a href="https://syncovatellc.com/organizational-diagnostic">Diagnostics</a>
+    <a href="https://syncovatellc.com/coaching-and-advising">Coaching</a>
+    <a href="https://syncovatellc.com/speaking--facilitation">Speaking</a>
+    <a href="https://syncovatellc.com/about-dr-j">About Dr. J</a>
+    <a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" class="nav-cta" target="_blank" rel="noopener">Book a Call</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-track">
+  <div class="progress-fill" id="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 0: HERO            -->
+<!-- ═══════════════════════════ -->
+<div class="screen active" id="s-hero">
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">The Scotoma Spotter™</div>
+      <h1>Find What You've<br><em>Stopped Seeing</em></h1>
+      <p class="hero-sub">Four questions. Ninety seconds. You'll get a diagnosis of the blind spot that's quietly running your business — and what to do about it this week.</p>
+      <div class="hero-start">
+        <button class="btn-bronze" onclick="go('s-q1')">Begin →</button>
+      </div>
+    </div>
+    <div class="hero-note">Built for founders, CEOs, and owners of growing companies.</div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 1: ABOUT YOU       -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q1">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">1 of 4</div>
+      <h2 class="q-title">Tell me about your company.</h2>
+
+      <div class="q-group">
+        <div class="q-group-label">How many people?</div>
+        <div class="q-row" id="grp-size">
+          <label class="q-chip" onclick="chip(this,'size',5)"><input type="radio" name="size">1–10</label>
+          <label class="q-chip" onclick="chip(this,'size',10)"><input type="radio" name="size">11–25</label>
+          <label class="q-chip" onclick="chip(this,'size',15)"><input type="radio" name="size">26–75</label>
+          <label class="q-chip" onclick="chip(this,'size',20)"><input type="radio" name="size">76–200</label>
+          <label class="q-chip" onclick="chip(this,'size',25)"><input type="radio" name="size">200+</label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-group-label">Your role</div>
+        <div class="q-row" id="grp-role">
+          <label class="q-chip" onclick="chip(this,'role',25)"><input type="radio" name="role">Founder / CEO / Owner</label>
+          <label class="q-chip" onclick="chip(this,'role',20)"><input type="radio" name="role">C-suite / President / Partner</label>
+          <label class="q-chip" onclick="chip(this,'role',10)"><input type="radio" name="role">VP / Director</label>
+          <label class="q-chip" onclick="chip(this,'role',0,'disq')"><input type="radio" name="role">Manager / Other</label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-group-label">Industry</div>
+        <div class="q-row" id="grp-ind">
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Electrical / Trades</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Construction</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Manufacturing</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Professional Services</label>
+          <label class="q-chip" onclick="chip(this,'industry',0)"><input type="radio" name="ind">Other</label>
+        </div>
+      </div>
+
+      <button class="btn-bronze q-next" id="q1-btn" onclick="fromQ1()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 2: 3AM TEST        -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q2">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">2 of 4</div>
+      <h2 class="q-title">How often do you wake up at 3am with the feeling that "something's off" — but you can't name what it is?</h2>
+      <div class="q-options" id="q2-opts">
+        <label class="q-opt" onclick="pick(this,'q2',0)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Never / Rarely</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',5)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Once a month</div><div class="q-opt-sub">It crosses my mind but I can usually shake it off.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',15)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">A couple times a month</div><div class="q-opt-sub">There's a pattern forming and I know it.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q2',25)"><input type="radio" name="q2">
+          <div><div class="q-opt-text">Weekly or more</div><div class="q-opt-sub">It's constant. I can feel something is wrong but I can't pin it down.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q2-btn" onclick="go('s-q3')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 3: SCOTOMA TYPE     -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q3">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">3 of 4</div>
+      <h2 class="q-title">Which of these sounds most like you right now?</h2>
+      <div class="q-options" id="q3-opts">
+        <label class="q-opt" onclick="pick(this,'q3',15,'optimizer')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">Everything still runs through me — I can't step away without things stalling.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'architectural')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">We've grown fast but nobody's clear on who does what anymore.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'relational')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">People and culture problems keep landing on my desk — even ones I thought we'd already solved.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q3',15,'velocity')"><input type="radio" name="q3">
+          <div><div class="q-opt-text">We're growing so fast I feel like I'm losing touch with what's actually happening.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q3-btn" onclick="go('s-q4')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  SCREEN 4: READINESS        -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-q4">
+  <div class="q-screen">
+    <div class="q-card">
+      <div class="q-counter">4 of 4</div>
+      <h2 class="q-title">If you could see exactly what's off, would you act on it?</h2>
+      <div class="q-options" id="q4-opts">
+        <label class="q-opt" onclick="pick(this,'q4',0)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Maybe — I'm still figuring out if there's really a problem.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',10)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Probably — if the path forward made sense.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',20)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Yes — this has been eating at me and I'm ready to move.</div></div>
+        </label>
+        <label class="q-opt" onclick="pick(this,'q4',30)"><input type="radio" name="q4">
+          <div><div class="q-opt-text">Yesterday — I should have dealt with this months ago.</div></div>
+        </label>
+      </div>
+      <button class="btn-bronze q-next" id="q4-btn" onclick="go('s-email')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  EMAIL GATE                 -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-email">
+  <div class="email-screen">
+    <div class="hero-grid"></div>
+    <div class="email-card">
+      <div class="q-counter">Assessment Complete</div>
+      <h2>Your diagnosis is ready.</h2>
+      <p>I built your Scotoma Profile from your answers. Enter your name and email and I'll show you what I found — including one thing you can do about it this week.</p>
+      <input type="text" class="email-input" id="inName" placeholder="First name">
+      <input type="email" class="email-input" id="inEmail" placeholder="Email">
+      <input type="text" class="email-input" id="inCompany" placeholder="Company (optional)">
+      <div class="email-error" id="emailError" aria-live="polite"></div>
+      <label class="email-consent"><input type="checkbox" id="inConsent"> I agree to receive my results and occasional resources from Syncovate.</label>
+      <button class="btn-bronze" onclick="submitEmail()" style="width:100%;text-align:center;">Show Me What I'm Missing →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  LOADING TRANSITION         -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-loading">
+  <div class="loading-screen">
+    <div class="hero-grid"></div>
+    <div class="loading-content">
+      <div class="loading-ring"></div>
+      <div class="loading-text" id="loadingText" aria-live="polite">Mapping your blind spot profile...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  DISQUALIFICATION           -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-disq">
+  <div class="disq-screen">
+    <div class="disq-hero">
+      <div class="hero-grid"></div>
+      <div class="disq-inner">
+        <div class="q-counter">Scotoma Spotter™</div>
+        <h2>You see it.<br><em>That matters.</em></h2>
+        <p>This assessment is built for the person who has the authority to change the system — the founder, CEO, or owner. But here's what I know about managers: you feel the friction before anyone else does. You see patterns leadership can't see from where they sit.</p>
+        <p>That makes you the most valuable person in this equation.</p>
+      </div>
+    </div>
+    <div class="disq-body">
+      <div class="disq-body-inner">
+        <h3>Help your leadership see what you're seeing.</h3>
+        <p>Enter your details and I'll send you the <strong>Internal Champion Toolkit</strong> — everything you need to open this conversation with your CEO or founder without sounding alarmist.</p>
+
+        <div class="toolkit-item"><div class="toolkit-label">The Executive Brief</div><p>"Why Successful CEOs Develop Strategic Blind Spots" — a non-threatening way to explain what you're observing.</p></div>
+        <div class="toolkit-item"><div class="toolkit-label">The Conversation Starter</div><p>A three-sentence email you can send today to open the door.</p></div>
+        <div class="toolkit-item"><div class="toolkit-label">VIP Assessment Link</div><p>A direct link so your leadership team can take the Scotoma Spotter themselves.</p></div>
+
+        <div class="toolkit-form">
+          <input type="text" placeholder="First name">
+          <input type="email" placeholder="Email">
+          <button class="btn-bronze" style="width:100%;text-align:center;">Send Me the Toolkit →</button>
+        </div>
+        <div style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border);">
+          <div class="sig-name">— Dr. Shannon Jennings</div>
+          <div class="sig-title">Founder, Syncovate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ -->
+<!--  RESULTS (populated by JS) -->
+<!-- ═══════════════════════════ -->
+<div class="screen" id="s-results">
+  <div class="results-screen">
+    <!-- Hero -->
+    <div class="r-hero">
+      <div class="hero-grid"></div>
+      <div class="r-hero-inner">
+        <div class="q-counter" id="rEyebrow"></div>
+        <h2 id="rHeadline"></h2>
+        <p class="r-hero-sub" id="rSubhead"></p>
+      </div>
+    </div>
+    <!-- Visual diagnostic -->
+    <div class="r-visual" id="rVisual">
+      <div class="r-visual-inner">
+        <div class="r-visual-title">Your Scotoma Profile</div>
+        <div id="rDimensions"></div>
+      </div>
+    </div>
+    <!-- Body -->
+    <div class="r-body"><div class="r-body-inner" id="rBody"></div></div>
+    <!-- Actions -->
+    <div class="r-actions"><div class="r-actions-inner" id="rActions"></div></div>
+    <!-- Offer -->
+    <div class="r-offer"><div class="r-offer-inner" id="rOffer"></div></div>
+    <!-- Sig -->
+    <div class="sig"><div class="sig-inner"><div class="sig-name">— Dr. Shannon Jennings</div><div class="sig-title">Founder, Syncovate</div></div></div>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-wordmark">Syncovate</div>
+          <p class="footer-tagline">Helping privately held business leaders make the hard calls — with clarity, confidence, and the tools to follow through.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Work</h4>
+          <ul>
+            <li><a href="https://syncovatellc.com/organizational-diagnostic">Organizational Diagnostics</a></li>
+            <li><a href="https://syncovatellc.com/coaching-and-advising">Coaching &amp; Advising</a></li>
+            <li><a href="https://syncovatellc.com/speaking--facilitation">Speaking &amp; Facilitation</a></li>
+            <li><a href="https://syncovatellc.com/scotoma-spotter">Scotoma Spotter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://syncovatellc.com/about-dr-j">About Dr. J</a></li>
+            <li><a href="https://www.linkedin.com/in/shannonsjennings/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="tel:5745323178">574-532-3178</a></li>
+            <li><a href="mailto:shannon@syncovatellc.com">shannon@syncovatellc.com</a></li>
+            <li><a href="https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo" target="_blank" rel="noopener">Book a Call</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Syncovate LLC</span>
+        <span class="footer-copy">Niles, Michigan</span>
+      </div>
+    </footer>
+  </div>
+</div>
+
+</main>
+
+<script src="js/results-content.js"></script>
+<script src="js/results-engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
