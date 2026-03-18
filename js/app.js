@@ -173,11 +173,11 @@ window.submitEmail = function(){
 
   var payload = {
     name:name, email:email, company:company,
-    score:total, tier:tier, scotomaType:S.q5type,
-    orgSize:S.sizeLabel, industry:S.industry,
-    q2_3am:S.q2, q3_visibility:S.q3vis,
-    q4_failedFixes:S.q4fails, q6_readiness:S.q6,
-    resultsUrl: resultsUrl
+    ss_score:total, ss_tier:tier, ss_type:S.q5type,
+    ss_org_size:S.sizeLabel, ss_industry:S.industry,
+    ss_q2_3am:S.q2, ss_q3_visibility:S.q3vis,
+    ss_q4_failed_fixes:S.q4fails, ss_q6_readiness:S.q6,
+    ss_results_url: resultsUrl
   };
 
   /* ── GHL WEBHOOK ──
