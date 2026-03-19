@@ -214,7 +214,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         cta: 'Download the Free Guide →',
         ctaHref: 'assets/founders-pre-scotoma-checklist.pdf',
         ctaDownload: true,
-        alt: null
+        alt: 'Follow Dr. J on LinkedIn → linkedin.com/in/shannonsjennings',
+        altHref: 'https://www.linkedin.com/in/shannonsjennings/'
       }
     };
   }
@@ -275,7 +276,9 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         desc: 'A clear answer to what\'s broken and what to fix first. Not a report that gathers dust — a plan you can actually use.',
         items: ['Exactly where the blind spot is hiding and what it\'s costing you','What to change first and what to leave alone','A step-by-step plan with quick wins and longer-term shifts','A 15-minute kickoff call so we\'re working on the right thing'],
         cta: 'Get the Blind Spot Scan →',
-        alt: 'Not ready for the full scan? Book a single session first — 90 minutes on your specific situation.'
+        alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"',
+        altHref: 'assets/7-decisions-scale-or-stall.pdf',
+        altDownload: true
       }
     };
   }
