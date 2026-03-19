@@ -310,9 +310,11 @@
         <div class="toolkit-item"><div class="toolkit-label">VIP Assessment Link</div><p>A direct link so your leadership team can take the Scotoma Spotter themselves.</p></div>
 
         <div class="toolkit-form">
-          <input type="text" placeholder="First name">
-          <input type="email" placeholder="Email">
-          <button class="btn-bronze" style="width:100%;text-align:center;">Send Me the Toolkit →</button>
+          <input type="text" id="tkName" class="email-input" placeholder="First name">
+          <input type="email" id="tkEmail" class="email-input" placeholder="Email">
+          <div id="tkError" class="email-error" style="display:none;"></div>
+          <button class="btn-bronze" style="width:100%;text-align:center;" onclick="submitToolkit()">Send Me the Toolkit →</button>
+          <div id="tkSuccess" style="display:none;margin-top:1rem;padding:1rem;background:rgba(184,155,110,0.15);border-radius:8px;text-align:center;color:var(--gold);">✓ Check your inbox — the toolkit is on its way.</div>
         </div>
         <div style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border);">
           <div class="sig-name">— Dr. Shannon Jennings</div>

@@ -238,6 +238,57 @@ window.restartAssessment = function(){
   go('s-hero');
 };
 
+/* ── TOOLKIT FORM (disqualification page) ── */
+window.submitToolkit = function(){
+  var nameEl = document.getElementById('tkName');
+  var emailEl = document.getElementById('tkEmail');
+  var errEl = document.getElementById('tkError');
+  var name = nameEl.value.trim();
+  var email = emailEl.value.trim();
+
+  // Reset
+  errEl.style.display = 'none';
+  nameEl.classList.remove('input-error');
+  emailEl.classList.remove('input-error');
+
+  if(!name){
+    nameEl.classList.add('input-error');
+    errEl.textContent = 'Please enter your first name.';
+    errEl.style.display = 'block';
+    nameEl.focus();
+    return;
+  }
+  if(!email || email.indexOf('@') === -1){
+    emailEl.classList.add('input-error');
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.style.display = 'block';
+    emailEl.focus();
+    return;
+  }
+
+  var payload = {
+    name: name, email: email,
+    ss_tier: 'toolkit',
+    ss_type: 'manager_referral',
+    ss_industry: S.industry || '',
+    ss_org_size: S.sizeLabel || ''
+  };
+
+  var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/yCTzggMS1VT4xrqF3lML/webhook-trigger/886dcaa9-29bf-4567-be3b-69b503eed7d6';
+  if(WEBHOOK_URL){
+    fetch(WEBHOOK_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    }).catch(function(e){ console.log('Toolkit webhook error:', e); });
+  }
+
+  // Show success, hide form fields
+  document.querySelector('.toolkit-form button').style.display = 'none';
+  nameEl.style.display = 'none';
+  emailEl.style.display = 'none';
+  document.getElementById('tkSuccess').style.display = 'block';
+};
+
 /* ── ON PAGE LOAD: check for results URL ── */
 checkForResultsUrl();
 
