@@ -75,11 +75,25 @@ var industryColor = {
 
 function getContent(tier, type, industry, name, q2score, orgSize, S){
   var ind = indLang(industry);
+  /* ── Q2 NARRATIVE (tier-aware) ──
+     The q2 narrative needs to match the tier's tone.
+     High tiers + low q2 shouldn't say "good news" when the rest of the page says everything is on fire.
+     Low tiers + high q2 shouldn't be more intense than the diagnosis warrants.
+  */
   var q2Narrative = '';
-  if(q2score>=25) q2Narrative = 'You told me that feeling hits you weekly or more. That\'s not anxiety — that\'s pattern recognition. Your brain is detecting something your conscious mind hasn\'t caught up to yet.';
-  else if(q2score>=15) q2Narrative = 'That feeling hitting you a couple times a month? It\'s not random. Your instinct is picking up a signal your daily routine keeps overriding.';
-  else if(q2score>=5) q2Narrative = 'You mentioned it happens occasionally. That\'s actually the earliest stage of the signal — your instinct noticing before your calendar gives you space to think about it.';
-  else q2Narrative = 'You said the 3AM feeling isn\'t hitting you yet. That\'s good news — it means you\'re still ahead of the pattern.';
+  var isHighTier = (tier==='breaking' || tier==='transformation');
+  var isLowTier = (tier==='early');
+  if(q2score>=25){
+    if(isLowTier) q2Narrative = 'That feeling hitting you often? At your stage, that\'s your instinct working the way it should — pay attention to it.';
+    else q2Narrative = 'You told me that feeling hits you weekly or more. That\'s not stress — that\'s your gut telling you something your calendar won\'t make room for.';
+  } else if(q2score>=15){
+    q2Narrative = 'That feeling hitting you a couple times a month? It\'s not random. Your instinct is picking up a signal your daily routine keeps overriding.';
+  } else if(q2score>=5){
+    q2Narrative = 'You mentioned it happens occasionally. That\'s actually the earliest stage of the signal — your instinct noticing before your calendar gives you space to think about it.';
+  } else {
+    if(isHighTier) q2Narrative = 'You said the 3AM feeling isn\'t hitting you yet. That doesn\'t mean the pattern isn\'t there — it means you\'ve gotten good at running through it. That\'s when it\'s hardest to see.';
+    else q2Narrative = 'You said the 3AM feeling isn\'t hitting you yet. That\'s a good sign — it means you\'re still ahead of the pattern.';
+  }
 
   // Visibility narrative (from Q3)
   var visNarrative = '';
@@ -92,7 +106,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
   // Failed solutions narrative (from Q4)
   var failsNarrative = '';
   var fails = S.q4fails || 0;
-  if(fails>=25) failsNarrative = 'You\'ve tried multiple fixes and none of them stuck. That\'s not bad execution — it\'s evidence of a pattern bigger than any single intervention. You\'re not fixing the wrong things. You\'re fixing symptoms of something you can\'t see from inside the system.';
+  if(fails>=25) failsNarrative = 'You\'ve tried multiple fixes and none of them stuck. That\'s not bad execution — it\'s a sign the real problem is bigger than any single fix. You\'re not doing the wrong things. You\'re fixing symptoms of something you can\'t see from inside it.';
   else if(fails>=20) failsNarrative = 'You told me you\'ve tried two or three things that didn\'t work. Each one probably seemed right at the time. The fact that they reverted tells you something important: the pattern underneath is stronger than any single fix.';
   else if(fails>=10) failsNarrative = 'You mentioned trying one fix that didn\'t stick. That\'s actually useful data — it tells you the problem isn\'t where you thought it was.';
   // 0 = no narrative needed
@@ -179,7 +193,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — Early Scale',
       headline: 'Your Vision Is Still Clear.<br><em>Build the Habits That Keep It That Way.</em>',
       subhead: 'At your current scale, you can still see most of what\'s happening. That\'s your advantage. The work now is building the systems that protect it as you grow.',
-      greeting: name+', you built something real. '+q2Narrative,
+      greeting: name+', you built something real. '+q2Narrative,  // ✅ Passes voice check
       sections: [
         { label:'Your Profile', heading:'You can still see the whole picture. That\'s your edge.', text:'At '+orgSize+' people, you still know what\'s happening. You can walk the '+ind.workplace+', read the room, and course-correct in real time. That\'s not a small thing — it\'s the advantage most founders lose without realizing it. The fact that you\'re thinking about this now, before the blind spots have formed, puts you ahead of most people at your stage.' },
         { label:'What I\'d Watch For', heading:'The patterns that catch good leaders off guard.', text:'I\'ve worked with enough companies to tell you what happens next: somewhere between 25 employees and $5M, the way you\'re leading now starts creating friction. Not because you\'re doing anything wrong — because the business outgrows what one person can see. Decisions start waiting on you. Your people stop bringing you the bad news. Things that work on paper don\'t change behavior on '+ind.workplace+'. That\'s when the blind spot forms — and you won\'t feel it until it\'s already costing you.' }
@@ -206,7 +220,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Builder Stage',
       headline: 'You\'re Building Fast.<br><em>Let\'s Make Sure You\'re Building Right.</em>',
       subhead: 'You\'re in a critical window: big enough to need systems, small enough to build them right the first time.',
-      greeting: name+', your answers tell me something important. '+q2Narrative+(visNarrative?' '+visNarrative:''),
+      greeting: name+', you\'re in the window where small decisions become permanent patterns. '+q2Narrative+(visNarrative?' '+visNarrative:''),
       sections: [
         { label:'Your Profile', heading:'You\'re setting things up as you go — and those decisions are becoming permanent.', text:'At '+orgSize+' people in '+industry+', you\'re making calls every day about who does what, who reports to whom, how things get communicated. You\'re building those on the fly because you\'re busy — and that\'s normal. But here\'s what I see: the way you set things up at 20 people becomes the way the '+ind.org+' runs at 50. Those patterns will either scale beautifully or become invisible walls that quietly drain speed, morale, and margin.'+(failsNarrative?' '+failsNarrative:'') },
         { label:'The Blind Spot Risk', heading: tc.typeName, text: mirrorFull }
@@ -240,7 +254,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Inflection Point',
       headline: 'You\'ve '+tc.heroEmphasis+'.<br><em>Now It\'s in the Way.</em>',
       subhead: 'The thing that got you here is creating the friction you\'re feeling. That\'s not failure — that\'s growth.',
-      greeting: name+', I want to be straight with you. '+q2Narrative,
+      greeting: name+', your answers painted a clear picture. '+q2Narrative,
       sections: [
         { label: tc.typeName, heading:'The Pattern', text: mirrorFull },
         { label:'The Operations View', heading:'What it\'s costing you in hours and dollars.', text: tc.opsView+(visNarrative?' '+visNarrative:'') },
@@ -267,7 +281,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Breaking Point',
       headline: 'This Isn\'t One Blind Spot.<br><em>It\'s Systemic.</em>',
       subhead: 'Your answers tell me you\'re dealing with something deeper than a single fix. The pattern has layers — and it\'s been building for a while.',
-      greeting: name+', I\'m going to be direct with you. '+q2Narrative+(visNarrative?' '+visNarrative:''),
+      greeting: name+', your answers tell me this has been building for a while. '+q2Narrative+(visNarrative?' '+visNarrative:''),
       sections: [
         { label: tc.typeName+' — Multi-Layered', heading:'The Pattern', text: mirrorFull },
         { label:'The Operations View', heading:'What an advisor would see in the first 48 hours.', text: tc.opsView },
@@ -294,7 +308,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     eyebrow: 'Your Results — Transformation',
     headline: 'You Don\'t Need Another Report.<br><em>You Need a Partner.</em>',
     subhead: 'Your answers tell me this has been building for a long time. You\'ve tried things. They haven\'t stuck. That\'s not because you\'re doing it wrong — it\'s because the pattern is bigger than any single fix.',
-    greeting: name+', I want you to hear something first: this isn\'t your fault. '+q2Narrative+(visNarrative?' '+visNarrative:'')+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.',
+    greeting: name+', this didn\'t happen overnight — and it\'s not because you did something wrong. '+q2Narrative+(visNarrative?' '+visNarrative:'')+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.',
     sections: [
       { label: tc.typeName+' — Systemic', heading:'The Pattern', text: mirrorFull },
       { label:'The Operations View', heading:'What the numbers would tell a stranger.', text: tc.opsView },
