@@ -12,7 +12,7 @@
 var S = {
   size:null, sizeLabel:'', role:null, industry:'', disq:false,
   q2:null,       // 3AM test (0-25)
-  q3vis:null,    // Visibility loss (5-20)
+  q3vis:null,    // Visibility loss (5-25)
   q4fails:null,  // Failed solutions (0-25)
   q5:null, q5type:'', // Scotoma type
   q6:null        // Readiness (0-30)
@@ -43,6 +43,8 @@ function checkForResultsUrl(){
     S.size = data.sz; S.role = data.rl; S.industry = data.i; S.sizeLabel = data.o;
     S.q2 = data.q2; S.q3vis = data.q3; S.q4fails = data.q4; S.q6 = data.q6;
     S.q5type = data.tp;
+    // Store results URL for copy button
+    lastResultsUrl = window.location.href;
     // Render results directly
     buildResults(data.n, data.sc, data.t, data.tp, data.i, data.q2, data.o, S);
     // Show results screen immediately (no animation)
@@ -147,7 +149,7 @@ window.submitEmail = function(){
     nameEl.focus();
     return;
   }
-  if(!email || email.indexOf('@')===-1){
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
     emailEl.classList.add('input-error');
     showError('Please enter a valid email address.');
     emailEl.focus();
@@ -170,6 +172,7 @@ window.submitEmail = function(){
   else tier='transformation';
 
   var resultsUrl = buildResultsUrl(name, total, tier, S.q5type, S.industry, S.sizeLabel, S);
+  lastResultsUrl = resultsUrl;
 
   var payload = {
     name:name, email:email, company:company,
@@ -212,6 +215,30 @@ window.submitEmail = function(){
     // Animate the radar chart
     setTimeout(function(){document.getElementById('rVisual').classList.add('animated');},200);
   },3800);
+};
+
+/* ── COPY RESULTS LINK ── */
+var lastResultsUrl = '';
+window.copyResultsLink = function(){
+  if(!lastResultsUrl) return;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(lastResultsUrl).then(function(){
+      var btn = document.getElementById('copyResultsBtn');
+      btn.textContent = '✓ Link Copied';
+      setTimeout(function(){ btn.textContent = 'Copy Link to Your Results'; }, 2500);
+    });
+  } else {
+    // Fallback for older browsers
+    var ta = document.createElement('textarea');
+    ta.value = lastResultsUrl;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    var btn = document.getElementById('copyResultsBtn');
+    btn.textContent = '✓ Link Copied';
+    setTimeout(function(){ btn.textContent = 'Copy Link to Your Results'; }, 2500);
+  }
 };
 
 /* ── RESTART ASSESSMENT ── */
@@ -258,7 +285,7 @@ window.submitToolkit = function(){
     nameEl.focus();
     return;
   }
-  if(!email || email.indexOf('@') === -1){
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
     emailEl.classList.add('input-error');
     errEl.textContent = 'Please enter a valid email address.';
     errEl.style.display = 'block';

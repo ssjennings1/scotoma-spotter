@@ -14,20 +14,25 @@ var scotomaTypeNames = {
   velocity: 'Velocity'
 };
 
-function getScotomaScores(type, q2, q6, role, size){
+function getScotomaScores(type, q2, q6, role, size, tier){
   // q2: 0-25 (3AM test), q6: 0-30 (readiness), role: 0-25, size: 0-25
   var q2mod = Math.round((q2/25)*15);   // 0-15
   var q4mod = Math.round((q6/30)*10);   // 0-10
   var sizeMod = Math.round((size/25)*10); // 0-10
   var roleMod = Math.round((role/25)*10); // 0-10
 
+  // Cap primary score by tier to avoid overpromising from 6 questions
+  var primaryCap = 80;
+  if(tier==='early') primaryCap = 50;
+  else if(tier==='builder') primaryCap = 65;
+
   var types = ['optimizer','architectural','relational','velocity'];
   var scores = {};
 
   types.forEach(function(t){
     if(t === type){
-      // Primary: high base + instinct and readiness modifiers
-      scores[t] = Math.min(100, Math.max(15, 70 + q2mod + q4mod));
+      // Primary: high base + instinct and readiness modifiers, capped by tier
+      scores[t] = Math.min(primaryCap, Math.max(15, 70 + q2mod + q4mod));
     } else {
       // Secondary: lower base + size and role modifiers + small instinct bump
       var base = 20;
@@ -48,7 +53,7 @@ function getScotomaScores(type, q2, q6, role, size){
 }
 
 /* ── RADAR CHART (SVG) ── */
-function renderRadarChart(scores, primaryType){
+function renderRadarChart(scores, primaryType, tier){
   var types = ['optimizer','architectural','relational','velocity'];
   var labels = ['Optimizer','Architectural','Relational','Velocity'];
 
@@ -119,7 +124,8 @@ function renderRadarChart(scores, primaryType){
 
   // Interpretation line
   var typeName = scotomaTypeNames[primaryType] || 'Architectural';
-  var interp = '<div class="radar-interpretation">Your strongest pattern: <strong>The '+typeName+' Blind Spot</strong></div>';
+  var interpLabel = (tier==='early') ? 'Emerging pattern' : 'Your strongest pattern';
+  var interp = '<div class="radar-interpretation">'+interpLabel+': <strong>The '+typeName+' Blind Spot</strong></div>';
 
   document.getElementById('rDimensions').innerHTML = svg + interp;
 }
@@ -128,8 +134,8 @@ function renderRadarChart(scores, primaryType){
 function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
 
   // ── Radar chart scores ──
-  var scores = getScotomaScores(type, q2score, S.q6, S.role, S.size);
-  renderRadarChart(scores, type);
+  var scores = getScotomaScores(type, q2score, S.q6, S.role, S.size, tier);
+  renderRadarChart(scores, type, tier);
 
   // ── Content by tier × type ──
   var content = getContent(tier, type, industry, name, q2score, orgSize, S);
@@ -172,8 +178,10 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
       oHtml += '<div class="offer-alt" style="border-bottom:none;"><span style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">'+content.offer.alt+'</span></div>';
     }
   }
-  // Session bridge on all tiers
-  oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';
-  oHtml += '<a href="https://link.syncovatellc.com/widget/bookings/on-demand-advisor" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
+  // Session bridge — suppress on early tier (main offer is free, $750 upsell contradicts positioning)
+  if(tier !== 'early'){
+    oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';
+    oHtml += '<a href="https://link.syncovatellc.com/widget/bookings/on-demand-advisor" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
+  }
   document.getElementById('rOffer').innerHTML = oHtml;
 }

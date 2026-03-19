@@ -141,6 +141,7 @@
         </label>
       </div>
       <button class="btn-bronze q-next" id="q2-btn" onclick="go('s-q3')">Continue →</button>
+      <a class="q-back" onclick="go('s-q1')">← Back</a>
     </div>
   </div>
 </div>
@@ -163,11 +164,12 @@
         <label class="q-opt" onclick="pick(this,'q3vis',20)"><input type="radio" name="q3vis">
           <div><div class="q-opt-text">I've clearly outgrown my ability to see everything.</div><div class="q-opt-sub">I know there are things happening that I'm not aware of — and that bothers me.</div></div>
         </label>
-        <label class="q-opt" onclick="pick(this,'q3vis',15)"><input type="radio" name="q3vis">
+        <label class="q-opt" onclick="pick(this,'q3vis',25)"><input type="radio" name="q3vis">
           <div><div class="q-opt-text">I'm drowning — I have no idea what's really happening anymore.</div><div class="q-opt-sub">I've lost the thread and I know it.</div></div>
         </label>
       </div>
       <button class="btn-bronze q-next" id="q3vis-btn" onclick="go('s-q4')">Continue →</button>
+      <a class="q-back" onclick="go('s-q2')">← Back</a>
     </div>
   </div>
 </div>
@@ -195,6 +197,7 @@
         </label>
       </div>
       <button class="btn-bronze q-next" id="q4fails-btn" onclick="go('s-q5')">Continue →</button>
+      <a class="q-back" onclick="go('s-q3')">← Back</a>
     </div>
   </div>
 </div>
@@ -222,6 +225,7 @@
         </label>
       </div>
       <button class="btn-bronze q-next" id="q5-btn" onclick="go('s-q6')">Continue →</button>
+      <a class="q-back" onclick="go('s-q4')">← Back</a>
     </div>
   </div>
 </div>
@@ -249,6 +253,7 @@
         </label>
       </div>
       <button class="btn-bronze q-next" id="q6-btn" onclick="go('s-email')">Continue →</button>
+      <a class="q-back" onclick="go('s-q5')">← Back</a>
     </div>
   </div>
 </div>
@@ -269,6 +274,7 @@
       <div class="email-error" id="emailError" aria-live="polite"></div>
       <label class="email-consent"><input type="checkbox" id="inConsent"> I agree to receive my results and occasional resources from Syncovate.</label>
       <button class="btn-bronze" onclick="submitEmail()" style="width:100%;text-align:center;">Show Me What I'm Missing →</button>
+      <a class="q-back" onclick="go('s-q6')" style="text-align:center;">← Back</a>
     </div>
   </div>
 </div>
@@ -354,8 +360,12 @@
     <div class="r-offer"><div class="r-offer-inner" id="rOffer"></div></div>
     <!-- Sig -->
     <div class="sig"><div class="sig-inner"><div class="sig-name">— Dr. Shannon Jennings</div><div class="sig-title">Founder, Syncovate</div></div></div>
-    <!-- Retake -->
-    <div class="retake"><a href="#" onclick="restartAssessment();return false;">← Retake the Assessment</a></div>
+    <!-- Retake + Share -->
+    <div class="retake">
+      <a href="#" onclick="restartAssessment();return false;">← Retake the Assessment</a>
+      <span class="retake-sep">|</span>
+      <a href="#" onclick="copyResultsLink();return false;" id="copyResultsBtn">Copy Link to Your Results</a>
+    </div>
     <!-- Footer -->
     <footer>
       <div class="footer-grid">

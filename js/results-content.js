@@ -98,8 +98,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
   // Visibility narrative (from Q3)
   var visNarrative = '';
   var vis = S.q3vis || 0;
-  if(vis>=20) visNarrative = 'You told me you\'ve clearly outgrown your ability to see everything. That\'s not failure — that\'s scale. But you\'re still trying to lead like you can see it all, and the gap between what you know and what\'s actually happening is where the blind spot lives.';
-  else if(vis>=15) visNarrative = 'You said you\'re drowning — you\'ve lost the thread and you know it. That\'s not a metaphor anymore. It\'s your nervous system telling you the current approach has hit its limit.';
+  if(vis>=25) visNarrative = 'You said you\'re drowning — you\'ve lost the thread and you know it. That\'s not a metaphor anymore. It\'s your nervous system telling you the current approach has hit its limit.';
+  else if(vis>=20) visNarrative = 'You told me you\'ve clearly outgrown your ability to see everything. That\'s not failure — that\'s scale. But you\'re still trying to lead like you can see it all, and the gap between what you know and what\'s actually happening is where the blind spot lives.';
   else if(vis>=10) visNarrative = 'You mentioned you\'re starting to lose visibility. That\'s the inflection — the gap between what you can see and what\'s actually happening is growing, and it\'s growing faster than you think.';
   else if(vis>=5) visNarrative = 'You said you still see and touch everything. That works at your current scale — but it won\'t survive the next stage of growth. The patterns you can\'t see are the ones forming right now.';
 
@@ -109,13 +109,13 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
   if(fails>=25) failsNarrative = 'You\'ve tried multiple fixes and none of them stuck. That\'s not bad execution — it\'s a sign the real problem is bigger than any single fix. You\'re not doing the wrong things. You\'re fixing symptoms of something you can\'t see from inside it.';
   else if(fails>=20) failsNarrative = 'You told me you\'ve tried two or three things that didn\'t work. Each one probably seemed right at the time. The fact that they reverted tells you something important: the pattern underneath is stronger than any single fix.';
   else if(fails>=10) failsNarrative = 'You mentioned trying one fix that didn\'t stick. That\'s actually useful data — it tells you the problem isn\'t where you thought it was.';
-  // 0 = no narrative needed
+  else if(fails===0 && !isLowTier) failsNarrative = 'You haven\'t tried to fix this yet — and that\'s actually data. Either you haven\'t named the problem clearly enough to take a swing at it, or some part of you knows the obvious fixes won\'t touch it.';
 
   /* ── TYPE-SPECIFIC CONTENT ── */
   var typeContent = {
     optimizer: {
       typeName: 'The Optimizer Blind Spot',
-      heroEmphasis: 'Built This Company',
+      heroEmphasis: 'Built This the Only Way You Knew How',
       mirror: 'The speed, the decisiveness, the "I\'ll just handle it" reflex — that\'s what got you here. But here\'s what I see in '+ind.org+'s like yours: the thing that built the business becomes the thing that caps it. You\'re still the fastest problem-solver in the room. And that\'s exactly the problem.',
       whatsMissing: 'Your '+ind.team+' has quietly stopped bringing you problems — not because there aren\'t any, but because they assume you\'ll just solve them yourself. Decisions queue behind your calendar. The people who could step up don\'t, because there\'s no room. You\'ve trained the entire '+ind.org+' to wait for you.',
       cost: 'Every decision you make is one your '+ind.leader+' doesn\'t learn to make. You\'re trading long-term capability for short-term speed. And the ceiling you\'re feeling? It\'s your own capacity. Revenue can\'t outgrow the person everything runs through.',
@@ -126,7 +126,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       actions: [
         { title:'Map the decision queue.', text:'This week, write down every decision someone brought to you or waited on you for. Just list them. Don\'t judge, don\'t fix — just make the invisible queue visible. You\'ll be surprised how long the list is.', time:'30 minutes over 5 days' },
         { title:'Sort into three columns.', text:'Take your list and sort each decision: "Must stay with me" / "Could hand off with guardrails" / "Should have handed off months ago." That third column is your blind spot in writing.', time:'20 minutes' },
-        { title:'Hand one off by Friday.', text:'Pick one item from column three. The easiest one. Tell the person it\'s theirs now, tell them the guardrails, and resist the urge to check on it for two weeks.', time:'One conversation' }
+        { title:'Hand one off by Friday.', text:'Pick one item from column three. The easiest one. Tell the person it\'s theirs now, tell them the guardrails, and resist the urge to check on it for two weeks.', time:'15-minute conversation' }
       ],
     },
     architectural: {
@@ -142,7 +142,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       actions: [
         { title:'Draw the real org chart.', text:'Not the official one. The one that shows how decisions actually get made. Who do people actually go to when they need something? That\'s your real structure — and it probably looks nothing like the one on paper.', time:'45 minutes' },
         { title:'Find the three biggest gaps.', text:'Compare the real chart to the official one. Where are the mismatches? Where is someone doing a job their title doesn\'t describe? Where is a decision getting made two levels away from where it should be?', time:'30 minutes' },
-        { title:'Pick one role and rewrite the handshake.', text:'Take the role with the biggest gap between what\'s on paper and what actually happens. Sit down with that person and rewrite the real deal: what they own, what they decide, what comes to you. Make the invisible structure visible.', time:'One conversation' }
+        { title:'Pick one role and rewrite the handshake.', text:'Take the role with the biggest gap between what\'s on paper and what actually happens. Sit down with that person and rewrite the real deal: what they own, what they decide, what comes to you. Make the invisible structure visible.', time:'30-minute conversation' }
       ],
     },
     relational: {
@@ -152,28 +152,28 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       whatsMissing: 'Somewhere in your '+ind.org+', there\'s a trust gap you can\'t see from where you sit. It might be between peers. It might be between a '+ind.leader+' and their '+ind.team+'. It might be between what you say the culture is and what people actually experience on '+ind.workplace+'. The mismatch between the stated values and the lived reality is where engagement dies quietly.',
       cost: 'Your best people get quiet first. They don\'t complain — they disengage. By the time the relational fracture becomes visible to leadership, it\'s been spreading for months. And the usual fix — a team offsite, a survey, an "open door" announcement — bounces off because it doesn\'t address the actual rupture.',
       /* ── THREE LENSES ── */
-      opsView: 'Relational fractures have a measurable cost, even when they feel intangible. Track your voluntary turnover over the last 18 months — not just who left, but who left that you didn\'t expect. Now estimate what each departure cost: recruiting, onboarding, lost productivity, the knowledge that walked out the door. In most '+ind.org+'s at this stage, the number is between 1.5x and 3x that person\'s salary. Then ask: how many of those departures were preceded by a period where the person got quieter, less engaged, less likely to push back? That silence was the signal. The resignation was the symptom.',
-      deeperPattern: 'You\'re not missing the relational signal because you don\'t care. You\'re missing it because your role has structurally isolated you from it. The higher you go, the more filtered the information becomes. People perform "fine" for leadership. They save the real conversation for each other — or for their next employer. The harder truth is this: the relational fracture might trace back to something you did or didn\'t do. A promise that was heard differently than it was meant. A decision that made sense on paper but landed as a betrayal to someone who\'d been loyal. These aren\'t malicious — but they accumulate. And you can\'t repair what you won\'t name.',
-      honestTruth: 'You feel it most in the moments that used to be easy. The hallway conversations that don\'t happen anymore. The meeting where someone used to challenge you and now they just nod. The person who used to stay late because they wanted to, not because they had to. Something broke and you can\'t find the seam. Maybe you\'re afraid that finding it means discovering it was something you did. Maybe it was. That doesn\'t make you a bad leader. It makes you a human one. But the longer you wait to look, the more it costs — and the people paying that cost are the ones who are still showing up.',
+      opsView: 'Relational fractures have a measurable cost, even when they feel intangible. Track your voluntary turnover over the last 18 months — not just who left, but who left that you didn\'t expect. Now estimate what each departure cost: recruiting, onboarding, lost productivity, the knowledge that walked out the door. In most '+ind.org+'s at this stage, the number is between 1.5x and 3x that person\'s salary. Then look at your hiring timeline — how long does it take to replace someone, and how long until the new person is actually producing? That gap is where margin disappears.',
+      deeperPattern: 'You\'re not missing the relational signal because you don\'t care. You\'re missing it because your role has structurally isolated you from it. The higher you go, the more filtered the information becomes. People perform "fine" for leadership. They save the real conversation for each other — or for their next employer. And here\'s the part that\'s hard to hear: the fracture might trace back to a decision you made that made sense on paper but landed differently than you intended. Not because you got it wrong — but because you made it from up here, and they experienced it from down there. That gap is where trust erodes.',
+      honestTruth: 'You feel it most in the moments that used to be easy. The hallway conversations that don\'t happen anymore. The meeting where someone used to challenge you and now they just nod. The person who used to stay late because they wanted to, not because they had to. Something shifted and you can\'t find the seam. You\'re not sure you want to find it — because you might discover it traces back to something you did, or didn\'t do. That doesn\'t make you a bad leader. It makes you a real one. But the longer you wait to look, the more it costs — and the people paying that cost are the ones still showing up.',
       actions: [
         { title:'Name what shifted.', text:'Think back to when things felt different — when the energy was better. What changed? A hire? A departure? A decision that wasn\'t explained? A promise that didn\'t land? The shift usually traces back to one moment. Name it.', time:'15 minutes of honest reflection' },
         { title:'Ask one person the real question.', text:'Pick the person on your '+ind.team+' you trust most — the one who\'ll tell you the truth. Ask them: "What\'s the one thing people aren\'t saying out loud right now?" Then listen without defending.', time:'One conversation, full attention' },
-        { title:'Close one loop.', text:'Whatever you hear, take one concrete action this week that demonstrates you heard it. Not a policy change. Not a grand announcement. One visible action that closes the gap between what you said and what people experienced.', time:'Depends on what you hear' }
+        { title:'Close one loop.', text:'Whatever you hear, take one concrete action this week that demonstrates you heard it. Not a policy change. Not a grand announcement. One visible action that closes the gap between what you said and what people experienced.', time:'One action this week' }
       ],
     },
     velocity: {
       typeName: 'The Velocity Blind Spot',
-      heroEmphasis: 'Outrun Your Own Foundation',
+      heroEmphasis: 'Outpaced Your Own Foundation',
       mirror: 'Growth covered the cracks. When '+ind.work+' keeps coming in and the numbers look right, it\'s easy to tell yourself the system is working. But you\'re carrying a feeling that something underneath isn\'t keeping up — the '+ind.team+' is stretched, the processes are held together with duct tape and heroics, and the "we\'ll fix it later" list keeps growing.',
-      whatsMissing: 'Speed creates compound invisibility. You don\'t have time to look back because you\'re sprinting forward. But the shortcuts your '+ind.org+' made at an earlier stage — the roles that were never properly defined, the processes that were "good enough," the communication that relied on proximity — those are now operating at a scale they were never designed for.',
-      cost: 'You\'re accruing operational debt faster than you realize. Customer experience is starting to wobble. Your '+ind.leader+' is burning the kind of energy that doesn\'t regenerate. And the scariest part: you won\'t see the breaking point until you\'re past it.',
+      whatsMissing: 'Speed creates blind spots that stack. You don\'t have time to look back because you\'re sprinting forward. But the shortcuts your '+ind.org+' made at an earlier stage — the roles that were never properly defined, the processes that were "good enough," the communication that relied on proximity — those are now operating at a scale they were never designed for.',
+      cost: 'The "fix it later" pile is growing faster than you realize. Customer experience is starting to wobble. Your '+ind.leader+' is burning the kind of energy that doesn\'t regenerate. And the scariest part: you won\'t see the breaking point until you\'re past it.',
       /* ── THREE LENSES ── */
-      opsView: 'Your '+ind.org+' is carrying operational debt in every system that was "good enough" at a smaller scale. Count the workarounds: the spreadsheet that should be a system, the person doing three jobs because the role was never split, the process that only works because one person remembers how. Each one is a load-bearing shortcut. At your current growth rate, you\'re adding weight to a foundation that wasn\'t engineered for it. The question isn\'t whether something will break — it\'s which thing breaks first, and whether it happens in front of a customer.',
+      opsView: 'Your '+ind.org+' is carrying shortcuts in every system that was "good enough" at a smaller scale. Count the workarounds: the spreadsheet that should be a system, the person doing three jobs because the role was never split, the process that only works because one person remembers how. Each one is a load-bearing shortcut. At your current growth rate, you\'re adding weight to a foundation that wasn\'t engineered for it. The question isn\'t whether something will break — it\'s which thing breaks first, and whether it happens in front of a customer.',
       deeperPattern: 'Speed is intoxicating. When the numbers are climbing, it feels like validation — proof that you\'re doing something right. But speed also serves a psychological function: it lets you avoid looking at the things that are harder to fix. Slowing down to rebuild a process or restructure a role feels like stalling when you should be scaling. So you don\'t. You add another workaround, promote someone who isn\'t quite ready, say yes to work you\'re not sure you can deliver. Not because you don\'t know the risk — but because momentum feels safer than pausing. The velocity itself becomes the blind spot: you can\'t see what\'s breaking because you\'re moving too fast to look.',
       honestTruth: 'You have a list — maybe in your head, maybe on paper — of things you know are held together with duct tape. You know who on your '+ind.team+' is carrying too much. You know which system is going to fail next. You know that the pace you\'re running isn\'t sustainable, not for them and not for you. And you keep going, because slowing down feels like losing ground you fought hard to gain. But here\'s what you already know at 3AM: you\'re not actually choosing between speed and stability. You\'re choosing between fixing it now while it\'s manageable, or fixing it later when it\'s an emergency. And emergencies cost ten times more.',
       actions: [
         { title:'List the duct tape.', text:'Every '+ind.org+' has systems held together by one person\'s heroics or a workaround that was supposed to be temporary. List them. The ones that make you wince are the ones that matter most.', time:'30 minutes' },
-        { title:'Find the load-bearing person.', text:'Who on your '+ind.team+' is the one holding the most together with the least support? That person is your biggest vulnerability and your biggest asset. If they left tomorrow, what breaks?', time:'Honest gut check' },
+        { title:'Find the load-bearing person.', text:'Who on your '+ind.team+' is the one holding the most together with the least support? That person is your biggest vulnerability and your biggest asset. If they left tomorrow, what breaks?', time:'10 minutes' },
         { title:'Fix one thing before you grow more.', text:'Pick one item from your duct tape list — the one with the highest risk. Fix it properly. Not a patch. An actual solution. Stabilize before you accelerate.', time:'This week' }
       ],
     }
@@ -200,7 +200,11 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       ],
       actionsTitle: 'Build these habits now — while you still can.',
       actionsSub: 'The founders who navigate the next stage well are the ones who build intentional architecture before they need it.',
-      actions: tc.actions,
+      actions: [
+        { title:'Start a weekly "What waited on me?" check-in.', text:'At the end of each week, ask your key person: what decisions waited on me this week that didn\'t need to? Just track it. Don\'t fix anything yet — the list itself will teach you where to look.', time:'15 minutes per week' },
+        { title:'Write down your three unwritten rules.', text:'Every '+ind.org+' has rules that aren\'t in any handbook — who really makes the calls, how things actually get communicated, what the real priorities are. Writing them down is the first step to deciding if they\'re the ones you want.', time:'20 minutes' },
+        { title:'Ask one person: "What should I know that nobody\'s telling me?"', text:'Pick someone you trust on your '+ind.team+'. Ask that question, then just listen. The answer might surprise you — or it might confirm something you already sensed.', time:'One conversation' }
+      ],
       offer: {
         headline: 'Stay Ahead of It',
         bridge: 'You don\'t need a diagnostic yet. What you need is awareness of the patterns that trip founders up between here and 50 people.',
@@ -220,7 +224,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       eyebrow: 'Your Results — The Builder Stage',
       headline: 'You\'re Building Fast.<br><em>Let\'s Make Sure You\'re Building Right.</em>',
       subhead: 'You\'re in a critical window: big enough to need systems, small enough to build them right the first time.',
-      greeting: name+', you\'re in the window where small decisions become permanent patterns. '+q2Narrative+(visNarrative?' '+visNarrative:''),
+      greeting: name+', you\'re in the window where small decisions become permanent patterns. '+q2Narrative,
       sections: [
         { label:'Your Profile', heading:'You\'re setting things up as you go — and those decisions are becoming permanent.', text:'At '+orgSize+' people in '+industry+', you\'re making calls every day about who does what, who reports to whom, how things get communicated. You\'re building those on the fly because you\'re busy — and that\'s normal. But here\'s what I see: the way you set things up at 20 people becomes the way the '+ind.org+' runs at 50. Those patterns will either scale beautifully or become invisible walls that quietly drain speed, morale, and margin.'+(failsNarrative?' '+failsNarrative:'') },
         { label:'The Blind Spot Risk', heading: tc.typeName, text: mirrorFull }
@@ -271,7 +275,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         desc: 'A clear answer to what\'s broken and what to fix first. Not a report that gathers dust — a plan you can actually use.',
         items: ['Exactly where the blind spot is hiding and what it\'s costing you','What to change first and what to leave alone','A step-by-step plan with quick wins and longer-term shifts','A 15-minute kickoff call so we\'re working on the right thing'],
         cta: 'Get the Blind Spot Scan →',
-        alt: 'Not ready? Download: "5 Warning Signs Your Blind Spot Is Getting Worse"'
+        alt: 'Not ready for the full scan? Book a single session first — 90 minutes on your specific situation.'
       }
     };
   }
@@ -308,9 +312,9 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     eyebrow: 'Your Results — Transformation',
     headline: 'You Don\'t Need Another Report.<br><em>You Need a Partner.</em>',
     subhead: 'Your answers tell me this has been building for a long time. You\'ve tried things. They haven\'t stuck. That\'s not because you\'re doing it wrong — it\'s because the pattern is bigger than any single fix.',
-    greeting: name+', this didn\'t happen overnight — and it\'s not because you did something wrong. '+q2Narrative+(visNarrative?' '+visNarrative:'')+' You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.',
+    greeting: name+', this didn\'t happen overnight — and it\'s not because you did something wrong. '+q2Narrative,
     sections: [
-      { label: tc.typeName+' — Systemic', heading:'The Pattern', text: mirrorFull },
+      { label: tc.typeName+' — Systemic', heading:'The Pattern', text: 'You\'re not dealing with one blind spot. You\'re carrying the accumulated weight of patterns that have been building since your '+ind.org+' was a fraction of its current size.'+(visNarrative?' '+visNarrative:'')+' '+mirrorFull },
       { label:'The Operations View', heading:'What the numbers would tell a stranger.', text: tc.opsView },
       { label:'The Deeper Pattern', heading:'Why you — specifically you — couldn\'t see this.', text: tc.deeperPattern+(failsNarrative?' '+failsNarrative:'') },
       { label:'The Honest Truth', heading:'What you\'d say if no one was listening.', text: tc.honestTruth }
@@ -325,7 +329,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       desc: 'Built around your specific situation. We figure out the right shape together — some clients want a partner in the room, others want a strategist on call.',
       items: ['Complete diagnostic — the full picture of what\'s happening and why','A plan built for your situation, not a template','Someone working alongside you to execute the changes, not just recommend them','Ongoing support until things actually shift — not a handoff after 30 days'],
       cta: 'Book a 15-Minute Consultation →',
-      alt: 'This isn\'t a sales call. It\'s a triage conversation — we\'ll confirm whether this is the right fit and what the shortest path to action looks like.'
+      alt: 'This isn\'t a pitch. At this level, we need 15 minutes to confirm we\'re the right partner — and that you\'re ready for what this actually requires.'
     }
   };
 }
