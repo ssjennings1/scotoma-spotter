@@ -160,7 +160,8 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
 
   // Offer
   var oHtml = '<h3>'+content.offer.headline+'</h3><p class="r-text">'+content.offer.bridge+'</p>';
-  oHtml += '<div class="offer-price">'+content.offer.price+'</div><p class="r-text">'+content.offer.desc+'</p>';
+  if(content.offer.price) oHtml += '<div class="offer-price">'+content.offer.price+'</div>';
+  oHtml += '<p class="r-text">'+content.offer.desc+'</p>';
   oHtml += '<div class="offer-box"><ul>';
   content.offer.items.forEach(function(it){ oHtml+='<li>'+it+'</li>'; });
   oHtml += '</ul></div>';
@@ -169,18 +170,22 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
   var ctaTarget = content.offer.ctaDownload ? '' : ' target="_blank" rel="noopener"';
   oHtml += '<a href="'+ctaHref+'" class="btn-bronze"'+ctaTarget+ctaDl+'>'+content.offer.cta+'</a>';
   if(content.offer.alt){
-    // Check if alt starts with "Not ready?" — render as link; otherwise as plain triage text
-    if(content.offer.alt.indexOf('Not ready')===0){
-      var altHref = content.offer.altHref || '#';
+    if(content.offer.altText && content.offer.altHref){
+      // Text description + separate CTA link (e.g., Builder tier)
+      oHtml += '<div class="offer-alt" style="border-bottom:none;"><span style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">'+content.offer.alt+'</span><br>';
+      oHtml += '<a href="'+content.offer.altHref+'" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">'+content.offer.altText+'</a></div>';
+    } else if(content.offer.altHref && content.offer.altHref !== '#'){
+      // Direct link alt (e.g., download or external link)
       var altDl = content.offer.altDownload ? ' download' : '';
-      oHtml += '<div class="offer-alt"><a href="'+altHref+'"'+altDl+'>'+content.offer.alt+'</a></div>';
+      oHtml += '<div class="offer-alt"><a href="'+content.offer.altHref+'"'+altDl+' target="_blank" rel="noopener">'+content.offer.alt+'</a></div>';
     } else {
+      // Plain triage text (e.g., Breaking/Transformation)
       oHtml += '<div class="offer-alt" style="border-bottom:none;"><span style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">'+content.offer.alt+'</span></div>';
     }
   }
-  // Session bridge — suppress on early tier (main offer is free, $750 upsell contradicts positioning)
-  if(tier !== 'early'){
-    oHtml += '<div class="offer-session"><p>Not ready for a full engagement? <strong>Book a single session — $750.</strong> Ninety minutes. Your results. What they mean for your business specifically.</p>';
+  // Session bridge — only if content opts in via session flag
+  if(content.offer.session){
+    oHtml += '<div class="offer-session"><p>Or book a single session — <strong>$750.</strong> Ninety minutes with your results and what they mean for your business specifically.</p>';
     oHtml += '<a href="https://link.syncovatellc.com/widget/bookings/on-demand-advisor" target="_blank" rel="noopener" style="font-size:0.82rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);padding-bottom:2px;">Book a Single Session →</a></div>';
   }
   document.getElementById('rOffer').innerHTML = oHtml;

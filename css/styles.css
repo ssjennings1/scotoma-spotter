@@ -64,7 +64,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem
 .q-opt:hover{border-color:var(--bronze);background:var(--bronze-glow);}
 .q-opt.selected{border-color:var(--bronze);background:var(--bronze-glow);}
 .q-opt.selected::before{transform:scaleY(1);}
-.q-opt input{display:none;}
+.q-opt input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+.q-opt:focus-within{border-color:var(--bronze);outline:2px solid var(--bronze);outline-offset:2px;}
 .q-opt-text{font-size:0.92rem;line-height:1.6;color:var(--text);}
 .q-opt-sub{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;line-height:1.5;}
 
@@ -75,7 +76,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem
 .q-chip{padding:0.6rem 1.1rem;background:white;border:1px solid var(--border);cursor:pointer;transition:all 0.25s;font-size:0.85rem;color:var(--text);}
 .q-chip:hover{border-color:var(--bronze);background:var(--bronze-glow);}
 .q-chip.selected{border-color:var(--bronze);background:var(--bronze-glow);color:var(--charcoal);font-weight:400;}
-.q-chip input{display:none;}
+.q-chip input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+.q-chip:focus-within{border-color:var(--bronze);outline:2px solid var(--bronze);outline-offset:2px;}
 
 .q-next{opacity:0.25;pointer-events:none;transition:opacity 0.3s;}
 .q-next.ready{opacity:1;pointer-events:auto;}
@@ -91,9 +93,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem
 .email-card p{font-size:0.88rem;color:var(--text-light);margin-bottom:1.75rem;line-height:1.8;}
 .email-input{display:block;width:100%;padding:0.85rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(196,147,90,0.2);color:#FDFCFA;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:300;margin-bottom:0.6rem;outline:none;transition:border-color 0.25s;}
 .email-input:focus{border-color:var(--bronze);}
-.email-input::placeholder{color:rgba(253,252,250,0.2);}
+.email-input::placeholder{color:rgba(253,252,250,0.45);}
 .email-input.input-error{border-color:#e74c3c;}
-.email-consent{display:flex;align-items:flex-start;gap:0.6rem;margin:1rem 0 1.5rem;font-size:0.75rem;color:rgba(253,252,250,0.3);line-height:1.5;cursor:pointer;}
+.email-consent{display:flex;align-items:flex-start;gap:0.6rem;margin:1rem 0 1.5rem;font-size:0.75rem;color:rgba(253,252,250,0.6);line-height:1.5;cursor:pointer;}
 .email-consent input{margin-top:2px;accent-color:var(--bronze);}
 .email-error{font-size:0.78rem;color:#e74c3c;margin-bottom:0.75rem;display:none;}
 
@@ -122,8 +124,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem
 .toolkit-item:last-of-type{border-bottom:none;}
 .toolkit-label{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--bronze);margin-bottom:0.25rem;}
 .toolkit-form{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.5rem;max-width:340px;}
-.toolkit-form input{padding:0.75rem 1rem;border:1px solid var(--border);background:white;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.25s;}
-.toolkit-form input:focus{border-color:var(--bronze);}
+.toolkit-form .email-input{color:var(--text);background:white;border:1px solid var(--border);}
+.toolkit-form .email-input::placeholder{color:var(--text-muted);}
+.toolkit-form .email-input:focus{border-color:var(--bronze);}
 
 /* ── RESULTS ── */
 .results-screen{flex:1;display:flex;flex-direction:column;}
@@ -214,6 +217,9 @@ footer{background:#1A1D22;padding:4rem 2rem 2rem;border-top:1px solid rgba(196,1
 .retake a:hover{color:var(--bronze);border-color:var(--bronze);}
 .retake-sep{margin:0 0.75rem;color:var(--border);}
 
+/* ── SCREEN READER ONLY ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
 .fade-in{animation:fadeUp 0.6s ease forwards;}
@@ -226,6 +232,7 @@ footer{background:#1A1D22;padding:4rem 2rem 2rem;border-top:1px solid rgba(196,1
   .q-card{padding:0 0.5rem;}
   .q-row{flex-direction:column;}
   .q-chip{text-align:center;}
+  .email-input{font-size:16px;}
   .r-hero,.r-visual,.r-body,.r-actions,.r-offer,.sig,.disq-hero,.disq-body{padding-left:1.5rem;padding-right:1.5rem;}
   .radar-svg{max-width:260px;}
   .radar-label{font-size:9px;}

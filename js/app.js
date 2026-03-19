@@ -105,7 +105,9 @@ window.chip = function(label, key, pts, special){
   else if(key==='industry'){ S.industry=label.textContent.trim(); }
   // Enable continue when all three selected
   if(S.size!==null && S.role!==null && S.industry){
-    document.getElementById('q1-btn').classList.add('ready');
+    var btn = document.getElementById('q1-btn');
+    btn.classList.add('ready');
+    btn.setAttribute('aria-disabled','false');
   }
 };
 
@@ -120,7 +122,9 @@ window.pick = function(label, key, pts, type){
   label.classList.add('selected');
   S[key] = pts;
   if(type) S.q5type = type;
-  document.getElementById(key+'-btn').classList.add('ready');
+  var btn = document.getElementById(key+'-btn');
+  btn.classList.add('ready');
+  btn.setAttribute('aria-disabled','false');
 };
 
 /* ── INLINE VALIDATION ── */
@@ -249,7 +253,7 @@ window.restartAssessment = function(){
   // Clear all selections
   document.querySelectorAll('.q-chip.selected, .q-opt.selected').forEach(function(el){ el.classList.remove('selected'); });
   // Reset continue buttons
-  document.querySelectorAll('.q-next').forEach(function(btn){ btn.classList.remove('ready'); });
+  document.querySelectorAll('.q-next').forEach(function(btn){ btn.classList.remove('ready'); btn.setAttribute('aria-disabled','true'); });
   // Clear email form
   var inName = document.getElementById('inName'); if(inName) inName.value='';
   var inEmail = document.getElementById('inEmail'); if(inEmail) inEmail.value='';
@@ -290,6 +294,11 @@ window.submitToolkit = function(){
     errEl.textContent = 'Please enter a valid email address.';
     errEl.style.display = 'block';
     emailEl.focus();
+    return;
+  }
+  if(!document.getElementById('tkConsent').checked){
+    errEl.textContent = 'Please check the consent box to receive the toolkit.';
+    errEl.style.display = 'block';
     return;
   }
 

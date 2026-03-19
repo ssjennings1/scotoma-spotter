@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=3">
 </head>
 <body>
 
@@ -113,7 +113,7 @@
         </div>
       </div>
 
-      <button class="btn-bronze q-next" id="q1-btn" onclick="fromQ1()">Continue →</button>
+      <button class="btn-bronze q-next" id="q1-btn" onclick="fromQ1()" aria-disabled="true">Continue →</button>
     </div>
   </div>
 </div>
@@ -140,8 +140,8 @@
           <div><div class="q-opt-text">Weekly or more</div><div class="q-opt-sub">It's constant. I can feel something is wrong but I can't pin it down.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q2-btn" onclick="go('s-q3')">Continue →</button>
-      <a class="q-back" onclick="go('s-q1')">← Back</a>
+      <button class="btn-bronze q-next" id="q2-btn" onclick="go('s-q3')" aria-disabled="true">Continue →</button>
+      <a href="#" class="q-back" role="button" onclick="go('s-q1');return false;">← Back</a>
     </div>
   </div>
 </div>
@@ -168,8 +168,8 @@
           <div><div class="q-opt-text">I'm drowning — I have no idea what's really happening anymore.</div><div class="q-opt-sub">I've lost the thread and I know it.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q3vis-btn" onclick="go('s-q4')">Continue →</button>
-      <a class="q-back" onclick="go('s-q2')">← Back</a>
+      <button class="btn-bronze q-next" id="q3vis-btn" onclick="go('s-q4')" aria-disabled="true">Continue →</button>
+      <a href="#" class="q-back" role="button" onclick="go('s-q2');return false;">← Back</a>
     </div>
   </div>
 </div>
@@ -196,8 +196,8 @@
           <div><div class="q-opt-text">Yes — multiple attempts, nothing has worked.</div><div class="q-opt-sub">I've thrown resources at this and I'm starting to wonder if I'm fixing the wrong thing.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q4fails-btn" onclick="go('s-q5')">Continue →</button>
-      <a class="q-back" onclick="go('s-q3')">← Back</a>
+      <button class="btn-bronze q-next" id="q4fails-btn" onclick="go('s-q5')" aria-disabled="true">Continue →</button>
+      <a href="#" class="q-back" role="button" onclick="go('s-q3');return false;">← Back</a>
     </div>
   </div>
 </div>
@@ -224,8 +224,8 @@
           <div><div class="q-opt-text">We're growing so fast I feel like I'm losing touch with what's actually happening.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q5-btn" onclick="go('s-q6')">Continue →</button>
-      <a class="q-back" onclick="go('s-q4')">← Back</a>
+      <button class="btn-bronze q-next" id="q5-btn" onclick="go('s-q6')" aria-disabled="true">Continue →</button>
+      <a href="#" class="q-back" role="button" onclick="go('s-q4');return false;">← Back</a>
     </div>
   </div>
 </div>
@@ -252,8 +252,8 @@
           <div><div class="q-opt-text">Yesterday — I should have dealt with this months ago.</div></div>
         </label>
       </div>
-      <button class="btn-bronze q-next" id="q6-btn" onclick="go('s-email')">Continue →</button>
-      <a class="q-back" onclick="go('s-q5')">← Back</a>
+      <button class="btn-bronze q-next" id="q6-btn" onclick="go('s-email')" aria-disabled="true">Continue →</button>
+      <a href="#" class="q-back" role="button" onclick="go('s-q5');return false;">← Back</a>
     </div>
   </div>
 </div>
@@ -268,13 +268,16 @@
       <div class="q-counter">Assessment Complete</div>
       <h2>Your diagnosis is ready.</h2>
       <p>I built your Scotoma Profile from your answers. Enter your name and email and I'll show you what I found — including one thing you can do about it this week.</p>
-      <input type="text" class="email-input" id="inName" placeholder="First name">
-      <input type="email" class="email-input" id="inEmail" placeholder="Email">
-      <input type="text" class="email-input" id="inCompany" placeholder="Company (optional)">
+      <label for="inName" class="sr-only">First name</label>
+      <input type="text" class="email-input" id="inName" placeholder="First name" autocomplete="given-name">
+      <label for="inEmail" class="sr-only">Email</label>
+      <input type="email" class="email-input" id="inEmail" placeholder="Email" autocomplete="email">
+      <label for="inCompany" class="sr-only">Company (optional)</label>
+      <input type="text" class="email-input" id="inCompany" placeholder="Company (optional)" autocomplete="organization">
       <div class="email-error" id="emailError" aria-live="polite"></div>
       <label class="email-consent"><input type="checkbox" id="inConsent"> I agree to receive my results and occasional resources from Syncovate. <a href="https://go.syncovatellc.com/syncovate-privacy-policy" target="_blank" rel="noopener" style="color:var(--bronze);text-decoration:underline;">Privacy Policy</a></label>
       <button class="btn-bronze" onclick="submitEmail()" style="width:100%;text-align:center;">Show Me What I'm Missing →</button>
-      <a class="q-back" onclick="go('s-q6')" style="text-align:center;">← Back</a>
+      <a href="#" class="q-back" role="button" onclick="go('s-q6');return false;" style="text-align:center;">← Back</a>
     </div>
   </div>
 </div>
@@ -316,9 +319,12 @@
         <div class="toolkit-item"><div class="toolkit-label">VIP Assessment Link</div><p>A direct link so your leadership team can take the Scotoma Spotter themselves.</p></div>
 
         <div class="toolkit-form">
-          <input type="text" id="tkName" class="email-input" placeholder="First name">
-          <input type="email" id="tkEmail" class="email-input" placeholder="Email">
+          <label for="tkName" class="sr-only">First name</label>
+          <input type="text" id="tkName" class="email-input" placeholder="First name" autocomplete="given-name">
+          <label for="tkEmail" class="sr-only">Email</label>
+          <input type="email" id="tkEmail" class="email-input" placeholder="Email" autocomplete="email">
           <div id="tkError" class="email-error" style="display:none;"></div>
+          <label class="email-consent" style="color:var(--text-muted);"><input type="checkbox" id="tkConsent"> I agree to receive the toolkit and occasional resources from Syncovate. <a href="https://go.syncovatellc.com/syncovate-privacy-policy" target="_blank" rel="noopener" style="color:var(--bronze);text-decoration:underline;">Privacy Policy</a></label>
           <button class="btn-bronze" style="width:100%;text-align:center;" onclick="submitToolkit()">Send Me the Toolkit →</button>
           <div id="tkSuccess" style="display:none;margin-top:1rem;padding:1rem;background:rgba(184,155,110,0.15);border-radius:8px;text-align:center;color:var(--gold);">✓ Check your inbox — the toolkit is on its way.</div>
         </div>
@@ -403,8 +409,8 @@
 
 </main>
 
-<script src="js/results-content.js?v=3"></script>
-<script src="js/results-engine.js?v=2"></script>
-<script src="js/app.js?v=2"></script>
+<script src="js/results-content.js?v=4"></script>
+<script src="js/results-engine.js?v=3"></script>
+<script src="js/app.js?v=3"></script>
 </body>
 </html>

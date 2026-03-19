@@ -242,7 +242,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         cta: 'Learn More About the Blind Spot Scan →',
         alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"',
         altHref: 'assets/7-decisions-scale-or-stall.pdf',
-        altDownload: true
+        altDownload: true,
+        session: true
       }
     };
   }
@@ -278,7 +279,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         cta: 'Get the Blind Spot Scan →',
         alt: 'Not ready? Download: "7 Decisions That Determine If You Scale or Stall"',
         altHref: 'assets/7-decisions-scale-or-stall.pdf',
-        altDownload: true
+        altDownload: true,
+        session: true
       }
     };
   }
@@ -305,7 +307,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
         desc: 'A 2-3 week deep dive. You get complete visibility and a plan that actually sticks.',
         items: ['A complete picture of what\'s broken across your leadership, structure, and people','What to fix first, what to leave alone, and in what order','How to know it\'s working — and what to watch for if it\'s not','A consultation to figure out next steps: do it yourself, get ongoing support, or bring in a partner'],
         cta: 'Book a 15-Minute Call →',
-        alt: 'This isn\'t a sales call. It\'s a triage conversation — we figure out if this is the right fit for where you are.'
+        alt: 'This isn\'t a sales call. It\'s a triage conversation — we figure out if this is the right fit for where you are.',
+        session: true
       }
     };
   }
@@ -332,7 +335,8 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
       desc: 'Built around your specific situation. We figure out the right shape together — some clients want a partner in the room, others want a strategist on call.',
       items: ['Complete diagnostic — the full picture of what\'s happening and why','A plan built for your situation, not a template','Someone working alongside you to execute the changes, not just recommend them','Ongoing support until things actually shift — not a handoff after 30 days'],
       cta: 'Book a 15-Minute Consultation →',
-      alt: 'This isn\'t a pitch. At this level, we need 15 minutes to confirm we\'re the right partner — and that you\'re ready for what this actually requires.'
+      alt: 'This isn\'t a pitch. At this level, we need 15 minutes to confirm we\'re the right partner — and that you\'re ready for what this actually requires.',
+      session: true
     }
   };
 }
