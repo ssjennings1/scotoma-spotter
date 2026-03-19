@@ -133,7 +133,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     },
     relational: {
       typeName: 'The Relational Blind Spot',
-      heroEmphasis: 'Can\'t Locate the Source',
+      heroEmphasis: 'Lost Sight of the Signal',
       mirror: 'The energy shifted. You can feel it. Conversations are shorter than they used to be. People say "things are fine" when you ask, and you know they\'re not. But you can\'t point to the specific thing that changed — and that\'s what makes relational blind spots so dangerous. They\'re invisible until someone leaves.',
       whatsMissing: 'Somewhere in your '+ind.org+', there\'s a trust gap you can\'t see from where you sit. It might be between peers. It might be between a '+ind.leader+' and their '+ind.team+'. It might be between what you say the culture is and what people actually experience on '+ind.workplace+'. The mismatch between the stated values and the lived reality is where engagement dies quietly.',
       cost: 'Your best people get quiet first. They don\'t complain — they disengage. By the time the relational fracture becomes visible to leadership, it\'s been spreading for months. And the usual fix — a team offsite, a survey, an "open door" announcement — bounces off because it doesn\'t address the actual rupture.',
@@ -149,7 +149,7 @@ function getContent(tier, type, industry, name, q2score, orgSize, S){
     },
     velocity: {
       typeName: 'The Velocity Blind Spot',
-      heroEmphasis: 'Moving Too Fast to See',
+      heroEmphasis: 'Outrun Your Own Foundation',
       mirror: 'Growth covered the cracks. When '+ind.work+' keeps coming in and the numbers look right, it\'s easy to tell yourself the system is working. But you\'re carrying a feeling that something underneath isn\'t keeping up — the '+ind.team+' is stretched, the processes are held together with duct tape and heroics, and the "we\'ll fix it later" list keeps growing.',
       whatsMissing: 'Speed creates compound invisibility. You don\'t have time to look back because you\'re sprinting forward. But the shortcuts your '+ind.org+' made at an earlier stage — the roles that were never properly defined, the processes that were "good enough," the communication that relied on proximity — those are now operating at a scale they were never designed for.',
       cost: 'You\'re accruing operational debt faster than you realize. Customer experience is starting to wobble. Your '+ind.leader+' is burning the kind of energy that doesn\'t regenerate. And the scariest part: you won\'t see the breaking point until you\'re past it.',
