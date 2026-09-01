@@ -29,14 +29,14 @@ Paste the **SITE-WIDE** block from `02-schema-jsonld.html` (the `ProfessionalSer
 
 ## Nav
 
-Links: Home (`/`) · How I Work (`/how-i-work`) · Writing (`/writing`) · About (`/about`) · Contact (`/contact`) · **Let's Talk** button (`https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo`, class `sy-btn-primary`)
+Links: Home (`/`) · How I Work (`/how-i-work`) · Blog (`/writing`) · About (`/about`) · Contact (`/contact`) · **Let's Talk** button (`https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo`, class `sy-btn-primary`)
 
 ---
 
 ## Footer
 
 - Tagline: **Business Psychology for Owners of Growing Companies**
-- Links: Home · How I Work · Writing · About · Contact
+- Links: Home · How I Work · Blog · About · Contact
 - LinkedIn: https://www.linkedin.com/in/shannonsjennings/
 - Saturday Seed: /saturday-seed
 - Phone: (269) 293-4442 (linked: `tel:+12692934442`)
@@ -98,7 +98,7 @@ Do NOT redirect `/prism-blog` or `/saturday-seed` — they stay live.
 | 9 | GHL Button (Single Session) | Label: "Book a Session" · URL: `#TODO-single-session-booking` · Class: `sy-btn-secondary` |
 | 10 | GHL Button (On-Call) | Label: "Let's Talk" · URL: `https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo` · Class: `sy-btn-primary` |
 | 11 | `hiw-05-who-i-work-with.html` | |
-| 12 | `hiw-06-testimonials.html` | FLAG: Confirm Jen Sailor's current title/org. |
+| 12 | `hiw-06-testimonials.html` | |
 | 13 | GHL Image (optional) | Alt: "Dr. Shannon Jennings facilitating a leadership team retreat" |
 | 14 | `hiw-07-closing.html` | |
 | 15 | GHL Button | Label: "Let's Talk" · URL: `https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo` · Class: `sy-btn-primary` |
@@ -168,7 +168,7 @@ Do NOT redirect `/prism-blog` or `/saturday-seed` — they stay live.
 
 ## Flags for Shannon
 
-1. **Jen Sailor's title/org** — currently "Chief Financial and Operations Officer, Indiana Trust Wealth Management" per copy doc. Confirm before publishing.
-2. **Nav label** — built as "Writing"; change to "Through the Prism" if preferred (one text change in nav).
+1. ~~**Jen Sailor's title/org**~~ — Confirmed: CFOO, Indiana Trust Wealth Management.
+2. **Nav label** — set to "Blog".
 3. **About slug** — built as `/about`; the redirect from `/about-dr-j` handles the old URL. Keep either.
 4. **Blog feed** — if GHL's native Blog element can't pull `/prism-blog`, uncomment the three hardcoded post cards in `writing-03-through-the-prism.html` and TODO to wire the live feed.
