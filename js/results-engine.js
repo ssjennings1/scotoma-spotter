@@ -17,7 +17,7 @@ var scotomaTypeNames = {
 function getScotomaScores(type, q2, q6, role, size, tier){
   // q2: 0-25 (3AM test), q6: 0-30 (readiness), role: 0-25, size: 0-25
   var q2mod = Math.round((q2/25)*15);   // 0-15
-  var q4mod = Math.round((q6/30)*10);   // 0-10
+  var q6mod = Math.round((q6/30)*10);   // 0-10
   var sizeMod = Math.round((size/25)*10); // 0-10
   var roleMod = Math.round((role/25)*10); // 0-10
 
@@ -32,7 +32,7 @@ function getScotomaScores(type, q2, q6, role, size, tier){
   types.forEach(function(t){
     if(t === type){
       // Primary: high base + instinct and readiness modifiers, capped by tier
-      scores[t] = Math.min(primaryCap, Math.max(15, 70 + q2mod + q4mod));
+      scores[t] = Math.min(primaryCap, Math.max(15, 70 + q2mod + q6mod));
     } else {
       // Secondary: lower base + size and role modifiers + small instinct bump
       var base = 20;
@@ -118,7 +118,8 @@ function renderRadarChart(scores, primaryType, tier){
     labelHtml += '<text x="'+(p.x+off.dx)+'" y="'+(p.y+off.dy+13)+'" text-anchor="'+off.anchor+'" class="radar-score'+(isPrimary?' radar-score-primary':'')+'">'+scoreTxt+'</text>';
   });
 
-  var svg = '<svg viewBox="0 0 320 320" class="radar-svg" xmlns="http://www.w3.org/2000/svg">';
+  var ariaScores = types.map(function(t){ return scotomaTypeNames[t]+' '+scores[t]+'%'; }).join(', ');
+  var svg = '<svg viewBox="0 0 320 320" class="radar-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scotoma Profile: '+ariaScores+'">';
   svg += gridHtml + axisHtml + scoreHtml + dotsHtml + labelHtml;
   svg += '</svg>';
 
@@ -167,7 +168,7 @@ function buildResults(name, score, tier, type, industry, q2score, orgSize, S){
   oHtml += '</ul></div>';
   var ctaHref = content.offer.ctaHref || 'https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo';
   var ctaDl = content.offer.ctaDownload ? ' download' : '';
-  var ctaTarget = content.offer.ctaDownload ? '' : ' target="_blank" rel="noopener"';
+  var ctaTarget = ' target="_blank" rel="noopener"';
   oHtml += '<a href="'+ctaHref+'" class="btn-bronze"'+ctaTarget+ctaDl+'>'+content.offer.cta+'</a>';
   if(content.offer.alt){
     if(content.offer.altText && content.offer.altHref){

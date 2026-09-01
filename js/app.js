@@ -41,8 +41,8 @@ function checkForResultsUrl(){
     var data = JSON.parse(decodeURIComponent(escape(atob(r))));
     // Reconstruct state
     S.size = data.sz; S.role = data.rl; S.industry = data.i; S.sizeLabel = data.o;
-    S.q2 = data.q2; S.q3vis = data.q3; S.q4fails = data.q4; S.q6 = data.q6;
-    S.q5type = data.tp;
+    S.q2 = data.q2; S.q3vis = data.q3; S.q4fails = data.q4; S.q6 = data.q6 || 0;
+    S.q5 = 0; S.q5type = data.tp;
     // Store results URL for copy button
     lastResultsUrl = window.location.href;
     // Render results directly
@@ -60,6 +60,15 @@ function checkForResultsUrl(){
   }
 }
 
+/* ── QUESTION GUARDS ── */
+var screenGuards = {
+  's-q3': function(){ return S.q2 !== null; },
+  's-q4': function(){ return S.q3vis !== null; },
+  's-q5': function(){ return S.q4fails !== null; },
+  's-q6': function(){ return S.q5type !== ''; },
+  's-email': function(){ return S.q6 !== null; }
+};
+
 /* ── NAV ── */
 function setProgress(id){
   var i = screens.indexOf(id);
@@ -72,6 +81,7 @@ function setProgress(id){
 
 /* ── SCREEN TRANSITIONS ── */
 window.go = function(id){
+  if(screenGuards[id] && !screenGuards[id]()) return;
   var current = document.querySelector('.screen.active');
   if(current){
     current.classList.add('fade-out');
@@ -112,6 +122,7 @@ window.chip = function(label, key, pts, special){
 };
 
 window.fromQ1 = function(){
+  if(S.size===null || S.role===null || !S.industry) return;
   if(S.disq){ go('s-disq'); return; }
   go('s-q2');
 };
@@ -265,6 +276,12 @@ window.restartAssessment = function(){
   document.getElementById('progress').setAttribute('aria-valuenow','0');
   // Reset radar animation
   document.getElementById('rVisual').classList.remove('animated');
+  // Reset toolkit form (disqualification page)
+  var tkName = document.getElementById('tkName'); if(tkName){ tkName.value=''; tkName.style.display=''; }
+  var tkEmail = document.getElementById('tkEmail'); if(tkEmail){ tkEmail.value=''; tkEmail.style.display=''; }
+  var tkConsent = document.getElementById('tkConsent'); if(tkConsent) tkConsent.checked=false;
+  var tkBtn = document.querySelector('.toolkit-form button'); if(tkBtn) tkBtn.style.display='';
+  var tkSuccess = document.getElementById('tkSuccess'); if(tkSuccess) tkSuccess.style.display='none';
   // Go to hero
   go('s-hero');
 };
@@ -324,6 +341,13 @@ window.submitToolkit = function(){
   emailEl.style.display = 'none';
   document.getElementById('tkSuccess').style.display = 'block';
 };
+
+/* ── KEYBOARD SUPPORT for radio inputs ── */
+document.addEventListener('change', function(e){
+  if(e.target.type !== 'radio') return;
+  var label = e.target.closest('.q-opt') || e.target.closest('.q-chip');
+  if(label && label.onclick) label.onclick();
+});
 
 /* ── ON PAGE LOAD: check for results URL ── */
 checkForResultsUrl();

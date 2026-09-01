@@ -82,7 +82,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 2.5rem
 .q-next{opacity:0.25;pointer-events:none;transition:opacity 0.3s;}
 .q-next.ready{opacity:1;pointer-events:auto;}
 .q-back{display:block;text-align:center;margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);cursor:pointer;text-decoration:none;transition:color 0.2s;}
-.q-back:hover{color:var(--cream);}
+.q-back:hover{color:var(--bronze);}
 
 /* ── EMAIL GATE ── */
 .email-screen{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--charcoal);position:relative;overflow:hidden;}
@@ -243,4 +243,9 @@ footer{background:#1A1D22;padding:4rem 2rem 2rem;border-top:1px solid rgba(196,1
 @media(max-width:480px){
   .hero h1{font-size:2rem;}
   .r-hero h2{font-size:1.5rem;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
+  .screen{transition:none;}
+  .loading-ring{animation:none;border-top-color:var(--bronze);}
 }

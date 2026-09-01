@@ -6,6 +6,9 @@
    tweak headlines, narratives, and offers.
    ═══════════════════════════════════════ */
 
+/* ── HTML SANITIZER ── */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
 /* ── INDUSTRY-SPECIFIC LANGUAGE ── */
 function indLang(industry){
   var map = {
@@ -74,6 +77,8 @@ var industryColor = {
    ═══════════════════════════════════════════ */
 
 function getContent(tier, type, industry, name, q2score, orgSize, S){
+  name = esc(name);
+  orgSize = esc(orgSize);
   var ind = indLang(industry);
   /* ── Q2 NARRATIVE (tier-aware) ──
      The q2 narrative needs to match the tier's tone.
