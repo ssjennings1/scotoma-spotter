@@ -1,0 +1,201 @@
+/* ============================================================
+   SYNCOVATE — SITE-WIDE CUSTOM CSS
+   Paste into: GHL Sites → your site → Settings → Custom CSS
+   (site-wide), OR each page → Settings → Custom CSS.
+   Site-wide is preferred so every page inherits it.
+
+   Brand palette (Brand Bible v1.8 — source of truth):
+     Gold/Bronze  #BF8756  primary accent, CTAs
+     Teal         #56ADBF  secondary accent, links
+     Charcoal Deep#252830  body text, dark backgrounds
+     Charcoal     #3D4148  logo wordmark
+     Cream        #FAF8F5  backgrounds
+     Warm Gray    #F0EDE8  subtle backgrounds / borders
+     NEVER use    #C4935A  (retired)
+   Type: Cormorant Garamond (headings) / DM Sans (body)
+   ============================================================ */
+
+:root {
+  --sy-gold:      #BF8756;
+  --sy-teal:      #56ADBF;
+  --sy-charcoal:  #252830;
+  --sy-charcoal2: #3D4148;
+  --sy-cream:     #FAF8F5;
+  --sy-warmgray:  #F0EDE8;
+  --sy-serif:     'Cormorant Garamond', Georgia, serif;
+  --sy-sans:      'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* ------------------------------------------------------------
+   1. THE H1 REVERSAL  (this is the load-bearing rule)
+   The keyword subhead IS the <h1>. It must look small.
+   The big conversational headline is a <p> with .sy-display.
+   In GHL: select the keyword text element → Advanced → HTML tag: H1
+           select the big headline element → HTML tag: P (or DIV)
+           add the classes below via the element's "CSS class" field.
+   ------------------------------------------------------------ */
+
+/* The small keyword H1 — overline style */
+h1.sy-h1-overline,
+.sy-h1-overline h1 {
+  font-family: var(--sy-sans);
+  font-size: 0.8rem;           /* ~13px */
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sy-gold);
+  line-height: 1.4;
+  margin: 0 0 0.75rem 0;
+}
+
+/* The big conversational headline — NOT a heading tag */
+.sy-display,
+p.sy-display,
+div.sy-display {
+  font-family: var(--sy-serif);
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--sy-charcoal);
+  margin: 0 0 1.25rem 0;
+  letter-spacing: -0.01em;
+}
+
+/* Safety net: if a builder default ever inflates the H1, this wins */
+h1 { font-size: 0.8rem !important; }
+h1.sy-display-override { font-size: clamp(2.1rem, 5vw, 3.6rem) !important; } /* only if you deliberately want an H1 to be large somewhere — you don't on these five pages */
+
+/* ------------------------------------------------------------
+   2. SECTION HEADINGS (H2) — Cormorant, readable, not shouty
+   ------------------------------------------------------------ */
+h2, .sy-h2 {
+  font-family: var(--sy-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--sy-charcoal);
+  margin: 0 0 1rem 0;
+}
+h3, .sy-h3 {
+  font-family: var(--sy-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sy-charcoal);
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+/* ------------------------------------------------------------
+   3. BODY — DM Sans, comfortable measure for long-ish copy
+   ------------------------------------------------------------ */
+body, p, li {
+  font-family: var(--sy-sans);
+  color: var(--sy-charcoal);
+  line-height: 1.65;
+}
+p { max-width: 68ch; }   /* keeps paragraphs readable; remove if it fights your column widths */
+
+/* ------------------------------------------------------------
+   4. BUTTONS — primary (Let's Talk) vs secondary (Start Now / Book a Session)
+   In GHL: add class sy-btn-primary or sy-btn-secondary to the button element.
+   ------------------------------------------------------------ */
+.sy-btn-primary, .sy-btn-primary a {
+  background: var(--sy-gold) !important;
+  color: #fff !important;
+  border: 2px solid var(--sy-gold) !important;
+  border-radius: 6px;
+  font-family: var(--sy-sans);
+  font-weight: 600;
+  padding: 0.85rem 1.6rem;
+  text-decoration: none;
+}
+.sy-btn-primary:hover, .sy-btn-primary a:hover { filter: brightness(0.94); }
+
+/* Ghost / outline — deliberately quieter than the primary */
+.sy-btn-secondary, .sy-btn-secondary a {
+  background: transparent !important;
+  color: var(--sy-charcoal) !important;
+  border: 1.5px solid var(--sy-charcoal2) !important;
+  border-radius: 6px;
+  font-family: var(--sy-sans);
+  font-weight: 500;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+}
+.sy-btn-secondary:hover, .sy-btn-secondary a:hover { background: var(--sy-warmgray) !important; }
+
+/* Text links */
+a { color: var(--sy-teal); }
+a:hover { color: var(--sy-gold); }
+
+/* ------------------------------------------------------------
+   5. PULL QUOTES (Rogers on How I Work; takeaway line on Home)
+   Add class sy-pullquote to the text element.
+   ------------------------------------------------------------ */
+.sy-pullquote {
+  font-family: var(--sy-serif);
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--sy-charcoal);
+  border-left: 3px solid var(--sy-gold);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin: 2rem 0;
+  max-width: 60ch;
+}
+.sy-pullquote cite, .sy-pullquote .sy-attrib {
+  display: block;
+  font-family: var(--sy-sans);
+  font-style: normal;
+  font-size: 0.9rem;
+  color: var(--sy-charcoal2);
+  margin-top: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   6. THE "YOU MIGHT BE HERE BECAUSE" LIST (Home) — clean, scannable
+   ------------------------------------------------------------ */
+.sy-nod-list { list-style: none; padding: 0; margin: 1.25rem 0; }
+.sy-nod-list li {
+  padding: 0.6rem 0 0.6rem 1.4rem;
+  position: relative;
+  border-bottom: 1px solid var(--sy-warmgray);
+}
+.sy-nod-list li::before {
+  content: "—";
+  position: absolute; left: 0;
+  color: var(--sy-gold);
+}
+
+/* ------------------------------------------------------------
+   7. PRICE CARDS (How I Work) — "Most Popular" gets a gold rule, nothing louder
+   ------------------------------------------------------------ */
+.sy-price-card {
+  background: #fff;
+  border: 1px solid var(--sy-warmgray);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.sy-price-card.sy-featured { border-top: 4px solid var(--sy-gold); }
+.sy-price { font-family: var(--sy-serif); font-size: 1.6rem; color: var(--sy-charcoal); }
+.sy-badge {
+  display: inline-block;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--sy-gold); border: 1px solid var(--sy-gold);
+  padding: 0.15rem 0.5rem; border-radius: 3px; margin-left: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   8. TESTIMONIALS
+   ------------------------------------------------------------ */
+.sy-testimonial { background: var(--sy-cream); border-radius: 8px; padding: 1.5rem; }
+.sy-testimonial p { font-family: var(--sy-serif); font-size: 1.15rem; line-height: 1.5; }
+.sy-testimonial .sy-attrib { font-family: var(--sy-sans); font-size: 0.9rem; color: var(--sy-charcoal2); margin-top: 0.75rem; }
+
+/* ------------------------------------------------------------
+   9. MOBILE — check on a phone; this is where H1/button hierarchy breaks first
+   ------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .sy-display { font-size: 2rem; }
+  .sy-btn-primary, .sy-btn-secondary { display: block; width: 100%; text-align: center; margin-bottom: 0.6rem; }
+  p { max-width: none; }
+}

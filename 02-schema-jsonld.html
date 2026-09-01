@@ -1,0 +1,172 @@
+<!-- ============================================================
+     SYNCOVATE — JSON-LD SCHEMA SNIPPETS
+     Where to paste in GHL:
+       SITE-WIDE block  → Sites → your site → Settings → Header Tracking Code
+       PAGE blocks      → open the page → Settings → Custom Code → Header
+     Each block is self-contained. Paste only the block(s) marked for that page.
+     Validate after publishing: https://validator.schema.org  (paste the live URL)
+     ============================================================ -->
+
+
+<!-- ============ SITE-WIDE (every page, via site header) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://www.syncovatellc.com/#org",
+  "name": "Syncovate LLC",
+  "alternateName": "Syncovate Business + Psychology",
+  "url": "https://www.syncovatellc.com/",
+  "description": "Business psychology for owners of growing companies — leadership advisory and team facilitation for trades, manufacturing, family business, and professional services.",
+  "telephone": "+1-269-293-4442",
+  "email": "Shannon@SyncovateLLC.com",
+  "founder": { "@id": "https://www.syncovatellc.com/about#person" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Niles",
+    "addressRegion": "MI",
+    "addressCountry": "US"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "South Bend, IN" },
+    { "@type": "City", "name": "Elkhart, IN" },
+    { "@type": "City", "name": "Mishawaka, IN" },
+    { "@type": "City", "name": "Niles, MI" },
+    { "@type": "City", "name": "Kalamazoo, MI" },
+    { "@type": "City", "name": "Fort Wayne, IN" },
+    { "@type": "State", "name": "Michigan" },
+    { "@type": "State", "name": "Indiana" },
+    { "@type": "Country", "name": "United States" }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/shannonsjennings/",
+    "https://www.facebook.com/Syncovate"
+  ],
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": "https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo",
+    "name": "Book a 15-minute call"
+  }
+}
+</script>
+
+
+<!-- ============ ABOUT PAGE ONLY (/about) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.syncovatellc.com/about#person",
+  "name": "Shannon Sheehan Jennings",
+  "alternateName": ["Dr. J", "Dr. Shannon Jennings", "Dr. Shannon Sheehan Jennings"],
+  "honorificPrefix": "Dr.",
+  "jobTitle": "Business Psychologist, Founder & President",
+  "worksFor": { "@id": "https://www.syncovatellc.com/#org" },
+  "url": "https://www.syncovatellc.com/about",
+  "description": "Business psychologist and leadership advisor with a doctorate in business psychology and 20 years of experience with entrepreneurs, family businesses, and leadership teams.",
+  "knowsAbout": [
+    "business psychology",
+    "leadership development",
+    "family business",
+    "leadership team facilitation",
+    "organizational dynamics",
+    "second-stage company growth"
+  ],
+  "hasCredential": [
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Doctorate in Business Psychology (PsyD)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Fellow, Strategic Doing Institute" },
+    { "@type": "EducationalOccupationalCredential", "name": "Pixel Perspectives+ 360 Certified" }
+  ],
+  "memberOf": [
+    { "@type": "Organization", "name": "American Psychological Association — Council of Representatives (Division 13, Society of Consulting Psychology)" }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/shannonsjennings/"
+  ]
+}
+</script>
+
+
+<!-- ============ HOW I WORK PAGE ONLY (/how-i-work) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "Team Session — leadership workshop",
+      "serviceType": "Leadership team facilitation",
+      "provider": { "@id": "https://www.syncovatellc.com/#org" },
+      "description": "A turnkey ~90-minute session on the psychology of leadership for your team — communication, blind spots, working better together.",
+      "offers": { "@type": "Offer", "price": "1500", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "price": "1500", "priceCurrency": "USD", "minPrice": "1500" } }
+    },
+    {
+      "@type": "Service",
+      "name": "Trusted Advisor — monthly leadership advisory",
+      "serviceType": "Executive / leadership advisory",
+      "provider": { "@id": "https://www.syncovatellc.com/#org" },
+      "description": "Two 90-minute sessions a month plus between-session access. Month-to-month.",
+      "offers": { "@type": "Offer", "price": "1500", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "1500", "priceCurrency": "USD", "unitText": "MONTH" } }
+    },
+    {
+      "@type": "Service",
+      "name": "Single Session",
+      "serviceType": "Executive / leadership advisory",
+      "provider": { "@id": "https://www.syncovatellc.com/#org" },
+      "description": "One 90-minute session with a written summary and next steps. No commitment.",
+      "offers": { "@type": "Offer", "price": "750", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "Service",
+      "name": "On-Call Advisor",
+      "serviceType": "Executive / leadership advisory",
+      "provider": { "@id": "https://www.syncovatellc.com/#org" },
+      "offers": { "@type": "Offer", "price": "3000", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "3000", "priceCurrency": "USD", "unitText": "MONTH" } }
+    },
+    {
+      "@type": "Service",
+      "name": "Leadership retreats, strategy sessions, and keynote speaking",
+      "serviceType": "Facilitation and speaking",
+      "provider": { "@id": "https://www.syncovatellc.com/#org" }
+    }
+  ]
+}
+</script>
+
+
+<!-- ============ CONTACT PAGE ONLY (/contact) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "url": "https://www.syncovatellc.com/contact",
+  "mainEntity": {
+    "@id": "https://www.syncovatellc.com/#org",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-269-293-4442",
+      "email": "Shannon@SyncovateLLC.com",
+      "contactType": "sales",
+      "availableLanguage": "en"
+    }
+  }
+}
+</script>
+
+
+<!-- ============ WRITING PAGE ONLY (/writing) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Through the Prism: Field Notes on Leadership & Systems",
+  "url": "https://www.syncovatellc.com/writing",
+  "description": "Short field notes on leadership, growing companies, and the psychology of running a business.",
+  "author": { "@id": "https://www.syncovatellc.com/about#person" },
+  "publisher": { "@id": "https://www.syncovatellc.com/#org" }
+}
+</script>
+
+<!-- NOTE: Each individual blog post (on /prism-blog) should carry a BlogPosting block.
+     GHL's blog module usually generates this automatically — verify one live post at
+     validator.schema.org. If it's missing, ask and I'll write a template. -->
