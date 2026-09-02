@@ -48,6 +48,20 @@ h1.sy-h1-overline,
   margin: 0 0 0.75rem 0;
 }
 
+/* Branding overline — same visual treatment as the H1 overline, for non-H1 elements
+   (e.g. "Dr. J — Syncovate" above the Home hero, "Dr. Shannon Jennings · Dr. J" on About).
+   In GHL: add class sy-overline to the element. */
+.sy-overline {
+  font-family: var(--sy-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sy-gold);
+  line-height: 1.4;
+  margin: 0 0 0.75rem 0;
+}
+
 /* The big conversational headline — NOT a heading tag */
 .sy-display,
 p.sy-display,
