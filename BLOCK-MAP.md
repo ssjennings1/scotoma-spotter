@@ -27,13 +27,17 @@ Paste the **SITE-WIDE** block from `assets/02-schema-jsonld.html` (the `Professi
 
 ---
 
-## Nav
+## Nav & Footer — build once as Global Sections
+
+Both of these are the same on every page, so build each **once** in GHL as a **Global Section** (Sites → Sections → Save as Global, or your version's equivalent) instead of recreating it five times. Add that global block to the top and bottom of each of the five pages. Edit it later in any one place and it updates on all five pages at once — you only ever touch it once.
+
+That's the whole point of the split in this kit: Nav and Footer are global, built one time. Everything under `blocks/<page>/` is the *unique* content for that one page — the only thing you paste in fresh each time.
+
+### Nav
 
 Links: Home (`/`) · How I Work (`/how-i-work`) · Blog (`/writing`) · About (`/about`) · Contact (`/contact`) · **Let's Talk** button (`https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo`, class `sy-btn-primary`)
 
----
-
-## Footer
+### Footer
 
 - Tagline: **Business Psychology for Owners of Growing Companies**
 - Links: Home · How I Work · Blog · About · Contact
