@@ -29,14 +29,14 @@ Paste the **SITE-WIDE** block from `assets/02-schema-jsonld.html` (the `Professi
 
 ## Nav
 
-Links: Home (`/`) · How I Work (`/how-i-work`) · Writing (`/writing`) · About (`/about`) · Contact (`/contact`) · **Let's Talk** button (`https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo`, class `sy-btn-primary`)
+Links: Home (`/`) · How I Work (`/how-i-work`) · Blog (`/writing`) · About (`/about`) · Contact (`/contact`) · **Let's Talk** button (`https://link.syncovatellc.com/widget/booking/29K6RwPvCIc2xOxgUVKo`, class `sy-btn-primary`)
 
 ---
 
 ## Footer
 
 - Tagline: **Business Psychology for Owners of Growing Companies**
-- Links: Home · How I Work · Writing · About · Contact
+- Links: Home · How I Work · Blog · About · Contact
 - LinkedIn: https://www.linkedin.com/in/shannonsjennings/
 - Saturday Seed: /saturday-seed
 - Phone: (269) 293-4442 (linked: `tel:+12692934442`)
@@ -160,7 +160,7 @@ Do NOT redirect `/prism-blog` or `/saturday-seed` — they stay live.
 ## Flags for Shannon
 
 1. ~~**Jen Sailor's title/org**~~ — Confirmed: Chief Financial and Operations Officer, Indiana Trust Wealth Management.
-2. **Nav label** — set to "Writing".
+2. **Nav label** — set to "Blog". Page slug and internal file naming stay "Writing"/`/writing`; only the nav and footer link text reads "Blog".
 3. **About slug** — built as `/about`; the redirect from `/about-dr-j` handles the old URL. Keep either.
 4. **Blog feed** — if GHL's native Blog element can't pull `/prism-blog`, uncomment the three hardcoded post cards in `writing-03-through-the-prism.html` and TODO to wire the live feed.
 5. **Price/product cards** — Team Session, Trusted Advisor, Single Session, and On-Call are all built as GHL NATIVE product elements now (not HTML markup). The fragments carry the copy and the comments telling you what to configure in each native element; nothing renders as a styled card from the fragment HTML alone.
